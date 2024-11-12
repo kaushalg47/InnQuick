@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Rooms{% endblock %}
+
+{% block content %}
+    <h1>Rooms</h1>
+    
+    <!-- Add Room Section -->
+    <div class="form-container">
+        <h2>Add New Room</h2>
+        <form id="addRoomForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input type="text" id="roomNumber" name="number" required>
+            </div>
+            <button type="submit">Create Room</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <!-- View Added Rooms Section -->
+    <div class="form-container">
+        <h2>Added Rooms</h2>
+        <table id="roomsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Room Number</th>
+                    <th>URL</th>
+                    <th>QR Code</th>
+                    <th>Download</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="roomsTableBody">
+                {% for room in rooms %}
+                    <tr id="room-{{ room.id }}">
+                        <td>{{ room.id }}</td>
+                        <td>{{ room.number }}</td>
+                        <td>{{ room.url }}</td>
+                        <td><img src="{{ room.qr_code.url }}" alt="QR Code" width="100" height="100"></td>
+                        <td><a href="${{data.qr_code_url}}" download="room-${room.number}-qr-code.png"><button><i class="fa fa-download"></i></button></a></td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteRoom({{ room.id }})">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById("addRoomForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+    
+            const roomNumber = document.getElementById("roomNumber").value;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+            try {
+                const response = await fetch("/rooms/admin/add-room", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({ number: roomNumber }),
+                });
+    
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById("message").innerText = "Room created successfully!";
+                    
+                    // Add the new room to the table
+                    const newRow = document.createElement("tr");
+                    newRow.id = `room-${data.room.id}`;
+                    newRow.innerHTML = `
+                        <td>${data.room.id}</td>
+                        <td>${data.room.number}</td>
+                        <td>${data.room.url}</td>
+                        <td><img src="${data.qr_code_url}" alt="QR Code" width="100" height="100"></td>
+                        <td><button class="delete-btn" onclick="deleteRoom(${data.room.id})">Delete</button></td>
+                    `;
+                    document.getElementById("roomsTableBody").appendChild(newRow);
+                    
+                    // Clear the input field
+                    document.getElementById("roomNumber").value = "";
+                } else {
+                    document.getElementById("message").innerText = "Error: " + data.error;
+                }
+            } catch (error) {
+                document.getElementById("message").innerText = "An error occurred: " + error.message;
+            }
+        });
+    
+        async function deleteRoom(roomId) {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            try {
+                const response = await fetch(`/rooms/admin/${roomId}/delete-room/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                });
+
+                const data = await response.json();
+                if (data.message) {
+                    
+                    // Remove the deleted room from the table
+                    const rowToDelete = document.getElementById(`room-${roomId}`);
+                    if (rowToDelete) {
+                        rowToDelete.remove();
+                    }
+                } else {
+                    alert('Failed to delete the room.');
+                }
+            } catch (error) {
+                alert("An error occurred: " + error.message);
+            }
+        }
+    </script>
+{% endblock %}

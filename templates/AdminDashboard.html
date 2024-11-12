@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    
+    <!-- Add Room Section -->
+    <div class="form-container">
+        <h2>Add New Room</h2>
+        <form id="addRoomForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input type="text" id="roomNumber" name="number" required>
+            </div>
+            <button type="submit">Create Room</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <!-- View Added Rooms Section -->
+    <div class="form-container">
+        <h2>Added Rooms</h2>
+        <table id="roomsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Room Number</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td>{{ room.id }}</td>
+                    <td>{{ room.number }}</td>
+                    <td>{{ room.created_at }}</td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteRoom({{ room.id }})">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", fetchRooms);
+    
+        async function fetchRooms() {
+            try {
+                const response = await fetch('/rooms/admin/dashboard/get-room');
+                const rooms = await response.json();
+    
+                const roomsTableBody = document.getElementById('roomsTableBody');
+                roomsTableBody.innerHTML = '';
+    
+                rooms.forEach(room => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${room.id}</td>
+                        <td>${room.number}</td>=
+                        <td>
+                            <button class="delete-btn" onclick="deleteRoom(${room.id})">Delete</button>
+                        </td>
+                    `;
+                    roomsTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error fetching rooms:", error);
+            }
+        }
+    
+        document.getElementById("addRoomForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+    
+            const roomNumber = document.getElementById("roomNumber").value;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+            try {
+                const response = await fetch("http://127.0.0.1:8000/rooms/admin/add-room", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({ number: roomNumber }),
+                });
+    
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById("message").innerText = "Room created successfully!";
+                    fetchRooms();  // Refresh the rooms table
+                } else {
+                    document.getElementById("message").innerText = "Error: " + data.error;
+                }
+            } catch (error) {
+                document.getElementById("message").innerText = "An error occurred: " + error.message;
+            }
+        });
+    
+        function deleteRoom(roomId) {
+            fetch(`/rooms/admin/delete-room/${roomId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert('Room deleted successfully.');
+                    fetchRooms();  // Refresh the table after deletion
+                } else {
+                    alert('Failed to delete the room.');
+                }
+            });
+        }
+    </script>
+{% endblock %}

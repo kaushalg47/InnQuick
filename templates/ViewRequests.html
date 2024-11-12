@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Requests{% endblock %}
+
+{% block content %}
+<h1>Room Service Requests</h1>
+    <div class="grid-container">
+        {% for request in requests %}
+        <div class="request-card" id="request-{{ request.id }}">
+            <h3>Room {{ request.room.number }}</h3>
+            <p>Service Type: {{ request.service_type|capfirst }}</p>  <!-- Display service type -->
+            <p>Requested at: {{ request.created_at }}</p>
+            <button class="btn-done" onclick="markAsDone({{ request.id }})">Mark as Done</button>
+            <button id="showPopupBtn">Mark as Done</button>
+        </div>
+        
+        {% empty %}
+        <p>No pending requests.</p>
+        {% endfor %}
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" id="closePopupBtn">&times;</span>
+                <h2>Are you sure?</h2>
+                <button class="popup-btn" id="confirmBtn">Confirm</button>
+                <button class="popup-btn" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function markAsDone(requestId) {
+            fetch(`${requestId}/mark-serviced/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    document.getElementById(`request-${requestId}`).remove();
+                    alert(data.message);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        showPopupBtn.addEventListener('click', function() {
+            popup.style.display = 'flex';
+        });
+    </script>
+{% endblock %}
