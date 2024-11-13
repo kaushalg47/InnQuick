@@ -58,7 +58,7 @@
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     
             try {
-                const response = await fetch("/rooms/admin/add-room", {
+                const response = await fetch("/rooms/add-room", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -97,7 +97,7 @@
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
             try {
-                const response = await fetch(`/rooms/admin/${roomId}/delete-room/`, {
+                const response = await fetch(`/rooms/${roomId}/delete-room/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -11,7 +11,7 @@
             <p>Service Type: {{ request.service_type|capfirst }}</p>  <!-- Display service type -->
             <p>Requested at: {{ request.created_at }}</p>
             <button class="btn-done" onclick="markAsDone({{ request.id }})">Mark as Done</button>
-            <button id="showPopupBtn">Mark as Done</button>
+            
         </div>
         
         {% empty %}
