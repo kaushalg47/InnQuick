@@ -145,3 +145,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+AWS_ACCESS_KEY_ID = 'AKIAWSDMBOOJLFJWPBVJ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'innquickbucket'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'ap-south-1'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
