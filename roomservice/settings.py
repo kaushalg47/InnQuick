@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$*syqd4&06q+@pmd)2pa6cl^pu3jb@0@urpz60#jm91gib57-%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,10 +93,13 @@ WSGI_APPLICATION = 'roomservice.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'InnQuick_DB',
+        'USER': 'Superuser',
+        'PASSWORD': 'Superuser??',
+        'HOST': 'innquick-db.c7yogciceb11.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

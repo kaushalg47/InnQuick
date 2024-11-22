@@ -29,7 +29,7 @@
 
     <script>
         function markAsDone(requestId) {
-            fetch(`${requestId}/mark-serviced/`, {
+            fetch(`requests/${requestId}/mark-serviced`, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': '{{ csrf_token }}',

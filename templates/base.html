@@ -98,18 +98,27 @@
             text-align: center;
             width: 300px;
         }
+        footer {
+            background-color: #333;
+            color: grey;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: auto; /* Pushes the footer to the bottom of the sidebar */
+        }
 
         
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <center><h2>InnQuick</h2></center>
+        <center><h2>Inn<span style="color:green">Quick<span></h2></center>
         <a href="{% url 'get_room_service_requests' %}">View Service Requests</a>
         <a href="{% url 'fetch_rooms' %}">Rooms</a>
         <a href="{% url 'admin_logout' %}">logout</a>
-        <a href="{% url 'admin_dashboard' %}">chatbot</a>
-        
+        <footer>
+            &copy; 2024 InnQuick® | All Rights Reserved.
+        </footer>
     </div>
     <div class="content">
         {% block content %}{% endblock %}
