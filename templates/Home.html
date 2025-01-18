@@ -1,14 +1,657 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Add the landing page here</h1>
-    
-    <!-- Button to redirect -->
-    <a href="/rooms/login" style="display: inline-block; padding: 10px 20px; background-color: green; color: white; text-decoration: none; border-radius: 5px;">login</a>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InnQuick - Landing Page</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      /* Navbar styles */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 15px 20px;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 40px;
+        padding: 0;
+        margin: 0 auto;
+      }
+
+      nav ul li {
+        margin: 0;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #4caf50;
+      }
+
+      .login-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        margin-right: 100px;
+      }
+
+      .login-button:hover {
+        background-color: #388e3c;
+        transform: scale(1.05);
+      }
+
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding-top: 60px; /* Adjusted for navbar */
+      }
+
+      .carousel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .carousel img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .carousel img.hidden {
+        opacity: 0;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Dark overlay for contrast */
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .hero-overlay h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      }
+
+      .hero-overlay p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      }
+
+      .hero-overlay button {
+        padding: 15px 30px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: background-color 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-overlay button:hover {
+        background-color: #388e3c;
+      }
+      .about-us {
+        display: flex;
+        justify-content: center;
+        padding: 6rem 2rem;
+        background: #f0f0f0;
+      }
+
+      .about-us-container {
+        display: flex;
+        align-items: center;
+        gap: 40px; /* Maintain gap between image and content */
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        flex-direction: row-reverse; /* Reverse the order */
+      }
+
+      .about-us img {
+        flex: 1;
+        max-width: 350px;
+        height: auto;
+        border-radius: 15px;
+        object-fit: cover;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .about-us-content {
+        flex: 2;
+        text-align: left;
+      }
+
+      .about-us-content h2 {
+        font-family: "Arial", sans-serif; /* Updated font style */
+        font-size: 2.5rem; /* Updated font size */
+        color: #000000;
+        margin-bottom: 1rem;
+      }
+
+      .about-us-content p {
+        font-family: "Arial", sans-serif; /* Updated font style */
+        font-size: 1.2rem; /* Updated font size */
+        line-height: 1.8;
+        color: #555;
+      }
+
+      .services {
+        padding: 4rem 2rem;
+        text-align: center;
+        background: #f0f0f0;
+        border-radius: 15px;
+      }
+
+      .services h2 {
+        color: #000000;
+        margin-bottom: 2rem;
+        font-family: "Arial", sans-serif;
+        font-size: 2.5rem;
+        text-align: center; /* Same text alignment */
+    margin-top: 30px; /* Same margin top */
+    margin-bottom: 20px; 
+    position:relative;
+ 
+      }
+
+      .services h2::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: #4caf50;
+        border-radius: 2px;
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .service {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease,
+          background-color 0.3s ease;
+        position: relative;
+      }
+
+      .service:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        background-color: #f4f4f4;
+      }
+
+      .service img {
+        width: 60px;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+      }
+
+      .service:hover img {
+        transform: rotate(360deg);
+      }
+
+      .service h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.4rem;
+        color: #333;
+      }
+
+      .service p {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      /* Add animation effect */
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0);
+        }
+        60% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .service:nth-child(even) {
+        animation: bounceIn 0.7s ease-out;
+      }
+
+      @media (max-width: 768px) {
+        .services h2 {
+          font-size: 2rem;
+        }
+
+        .services-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .service img {
+          width: 50px;
+        }
+      }
+
+      .footer {
+        background-color: #333;
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .footer p {
+        margin: 0;
+      }
+
+      @media (max-width: 768px) {
+        .hero-overlay h1 {
+          font-size: 3rem;
+        }
+
+        .hero-overlay p {
+          font-size: 1.2rem;
+        }
+
+        .hero-overlay button {
+          font-size: 1rem;
+          padding: 12px 24px;
+        }
+        .about-us-container {
+          flex-direction: column;
+          text-align: center;
+          padding: 2rem;
+        }
+
+        .about-us img {
+          max-width: 100%;
+        }
+
+        .about-us-content {
+          padding: 1rem 0;
+        }
+      }
+      .contact-us {
+        display: flex;
+        justify-content: center;
+        padding: 6rem 2rem;
+        background: #f0f0f0;
+      }
+
+      .contact-us-container {
+        display: flex;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .faq-section {
+        flex: 1;
+        padding: 2rem;
+        border-right: 2px solid #ddd;
+      }
+
+      .faq-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: #020302;
+        font-family: "Arial", sans-serif;
+      }
+
+      .faq-item {
+        margin-bottom: 1.5rem;
+      }
+
+      .faq-item h3 {
+        font-size: 1.4rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .faq-item p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.5;
+      }
+
+      .contact-form-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .contact-us-content h2 {
+        font-size: 2.5rem;
+        color: #000000;
+        margin-bottom: 1rem;
+      }
+
+      .contact-us-content p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 2rem;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .contact-form input:focus,
+      .contact-form textarea:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+      }
+
+      .contact-form textarea {
+        resize: vertical;
+      }
+
+      .send-message-button {
+        padding: 1rem 2rem;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        align-self: flex-start;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .send-message-button:hover {
+        background-color: #388e3c;
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 768px) {
+        .contact-us-container {
+          flex-direction: column;
+          text-align: center;
+          padding: 2rem;
+        }
+
+        .faq-section {
+          border-right: none;
+          margin-bottom: 2rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about-us">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact-us">Contact</a></li>
+      </ul>
+      <button class="login-button">Login</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero" id="hero">
+      <div class="carousel">
+        <img src="https://picsum.photos/id/1018/1600/900" alt="Hotel Room 1" />
+        <img
+          src="https://picsum.photos/id/1015/1600/900"
+          alt="Hotel Room 2"
+          class="hidden"
+        />
+        <img
+          src="https://picsum.photos/id/1011/1600/900"
+          alt="Hotel Room 3"
+          class="hidden"
+        />
+      </div>
+      <div class="hero-overlay">
+        <h1>Welcome to InnQuick</h1>
+        <p>Your ultimate room service companion</p>
+        <button>Get Started</button>
+      </div>
+    </div>
+
+    <!-- About Us Section -->
+    <section class="about-us" id="about-us">
+      <div class="about-us-container">
+        <img
+          src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg"
+          alt="hotel"
+        />
+        <div class="about-us-content">
+          <h2>About Us</h2>
+          <p>
+            At InnQuick, we provide seamless hotel experiences, from easy
+            check-ins and room details to top-notch room service and concierge
+            assistance. We aim to redefine comfort and convenience for travelers
+            everywhere.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <h2>Our Services</h2>
+      <div class="services-grid">
+        <div class="service">
+          <img
+            src="https://img.icons8.com/ios-filled/50/000000/room.png"
+            alt="Room Details Icon"
+          />
+          <h3>View Room Details</h3>
+          <p>
+            Get detailed descriptions and visuals of your room before booking.
+          </p>
+        </div>
+        <div class="service">
+          <img
+            src="https://img.icons8.com/ios-filled/50/000000/qr-code.png"
+            alt="QR Code Icon"
+          />
+          <h3>QR Code Access</h3>
+          <p>Scan QR codes for quick room check-ins and additional services.</p>
+        </div>
+        <div class="service">
+          <img
+            src="https://img.icons8.com/ios-filled/50/000000/restaurant.png"
+            alt="Room Service Icon"
+          />
+          <h3>Room Service</h3>
+          <p>Order room service anytime, anywhere with just a few clicks.</p>
+        </div>
+        <div class="service">
+          <img
+            src="data:image/png;base64,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"
+            alt="Concierge Icon"
+          />
+          <h3>Concierge</h3>
+          <p>Experience top-notch assistance for all your travel needs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="contact-us" id="contact-us">
+      <div class="contact-us-container">
+        <!-- FAQ Section -->
+         
+        <div class="faq-section">
+          <h2>How Can We Help?</h2>
+          <div class="faq-item">
+            <h3>What services do you offer?</h3>
+            <p>
+              We offer room service, concierge assistance, QR code access for
+              check-ins, and detailed room views before booking.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>How do I check-in?</h3>
+            <p>
+              You can easily check-in using the QR code provided at the hotel
+              entrance or use our app to check-in online.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I change my booking?</h3>
+            <p>
+              Yes, you can change your booking by visiting the 'My Bookings'
+              section in the app or contacting our support team.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>What if I need help during my stay?</h3>
+            <p>
+              Our concierge service is available 24/7 to assist you with any
+              requests, from booking tours to arranging transportation.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>How do I order room service?</h3>
+            <p>
+              You can order room service through the app or by scanning the QR
+              code in your room to view the menu.
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="contact-form-section">
+          <div class="contact-us-content">
+            <h2>Contact Us</h2>
+            <p>
+              If you have any questions, feel free to reach out to us. We're
+              here to assist you!
+            </p>
+          </div>
+          <form class="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              rows="5"
+              required
+            ></textarea>
+            <button type="submit" class="send-message-button">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer" id="footer">
+      <p>&copy; 2025 InnQuick. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const images = document.querySelectorAll(".carousel img");
+      let currentIndex = 0;
+
+      function showNextImage() {
+        images[currentIndex].classList.add("hidden");
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.remove("hidden");
+      }
+
+      setInterval(showNextImage, 2000); // Change image every 5 seconds
+    </script>
+  </body>
 </html>
