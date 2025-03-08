@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rooms',
     'corsheaders',
     'client',
+    'menu'
 ]
 
 
@@ -93,11 +94,7 @@ WSGI_APPLICATION = 'roomservice.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'InnQuick_DB',
-        'USER': 'Superuser',
-        'PASSWORD': 'Superuser??',
-        'HOST': 'innquick-db.c7yogciceb11.ap-south-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -137,6 +134,9 @@ USE_TZ = True
 BASE_URL = 'http://127.0.0.1:8000'
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+  os.path.join(BASE_DIR, 'roomservice/static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

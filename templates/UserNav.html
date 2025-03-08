@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Navigation</title>
+  <style>
+    .logo {
+      color: #4caf50;
+    }
+    h1 {
+      font-size: 24px;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .button {
+      width: 80%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 18px;
+      text-align: center;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Room Service for Room {{ room.number }}</h1>
+    <p>powered by <b class="logo">InnQuick</b></p>
+  <button class="button" onclick="location.href='/client/{{room.id}}/service/'">roomservice</button>
+  <button class="button" onclick="location.href='/client/{{room.id}}/menu/'">Food menu</button>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .menu-item {
+      background-color: white;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-item h3 {
+      margin: 0;
+    }
+    .menu-item .price {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    .menu-item .quantity-adjust {
+      display: flex;
+      align-items: center;
+    }
+    .menu-item .quantity-adjust button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .cart-popup {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: white;
+      border-top: 1px solid #ccc;
+      padding: 15px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    .cart-popup h3 {
+      margin: 0;
+    }
+    .cart-popup .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .cart-popup .cart-item .quantity-adjust {
+      display: flex;
+      align-items: center;
+    }
+    .cart-popup .cart-item .quantity-adjust button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .cart-popup .total-price {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 10px;
+    }
+    .cart-popup button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .cart-toggle {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Menu</h1>
+  </div>
+  <div id="menu-items">
+    <!-- Menu items will be dynamically inserted here -->
+  </div>
+  <div class="cart-popup" id="cart-popup">
+    <h3>Cart</h3>
+    <div id="cart-items">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+    <div class="total-price" id="total-price">
+      <!-- Total price will be dynamically inserted here -->
+    </div>
+    <button onclick="orderNow()">Order Now</button>
+  </div>
+  <button class="cart-toggle" id="cart-toggle" onclick="toggleCart()"><i class="fa fa-shopping-cart" style="font-size:24px"></i></button>
+
+  <script>
+    const menuItems = [
+      {% for item in items %}
+          { id: {{ item.id }}, name: "{{ item.name }}", price: {{ item.price }} }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+      // Add more items as needed
+    ];
+
+    const cart = [];
+
+    function renderMenu() {
+      const menuContainer = document.getElementById('menu-items');
+      menuContainer.innerHTML = '';
+      menuItems.forEach(item => {
+        const menuItem = document.createElement('div');
+        menuItem.className = 'menu-item';
+        menuItem.innerHTML = `
+          <h3>${item.name}</h3>
+          <span class="price">$${item.price.toFixed(2)}</span>
+          <div class="quantity-adjust" id="quantity-adjust-${item.id}">
+            <input type="number" id="quantity-${item.id}" value="1" min="1" style="width: 50px; text-align: center;" class="hidden">
+            <button onclick="addToCart(${item.id})">Add to Cart</button>
+          </div>
+        `;
+        menuContainer.appendChild(menuItem);
+      });
+    }
+
+    function addToCart(itemId) {
+      const item = menuItems.find(i => i.id === itemId);
+      const quantityInput = document.getElementById(`quantity-${itemId}`);
+      quantityInput.classList.remove('hidden');
+      const quantity = parseInt(quantityInput.value);
+      const cartItem = cart.find(i => i.id === itemId);
+      if (cartItem) {
+        cartItem.quantity += quantity;
+      } else {
+        cart.push({ ...item, quantity });
+      }
+      updateMenuItem(itemId);
+      renderCart();
+    }
+
+    function updateMenuItem(itemId) {
+      const quantityAdjust = document.getElementById(`quantity-adjust-${itemId}`);
+      quantityAdjust.innerHTML = `
+        <button onclick="decreaseQuantity(${itemId})">-</button>
+        <input type="number" id="quantity-${itemId}" value="${cart.find(i => i.id === itemId).quantity}" min="1" style="width: 50px; text-align: center;" onchange="updateQuantity(${itemId}, this.value)">
+        <button onclick="increaseQuantity(${itemId})">+</button>
+      `;
+    }
+
+    function increaseQuantity(itemId) {
+      const cartItem = cart.find(i => i.id === itemId);
+      if (cartItem) {
+        cartItem.quantity += 1;
+        updateMenuItem(itemId);
+        renderCart();
+      }
+    }
+
+    function decreaseQuantity(itemId) {
+      const cartItem = cart.find(i => i.id === itemId);
+      if (cartItem && cartItem.quantity > 1) {
+        cartItem.quantity -= 1;
+        updateMenuItem(itemId);
+        renderCart();
+      }
+    }
+
+    function renderCart() {
+      const cartContainer = document.getElementById('cart-items');
+      cartContainer.innerHTML = '';
+      let totalPrice = 0;
+      cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+          <span>${item.name} - $${(item.price * item.quantity).toFixed(2)}</span>
+          <div class="quantity-adjust">
+            <button onclick="decreaseQuantity(${item.id})">-</button>
+            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+            <button onclick="increaseQuantity(${item.id})">+</button>
+          </div>
+        `;
+        cartContainer.appendChild(cartItem);
+        totalPrice += item.price * item.quantity;
+      });
+      document.getElementById('total-price').innerText = `Total: $${totalPrice.toFixed(2)}`;
+      updateCartToggle();
+    }
+
+    function updateQuantity(itemId, quantity) {
+      const cartItem = cart.find(i => i.id === itemId);
+      if (cartItem) {
+        cartItem.quantity = parseInt(quantity);
+        updateMenuItem(itemId);
+        renderCart();
+      }
+    }
+
+    function orderNow() {
+      const orderItems = cart.map(item => ({ id: item.id, quantity: item.quantity }));
+    
+      fetch('/menu/place-order/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ items: orderItems, room_id: {{ room.id }} })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          alert(data.message);
+          cart.length = 0;
+          renderCart();
+          document.getElementById('cart-popup').style.display = 'none';
+          renderMenu();
+        } else {
+          alert('Failed to place order.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to place order.');
+      });
+    }
+    
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+        }
+      }
+      }
+      return cookieValue;
+    }
+
+    function toggleCart() {
+      const cartPopup = document.getElementById('cart-popup');
+      if (cartPopup.style.display === 'none' || cartPopup.style.display === '') {
+        cartPopup.style.display = 'block';
+      } else {
+        cartPopup.style.display = 'none';
+      }
+    }
+
+    function updateCartToggle() {
+      const cartToggle = document.getElementById('cart-toggle');
+      const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartToggle.innerText = totalQuantity;
+    }
+
+    renderMenu();
+  </script>
+</body>
+</html>

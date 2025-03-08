@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
 
   <!-- Favicons -->
    <!-- Innquick logo -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="{% static 'img/favicon.png'%}" rel="icon">
 
 
   <!-- Fonts -->
@@ -19,14 +20,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 </head>
 
@@ -53,7 +54,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="login.html">Login</a>
+      <a class="btn-getstarted" href="/rooms/login">Login</a>
 
     </div>
   </header>
@@ -63,7 +64,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+      <img src="{% static 'img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
 
       <div class="container">
         <h2 data-aos="fade-up" data-aos-delay="100">Book Today,<br>Relax Tomorrow</h2>
@@ -84,7 +85,7 @@
     <div class="row gy-4">
 
       <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-        <img src="assets/img/about.jpg" class="img-fluid" alt="">
+        <img src="{% static 'img/about.jpg' %}" class="img-fluid" alt="">
       </div>
 
       <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
@@ -147,9 +148,6 @@
   </div>
 
 </section><!-- /Counts Section -->
-
-
- <!-- Why Us Section -->
 <section id="why-us" class="section why-us">
 
   <div class="container">
@@ -300,7 +298,6 @@
   </div>
 
 </section><!-- /Features Section -->
-
 <section id="room-service" class="room-service section">
   <div class="container section-title" data-aos="fade-up">
     <h2>Room Service</h2>
@@ -313,7 +310,7 @@
       <!-- Item 1: Gourmet Breakfast -->
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
         <div class="menu-item">
-          <img src="assets/img/breakfast.jpg" class="img-fluid" alt="Gourmet Breakfast" 
+          <img src="{% static 'img/breakfast.jpg' %}" class="img-fluid" alt="Gourmet Breakfast" 
                style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
           <div class="menu-content">
             <h3><a href="#">Gourmet Breakfast</a></h3>
@@ -325,7 +322,7 @@
       <!-- Item 2: Chef's Special Dinner -->
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
         <div class="menu-item">
-          <img src="assets/img/dinner.jpg" class="img-fluid" alt="Chef's Special Dinner" 
+          <img src="{% static 'img/dinner.jpg' %}" class="img-fluid" alt="Chef's Special Dinner" 
                style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
           <div class="menu-content">
             <h3><a href="#">Chef’s Special Dinner</a></h3>
@@ -337,7 +334,7 @@
       <!-- Item 3: Luxury Desserts -->
       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
         <div class="menu-item">
-          <img src="assets/img/dessert.jpg" class="img-fluid" alt="Luxury Desserts" 
+          <img src="{% static 'img/dessert.jpg' %}" class="img-fluid" alt="Luxury Desserts" 
                style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
           <div class="menu-content">
             <h3><a href="#">Luxury Desserts</a></h3>
@@ -349,9 +346,6 @@
     </div>
   </div>
 </section>
-
-
-
 
   </main>
 
@@ -430,15 +424,15 @@
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
 
 </body>
 

@@ -114,8 +114,12 @@
     <div class="sidebar">
         <center><h2>Inn<span style="color:green">Quick<span></h2></center>
         <a href="{% url 'get_room_service_requests' %}">View Service Requests</a>
-        <a href="{% url 'fetch_rooms' %}">Rooms</a>
+        <a href="{% url 'order_list' %}">View Orders</a>
+        <a href="{% url 'fetch_rooms' %}">Manage Rooms</a>
+        <a href="{% url 'menu_list' %}">Manage Menu</a>
+        <a href="{% url 'completed_orders' %}">Order logs</a>
         <a href="{% url 'admin_logout' %}">logout</a>
+
         <footer>
             &copy; 2024 InnQuick® | All Rights Reserved.
         </footer>

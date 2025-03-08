@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Rooms{% endblock %}
+
+{% block content %}
+    <h1>Food Menu</h1>
+    
+    <!-- Add Room Section -->
+    <div class="form-container">
+        <h2>Add menu item</h2>
+        <form id="addItemForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="itemName">Item Name:</label>
+                <input type="text" id="itemName" name="name" required>
+                <label for="itemPrice">Item Price:</label>
+                <input type="text" id="itemPrice" name="price" required>
+            </div>
+            <button type="submit">Add item</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <!-- View Added Rooms Section -->
+    <div class="form-container">
+        <h2>Added items</h2>
+        <table id="itemsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="itemTableBody">
+                {% for item in items %}
+                    <tr id="item-{{ item.id }}">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+                          <button class="delete-btn" onclick="">Delete</button>
+                      </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById("addItemForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+    
+            const itemName = document.getElementById("itemName").value;
+            const itemPrice = document.getElementById("itemPrice").value;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+            try {
+                const response = await fetch("/menu/add-item/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify({
+                        name: itemName,
+                        price: itemPrice
+                      }),
+                });
+    
+                const data = await response.json();
+                console.log(data);
+                if (response.ok) {
+                    document.getElementById("message").innerText = "Item created successfully!";
+                    const newRow = document.createElement("tr");
+                    newRow.id = `item-${data.item.id}`;
+                    newRow.innerHTML = `
+                        <td>${data.item.id}</td>
+                        <td>${data.item.name}</td>
+                        <td>${data.item.price}</td>
+                        <td><button class="delete-btn" onclick="">Delete</button></td>
+                    `;
+                    document.getElementById("itemTableBody").appendChild(newRow);
+                    
+                    
+                    // Clear the input field
+                    document.getElementById("itemName").value = "";
+                    document.getElementById("itemPrice").value = "";
+                } else {
+                    document.getElementById("message").innerText = "Error: " + data.error;
+                }
+            } catch (error) {
+                document.getElementById("message").innerText = "An error occurred: " + error.message;
+            }
+        });
+    
+        {% comment %} async function deleteRoom(roomId) {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            try {
+                const response = await fetch(`/rooms/${roomId}/delete-room/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                });
+
+                const data = await response.json();
+                if (data.message) {
+                    
+                    // Remove the deleted room from the table
+                    const rowToDelete = document.getElementById(`room-${roomId}`);
+                    if (rowToDelete) {
+                        rowToDelete.remove();
+                    }
+                } else {
+                    alert('Failed to delete the room.');
+                }
+            } catch (error) {
+                alert("An error occurred: " + error.message);
+            }
+        } {% endcomment %}
+    </script>
+{% endblock %}

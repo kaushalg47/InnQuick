@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Rooms{% endblock %}
+
+{% block content %}
+  <h1>Completed Orders</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th>Items</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.created_at }}</td>
+        <td>
+          <ul>
+            {% for item in order.items %}
+            <li>{{ item.name }} ({{ item.quantity }} x ${{ item.price }}) - ${{ item.total_item_price }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>${{ order.total_price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}

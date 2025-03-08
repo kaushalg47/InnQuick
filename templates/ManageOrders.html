@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Requests{% endblock %}
+
+{% block content %}
+<h1>Room Food Orders</h1>
+  <div class="grid-container">
+    {% for order in orders %}
+    <div class="request-card" id="order-{{ order.id }}">
+      <h3>Order ID: {{ order.id }}</h3>
+      <h2>Room: {{ order.room }}</h2>
+      <div class="items" id="items-{{ order.id }}" style="display: none;">
+        <p>Items: 
+          <ul>
+            {% for item in order.items %}
+            <li>{{ item.name }}  ({{ item.quantity }})</li>
+            {% endfor %}
+          </ul>
+        </p>
+      </div>
+      
+      <p>Requested at: {{ order.created_at }}</p>
+      <button class="btn-view" onclick="toggleItems({{ order.id }})">View</button>
+      <button class="btn-done" onclick="markAsDone({{ order.id }})">Mark as Done</button>
+    </div>
+    
+    {% empty %}
+    <p>No pending requests.</p>
+    {% endfor %}
+  </div>
+
+  <script>
+    function toggleItems(orderId) {
+      const itemsDiv = document.getElementById(`items-${orderId}`);
+      if (itemsDiv.style.display === 'none') {
+        itemsDiv.style.display = 'block';
+      } else {
+        itemsDiv.style.display = 'none';
+      }
+    }
+
+    function markAsDone(orderId) {
+      fetch(`/menu/orders/${orderId}/done/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          document.getElementById(`order-${orderId}`).remove();
+          alert(data.message);
+        } else if (data.error) {
+          alert(data.error);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+{% endblock %}
