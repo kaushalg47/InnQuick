@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import menu_list, place_order, order_list, mark_order_done, add_menu_item, completed_orders
+from .views import menu_list, place_order, order_list, mark_order_done, add_menu_item, completed_orders, delete_item
 
 urlpatterns = [
     path('menu/', menu_list, name='menu_list'),
@@ -7,5 +7,6 @@ urlpatterns = [
     path('orders/', order_list, name='order_list'),
     path('all-orders/', completed_orders, name='completed_orders'),
     path('orders/<int:order_id>/done/', mark_order_done, name='mark_order_done'),
+    path('delete-item/<int:item_id>/', delete_item, name='delete_item'),
     path('add-item/', add_menu_item, name='add_menu_item'),
 ]
