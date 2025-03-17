@@ -135,7 +135,7 @@
   <script>
     const menuItems = [
       {% for item in items %}
-          { id: {{ item.id }}, name: "{{ item.name }}", price: {{ item.price }} }{% if not forloop.last %},{% endif %}
+          { id: {{ item.id }}, name: "{{ item.name }}", price: {{ item.price }}, description: "{{ item.description }}" }{% if not forloop.last %},{% endif %}
       {% endfor %}
       // Add more items as needed
     ];
@@ -149,7 +149,10 @@
         const menuItem = document.createElement('div');
         menuItem.className = 'menu-item';
         menuItem.innerHTML = `
+        <div>
           <h3>${item.name}</h3>
+          <p style="color: #555; margin: 5px 0;">${item.description || "No description available"}</p>
+          </div>
           <span class="price">$${item.price.toFixed(2)}</span>
           <div class="quantity-adjust" id="quantity-adjust-${item.id}">
             <input type="number" id="quantity-${item.id}" value="1" min="1" style="width: 50px; text-align: center;" class="hidden">

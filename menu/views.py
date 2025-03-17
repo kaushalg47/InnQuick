@@ -95,13 +95,23 @@ def add_menu_item(request):
     if not name:
       return JsonResponse({"error": "Name is required."}, status=400)
     
-    item = MenuItem.objects.create(name=name, user=request.user, price=data.get('price'))
+    item = MenuItem.objects.create(name=name, user=request.user, price=data.get('price'), description=data.get('description'))
     return JsonResponse({
-      "message": "Menu item added successfully.",
+      "message": "Menu item added successfully.{item.description}",
       "item":{
         "id": item.id,
         "name": item.name,
-        "price": item.price
+        "price": item.price,
+        "description": item.description
       }
       }, status=201)
   return JsonResponse({"error": "Invalid request."}, status=400)
+
+@login_required
+def delete_item(request, item_id):
+    if request.method == 'POST':
+        item = get_object_or_404(MenuItem, id=item_id, user=request.user)
+        item.delete()
+        return JsonResponse({'message': 'Item deleted successfully.'})
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+

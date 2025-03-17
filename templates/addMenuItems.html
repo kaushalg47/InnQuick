@@ -15,6 +15,8 @@
                 <input type="text" id="itemName" name="name" required>
                 <label for="itemPrice">Item Price:</label>
                 <input type="text" id="itemPrice" name="price" required>
+                <label for="itemPrice">Item Description:</label>
+                <input type="text" maxlength="300" id="itemDesc" name="desc" required>
             </div>
             <button type="submit">Add item</button>
         </form>
@@ -29,6 +31,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Description</th>
                     <th>price</th>
                     <th>Action</th>
                 </tr>
@@ -38,9 +41,10 @@
                     <tr id="item-{{ item.id }}">
                         <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
                         <td>{{ item.price }}</td>
                         <td>
-                          <button class="delete-btn" onclick="">Delete</button>
+                          <button class="delete-btn" onclick="deleteItem({{ item.id }})">Delete</button>
                       </td>
                     </tr>
                 {% endfor %}
@@ -54,6 +58,7 @@
     
             const itemName = document.getElementById("itemName").value;
             const itemPrice = document.getElementById("itemPrice").value;
+            const itemDesc = document.getElementById("itemDesc").value;
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     
             try {
@@ -65,7 +70,8 @@
                     },
                     body: JSON.stringify({
                         name: itemName,
-                        price: itemPrice
+                        price: itemPrice,
+                        description: itemDesc
                       }),
                 });
     
@@ -78,6 +84,7 @@
                     newRow.innerHTML = `
                         <td>${data.item.id}</td>
                         <td>${data.item.name}</td>
+                        <td>${data.item.description}</td>
                         <td>${data.item.price}</td>
                         <td><button class="delete-btn" onclick="">Delete</button></td>
                     `;
@@ -87,6 +94,7 @@
                     // Clear the input field
                     document.getElementById("itemName").value = "";
                     document.getElementById("itemPrice").value = "";
+                    document.getElementById("itemDesc").value = "";
                 } else {
                     document.getElementById("message").innerText = "Error: " + data.error;
                 }
@@ -95,11 +103,11 @@
             }
         });
     
-        {% comment %} async function deleteRoom(roomId) {
+        async function deleteItem(itemId) {
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
             try {
-                const response = await fetch(`/rooms/${roomId}/delete-room/`, {
+                const response = await fetch(`/menu/delete-item/${itemId}/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -111,16 +119,16 @@
                 if (data.message) {
                     
                     // Remove the deleted room from the table
-                    const rowToDelete = document.getElementById(`room-${roomId}`);
+                    const rowToDelete = document.getElementById(`item-${itemId}`);
                     if (rowToDelete) {
                         rowToDelete.remove();
                     }
                 } else {
-                    alert('Failed to delete the room.');
+                    alert('Failed to delete the item.');
                 }
             } catch (error) {
                 alert("An error occurred: " + error.message);
             }
-        } {% endcomment %}
+        } 
     </script>
 {% endblock %}

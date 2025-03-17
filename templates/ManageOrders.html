@@ -11,7 +11,7 @@
       <h2>Room: {{ order.room }}</h2>
       <div class="items" id="items-{{ order.id }}" style="display: none;">
         <p>Items: 
-          <ul>
+          <ul styles="list-style: none;">
             {% for item in order.items %}
             <li>{{ item.name }}  ({{ item.quantity }})</li>
             {% endfor %}
