@@ -137,6 +137,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
   os.path.join(BASE_DIR, 'roomservice/static'),
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Adjust to wherever you want to collect static files
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
