@@ -133,10 +133,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 BASE_URL = 'http://127.0.0.1:8000'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+# Development static files (for local development only)
 STATICFILES_DIRS = [
-  os.path.join(BASE_DIR, 'roomservice/static'),
+    os.path.join(BASE_DIR, 'roomservice/static'),  # Local static files directory
 ]
+
+# Static files root (for production)
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Adjust to wherever you want to collect static files
 
 
