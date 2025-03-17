@@ -133,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 BASE_URL = 'http://127.0.0.1:8000'
 
-STATIC_URL = '/static/'
+STATIC_URL = 'roomservice/static/'
 
 # Development static files (for local development only)
 STATICFILES_DIRS = [
