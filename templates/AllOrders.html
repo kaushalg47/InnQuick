@@ -23,11 +23,11 @@
         <td>
           <ul>
             {% for item in order.items %}
-            <li>{{ item.name }} ({{ item.quantity }} x ${{ item.price }}) - ${{ item.total_item_price }}</li>
+            <li>{{ item.name }} ({{ item.quantity }} x ₹{{ item.price }}) - ₹{{ item.total_item_price }}</li>
             {% endfor %}
           </ul>
         </td>
-        <td>${{ order.total_price }}</td>
+        <td>₹{{ order.total_price }}</td>
       </tr>
       {% endfor %}
     </tbody>

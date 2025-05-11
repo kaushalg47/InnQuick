@@ -1,62 +1,257 @@
 {% extends 'base.html' %}
-
-{% block title %}Service Requests{% endblock %}
+{% block title %}Room Food Orders{% endblock %}
 
 {% block content %}
-<h1>Room Food Orders</h1>
-  <div class="grid-container">
+<div class="orders-dashboard">
+  <header class="dashboard-header">
+    <h1>Room Food Orders</h1>
+  </header>
+
+  <div class="orders-container">
     {% for order in orders %}
-    <div class="request-card" id="order-{{ order.id }}">
-      <h3>Order ID: {{ order.id }}</h3>
-      <h2>Room: {{ order.room }}</h2>
-      <div class="items" id="items-{{ order.id }}" style="display: none;">
-        <p>Items: 
-          <ul styles="list-style: none;">
-            {% for item in order.items %}
-            <li>{{ item.name }}  ({{ item.quantity }})</li>
-            {% endfor %}
-          </ul>
-        </p>
+    <div class="order-card" id="order-{{ order.id }}">
+      <div class="order-header">
+        <div class="order-info">
+          <span class="room-number">Room {{ order.room }}</span>
+          <span class="order-id">Order #{{ order.id }}</span>
+        </div>
+        <span class="order-time">{{ order.created_at }}</span>
       </div>
       
-      <p>Requested at: {{ order.created_at }}</p>
-      <button class="btn-view" onclick="toggleItems({{ order.id }})">View</button>
-      <button class="btn-done" onclick="markAsDone({{ order.id }})">Mark as Done</button>
+      <div class="order-content">
+        <div class="items-container" id="items-{{ order.id }}">
+          <h3>Order Items</h3>
+          <ul class="items-list">
+            {% for item in order.items %}
+            <li class="order-item">
+              <span class="item-name">{{ item.name }}</span>
+              <span class="item-quantity">× {{ item.quantity }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      
+      <div class="order-actions">
+        <button class="btn btn-view" onclick="toggleItems({{ order.id }})">
+          <span class="btn-text">Hide Items</span>
+        </button>
+        <button class="btn btn-done" onclick="markAsDone({{ order.id }})">
+          <span class="btn-text">Complete Order</span>
+        </button>
+      </div>
     </div>
-    
     {% empty %}
-    <p>No pending requests.</p>
+    <div class="empty-state">
+      <p>No pending orders at this time.</p>
+    </div>
     {% endfor %}
   </div>
+</div>
 
-  <script>
-    function toggleItems(orderId) {
-      const itemsDiv = document.getElementById(`items-${orderId}`);
-      if (itemsDiv.style.display === 'none') {
-        itemsDiv.style.display = 'block';
-      } else {
-        itemsDiv.style.display = 'none';
+<style>
+  .orders-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 1rem;
+  }
+  
+  .dashboard-header h1 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  
+  .orders-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .order-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .order-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .order-header {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .room-number {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #34495e;
+    display: block;
+  }
+  
+  .order-id {
+    font-size: 0.875rem;
+    color: #7f8c8d;
+    display: block;
+    margin-top: 0.25rem;
+  }
+  
+  .order-time {
+    font-size: 0.875rem;
+    color: #95a5a6;
+  }
+  
+  .order-content {
+    padding: 1rem;
+  }
+  
+  .items-container {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1rem;
+  }
+  
+  .items-container h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #34495e;
+    margin-bottom: 0.75rem;
+  }
+  
+  .items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #eaeaea;
+  }
+  
+  .order-item:last-child {
+    border-bottom: none;
+  }
+  
+  .item-name {
+    font-weight: 500;
+  }
+  
+  .item-quantity {
+    font-weight: 600;
+    color: #3498db;
+  }
+  
+  .order-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-top: 1px solid #eaeaea;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    flex: 1;
+  }
+  
+  .btn-view {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+  }
+  
+  .btn-view:hover {
+    background-color: #d6dbdf;
+  }
+  
+  .btn-done {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  .btn-done:hover {
+    background-color: #27ae60;
+  }
+  
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    color: #7f8c8d;
+  }
+  
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  // Auto-refresh the page every 30 seconds
+  setTimeout(() => {
+    window.location.reload();
+  }, 30000);
+  
+  function toggleItems(orderId) {
+    const itemsDiv = document.getElementById(`items-${orderId}`);
+    if (itemsDiv.classList.contains('hidden')) {
+      itemsDiv.classList.remove('hidden');
+      document.querySelector(`#order-${orderId} .btn-view .btn-text`).textContent = 'Hide Items';
+    } else {
+      itemsDiv.classList.add('hidden');
+      document.querySelector(`#order-${orderId} .btn-view .btn-text`).textContent = 'View Items';
+    }
+  }
+  
+  function markAsDone(orderId) {
+    const card = document.getElementById(`order-${orderId}`);
+    card.style.opacity = '0.5';
+    
+    fetch(`/menu/orders/${orderId}/done/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json'
       }
-    }
-
-    function markAsDone(orderId) {
-      fetch(`/menu/orders/${orderId}/done/`, {
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message) {
-          document.getElementById(`order-${orderId}`).remove();
-          alert(data.message);
-        } else if (data.error) {
-          alert(data.error);
-        }
-      })
-      .catch(error => console.error('Error:', error));
-    }
-  </script>
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        // Add animation before removing
+        card.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          card.remove();
+        }, 300);
+      } else if (data.error) {
+        card.style.opacity = '1';
+        alert(data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      card.style.opacity = '1';
+    });
+  }
+</script>
 {% endblock %}

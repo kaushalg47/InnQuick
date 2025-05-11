@@ -3,49 +3,418 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Navigation</title>
+  <title>Room Service</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .logo {
-      color: #4caf50;
+    :root {
+      --primary-color: #4caf50;
+      --primary-dark: #3e8e41;
+      --text-color: #333;
+      --background-color: #f9f9f9;
+      --card-background: #ffffff;
+      --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    h1 {
-      font-size: 24px;
-      text-align: center;
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-
-    p {
-      text-align: center;
+    
+    html, body {
+      height: 100%;
+      overflow: hidden;
     }
+    
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background-color);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+      justify-content: space-between;
+      padding: 20px;
     }
-    .button {
-      width: 80%;
-      padding: 15px;
-      margin: 10px 0;
-      font-size: 18px;
+    
+    .container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .header {
       text-align: center;
-      background-color: #4caf50;
+      padding: 20px 0;
+    }
+    
+    .logo {
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    
+    .logo i {
+      margin-right: 8px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      color: var(--text-color);
+      margin-bottom: 10px;
+    }
+    
+    .room-badge {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    
+    .menu-card {
+      overflow: hidden;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      max-height: 50%;
+    }
+    
+    .button {
+      padding: 15px;
+      font-size: 18px;
+      text-align: left;
+      background-color: var(--card-background);
+      color: var(--text-color);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .button:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .button i {
+      font-size: 24px;
+      margin-right: 15px;
+      width: 30px;
+      color: var(--primary-color);
+    }
+    
+    .button .badge {
+      background-color: #ff6b6b;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+    
+    .button .arrow {
+      margin-left: auto;
+      color: #ccc;
+    }
+    
+    .promotion {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffc107;
+    }
+    
+    .footer {
+      width: 100%;
+      background-color: #f1f1f1;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .quick-actions {
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0;
+      margin: 20px 0;
+    }
+    
+    .action-button {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+    
+    .action-button:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+    
+    .action-button i {
+      font-size: 22px;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+    
+    .action-text {
+      font-size: 12px;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    .modal-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #777;
+    }
+    
+    .modal-body {
+      margin-bottom: 20px;
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .modal-button {
+      background-color: var(--primary-color);
       color: white;
       border: none;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
     }
-    .button:hover {
-      background-color: #4caf50;
+    
+    .wifi-details {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    
+    .wifi-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    
+    .wifi-label {
+      font-weight: bold;
+      color: #555;
+    }
+    
+    .call-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    
+    .call-button i {
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Room Service for Room {{ room.number }}</h1>
-    <p>powered by <b class="logo">InnQuick</b></p>
-  <button class="button" onclick="location.href='/client/{{room.id}}/service/'">roomservice</button>
-  <button class="button" onclick="location.href='/client/{{room.id}}/menu/'">Food menu</button>
+  <div class="container">
+    <div class="header">
+      <h1>Room Service</h1>
+      <div class="room-badge">{{ room.number }}</div>
+      <div class="logo">
+        <span>Powered by InnQuick</span>
+      </div>
+    </div>
+    
+    <div class="menu-card">
+      <button class="button" onclick="location.href='/client/{{room.id}}/{{user.id}}/service/'">
+        <i class="fas fa-concierge-bell"></i>
+        <span>Room Service</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </button>
+      
+      <button class="button" onclick="location.href='/client/{{room.id}}/{{user.id}}/menu/'">
+        <i class="fas fa-utensils"></i>
+        <span>Food Menu</span>
+        <span class="badge">New</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </button>
+      
+      <button class="button promotion">
+        <i class="fas fa-star"></i>
+        <span>Write a Review and get 5% off</span>
+        <i class="fas fa-chevron-right arrow"></i>
+      </button>
+    </div>
+    
+    <div class="quick-actions">
+      <button class="action-button" onclick="openModal('reception-modal')">
+        <i class="fas fa-phone"></i>
+        <span class="action-text">Call Reception</span>
+      </button>
+      
+      <button class="action-button" onclick="openModal('wifi-modal')">
+        <i class="fas fa-wifi"></i>
+        <span class="action-text">WiFi Info</span>
+      </button>
+      
+      <button class="action-button">
+        <i class="fas fa-map-marker-alt"></i>
+        <span class="action-text">Hotel Map</span>
+      </button>
+      
+      <button class="action-button">
+        <i class="fas fa-info-circle"></i>
+        <span class="action-text">Help</span>
+      </button>
+    </div>
+  
+    <div class="footer">
+      Thank you for choosing our hotel. Enjoy your stay!
+    </div>
+  </div>
+  
+  <!-- WiFi Modal -->
+  <div id="wifi-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fas fa-wifi"></i> WiFi Information</div>
+        <button class="close-modal" onclick="closeModal('wifi-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Connect to our high-speed internet using these credentials:</p>
+        <div class="wifi-details">
+          <div class="wifi-row">
+            <span class="wifi-label">Network Name:</span>
+            <span>InnQuick_Guest</span>
+          </div>
+          <div class="wifi-row">
+            <span class="wifi-label">Password:</span>
+            <span>Welcome2024!</span>
+          </div>
+        </div>
+        <p>For premium high-speed connection, please contact reception.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-button" onclick="closeModal('wifi-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Reception Modal -->
+  <div id="reception-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fas fa-phone"></i> Call Reception</div>
+        <button class="close-modal" onclick="closeModal('reception-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Our reception team is available 24/7 to assist you with any needs:</p>
+        <div class="wifi-details">
+          <div class="wifi-row">
+            <span class="wifi-label">Reception:</span>
+            <span>Dial 0</span>
+          </div>
+          <div class="wifi-row">
+            <span class="wifi-label">Direct Number:</span>
+            <span>+1 (555) 123-4567</span>
+          </div>
+        </div>
+        <button class="call-button">
+          <i class="fas fa-phone"></i> Call Reception Now
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-button" onclick="closeModal('reception-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+      document.body.style.overflow = 'hidden';
+    }
+    
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      const modals = document.getElementsByClassName('modal');
+      for (let i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
 </body>
 </html>

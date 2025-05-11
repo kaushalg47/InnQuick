@@ -5,62 +5,346 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Room Services</title>
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --background-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.2s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background-light);
+            padding: 2rem 1rem;
         }
-
-        .container {
-            max-width: 600px;
+        
+        .dashboard-container {
+            max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
-        h1 {
+        
+        .dashboard-header {
             text-align: center;
+            margin-bottom: 2rem;
         }
-
+        
+        .dashboard-title {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        
+        .services-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        
+        .services-header {
+            background-color: #f1f5f9;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .services-form {
+            padding: 1.5rem;
+        }
+        
+        .services-list {
+            margin-bottom: 1.5rem;
+        }
+        
         .service-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
         }
-
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
+        
+        .service-item:hover {
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .service-label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        /* Custom checkbox styling */
+        .checkbox-container {
+            display: inline-block;
+            position: relative;
+            padding-left: 35px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .checkbox-container:hover input ~ .checkmark {
+            border-color: var(--primary-color);
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-container .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .service-text {
+            margin-left: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .save-button {
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 16px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
         }
-
-        button:hover {
-            background-color: #0056b3;
+        
+        .save-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .save-button:active {
+            transform: translateY(0);
+        }
+        
+        .save-text {
+            margin-left: 0.5rem;
+        }
+        
+        /* Status indicator */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .status-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-saved {
+            background-color: var(--success-color);
+        }
+        
+        /* Animation for save feedback */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .dashboard-container {
+                padding: 0;
+            }
+            
+            .services-card {
+                border-radius: 0;
+            }
+            
+            .services-list {
+                margin-bottom: 1rem;
+            }
+            
+            .service-item {
+                padding: 0.75rem;
+            }
+            
+            .actions-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .save-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .status-indicator {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-  <div class="container">
-      <h1>Manage Room Services</h1>
-      <form method="POST">
-          {% csrf_token %}
-          {% for service in services %}
-              <div class="service-item">
-                  <label>
-                      <input type="checkbox" name="service_{{ service.id }}" {% if service.is_available %}checked{% endif %}>
-                      {{ service.get_service_type_display }}
-                  </label>
-              </div>
-          {% endfor %}
-          <button type="submit">Save Changes</button>
-      </form>
-  </div>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Hotel Services Management</h1>
+            <p class="dashboard-subtitle">Enable or disable room services for guests</p>
+        </div>
+        
+        <div class="services-card">
+            <div class="services-header">
+                <h2>Available Room Services</h2>
+            </div>
+            
+            <form method="POST" class="services-form">
+                {% csrf_token %}
+                
+                <div class="services-list">
+                    {% for service in services %}
+                        <div class="service-item">
+                            <label class="service-label">
+                                <span class="checkbox-container">
+                                    <input type="checkbox" name="service_{{ service.id }}" {% if service.is_available %}checked{% endif %}>
+                                    <span class="checkmark"></span>
+                                </span>
+                                <span class="service-text">{{ service.get_service_type_display }}</span>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="actions-container">
+                    <div class="status-indicator" id="saveStatus" style="opacity: 0;">
+                        <span class="status-saved"></span>
+                        Changes saved successfully
+                    </div>
+                    
+                    <button type="submit" class="save-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        <span class="save-text">Save Changes</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Form submission feedback
+        document.querySelector('form').addEventListener('submit', function() {
+            // You can add form validation here if needed
+            
+            // For visual feedback while submitting (if you implement AJAX)
+            document.querySelector('.save-button').innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span class="save-text">Saving...</span>
+            `;
+            
+            // If you're using AJAX form submission, you can add success handling here
+            // For this example, we'll just return true to allow normal form submission
+            return true;
+        });
+        
+        // If you need to show a success message after redirect (with server-side flash messages)
+        if (window.location.search.includes('success=true')) {
+            const statusEl = document.getElementById('saveStatus');
+            statusEl.style.opacity = 1;
+            statusEl.classList.add('fade-in');
+            
+            setTimeout(() => {
+                statusEl.style.opacity = 0;
+            }, 3000);
+        }
+    </script>
 </body>
 </html>

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$*syqd4&06q+@pmd)2pa6cl^pu3jb@0@urpz60#jm91gib57-%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['innquick.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -92,12 +92,26 @@ WSGI_APPLICATION = 'roomservice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'innqaxpz_innquickDB',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         'USER': 'innqaxpz_admin',
+#         'PASSWORD': '3jYG3bcyT#WueCs'
+#     }
+# }
+
+# settings.py
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -138,7 +152,9 @@ STORAGES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
+USE_TZ = True  # Keep this True to store in UTC and convert on display
+
 
 USE_I18N = True
 
@@ -147,7 +163,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-BASE_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'https://localhost:8000'
 
 STATIC_URL = '/static/'
 

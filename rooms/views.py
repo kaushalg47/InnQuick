@@ -18,6 +18,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 import qrcode
 import os
+import time
+from django.http import JsonResponse
+from django.shortcuts import render
 
 # Admin login view
 def admin_login(request):
@@ -70,12 +73,12 @@ def add_room(request):
             return JsonResponse({'error': 'Room number already exists'}, status=400)
         
         room = Room.objects.create(number=room_number,user=request.user)
-        room_url = f"{settings.BASE_URL}/client/{room.id}/"
+        room_url = f"{settings.BASE_URL}/client/{room.id}/{request.user.id}"
         room.url = room_url
         room.save()
 
         qr_image = qrcode.make(room_url)
-        qr_image_path = f'qr_codes/{room.number}.png'
+        qr_image_path = f'qr_codes/{room.id}-{room.number}.png'
         full_path = os.path.join(settings.MEDIA_ROOT, qr_image_path)
         os.makedirs(os.path.dirname(full_path), exist_ok=True)
         qr_image.save(full_path)
@@ -108,6 +111,10 @@ def add_room(request):
 def delete_room(request, room_id):
     if request.method == 'POST':
         room = get_object_or_404(Room, id=room_id, user=request.user)
+        if room.qr_code:
+            qr_code_path = os.path.join(settings.MEDIA_ROOT, str(room.qr_code))
+            if os.path.isfile(qr_code_path):
+                os.remove(qr_code_path)
         room.delete()
         return JsonResponse({'message': 'Room deleted successfully.'})
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
@@ -116,9 +123,24 @@ def delete_room(request, room_id):
 @login_required
 def get_room_service_requests(request):
     if request.method == 'GET':
-        requests = RoomServiceRequest.objects.filter(user=request.user,is_serviced=False)
+        requests = RoomServiceRequest.objects.filter(user=request.user, is_serviced=False)
+
+        # Handle AJAX requests by returning JSON data
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'requests': [
+                    {
+                        'id': req.id,
+                        'room': {'number': req.room.number},
+                        'service_type': req.service_type,
+                        'created_at': req.created_at.strftime('%Y-%m-%d %H:%M:%S')
+                    }
+                    for req in requests
+                ]
+            })
+
+        # Otherwise, render the normal page
         return render(request, 'ViewRequests.html', {'requests': requests})
-    
 
 @csrf_exempt
 @login_required

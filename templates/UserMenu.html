@@ -6,131 +6,400 @@
   <title>User Menu</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-      color: #333;
+    :root {
+      --primary-color: #4CAF50;
+      --primary-dark: #3d8b40;
+      --primary-light: #a5d6a7;
+      --text-color: #333;
+      --text-light: #666;
+      --bg-color: #f8f9fa;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --radius: 8px;
+    }
+    
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    .header {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px;
-      text-align: center;
+    
+    body {
+      font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding-bottom: 70px;
     }
+    
+    .header {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+    }
+    
+    #menu-items {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    
     .menu-item {
-      background-color: white;
-      margin: 10px;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: var(--white);
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
+    
+    .menu-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .menu-info {
+      flex: 1;
+    }
+    
     .menu-item h3 {
+      margin: 0 0 8px 0;
+      color: var(--text-color);
+      font-size: 18px;
+    }
+    
+    .menu-item p {
+      color: var(--text-light);
+      font-size: 14px;
       margin: 0;
     }
-    .menu-item .price {
-      margin-left: 10px;
-      font-weight: bold;
-    }
-    .menu-item .quantity-adjust {
+    
+    .menu-actions {
       display: flex;
       align-items: center;
+      gap: 15px;
     }
-    .menu-item .quantity-adjust button {
-      background-color: #4CAF50;
-      color: white;
+    
+    .price {
+      font-weight: bold;
+      color: var(--text-color);
+      font-size: 18px;
+    }
+    
+    .quantity-adjust {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .quantity-adjust button {
+      background-color: var(--primary-color);
+      color: var(--white);
       border: none;
-      padding: 10px;
-      border-radius: 5px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       cursor: pointer;
-      margin: 0 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background-color 0.2s;
     }
+    
+    .quantity-adjust button:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .quantity-adjust input {
+      width: 50px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 8px;
+      font-size: 14px;
+    }
+    
+    .add-btn {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 10px 15px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    
+    .add-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
     .cart-popup {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: white;
-      border-top: 1px solid #ccc;
-      padding: 15px;
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+      background-color: var(--white);
+      border-top: 1px solid #eee;
+      padding: 20px;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
       display: none;
+      z-index: 900;
+      max-height: 60vh;
+      overflow-y: auto;
+      border-radius: 20px 20px 0 0;
     }
+    
     .cart-popup h3 {
-      margin: 0;
+      margin: 0 0 15px 0;
+      font-size: 20px;
+      color: var(--text-color);
     }
-    .cart-popup .cart-item {
+    
+    .cart-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 10px 0;
+      margin: 15px 0;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
     }
-    .cart-popup .cart-item .quantity-adjust {
-      display: flex;
-      align-items: center;
+    
+    .cart-item-name {
+      font-weight: 500;
     }
-    .cart-popup .cart-item .quantity-adjust button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 0 5px;
+    
+    .cart-item-price {
+      font-weight: 600;
     }
-    .cart-popup .total-price {
-      font-weight: bold;
+    
+    .total-price {
+      font-weight: 700;
       text-align: right;
-      margin-top: 10px;
+      margin: 20px 0;
+      font-size: 20px;
+      color: var(--text-color);
     }
-    .cart-popup button {
-      background-color: #4CAF50;
-      color: white;
+    
+    .order-btn {
+      background-color: var(--primary-color);
+      color: var(--white);
       border: none;
-      padding: 10px;
-      border-radius: 5px;
+      padding: 12px;
+      border-radius: var(--radius);
       cursor: pointer;
       width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.2s;
     }
+    
+    .order-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
     .cart-toggle {
       position: fixed;
-      bottom: 15px;
-      right: 15px;
-      background-color: #4CAF50;
-      color: white;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: var(--white);
       border: none;
-      padding: 15px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: transform 0.2s, background-color 0.2s;
+      z-index: 1000;
     }
+    
+    .cart-toggle:hover {
+      background-color: var(--primary-dark);
+      transform: scale(1.05);
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #ff5722;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
     .hidden {
       display: none;
+    }
+    
+    #order-confirm-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .popup-content {
+      background: var(--white);
+      padding: 30px;
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .popup-content h3 {
+      margin: 0 0 20px 0;
+      color: var(--text-color);
+      font-size: 22px;
+    }
+    
+    .popup-content ul {
+      text-align: left;
+      margin-bottom: 25px;
+      list-style-type: none;
+    }
+    
+    .popup-content li {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .popup-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .popup-buttons button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background-color 0.2s;
+    }
+    
+    .confirm-btn {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .confirm-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .cancel-btn {
+      background-color: #f44336;
+      color: white;
+    }
+    
+    .cancel-btn:hover {
+      background-color: #d32f2f;
+    }
+    
+    /* Empty cart message */
+    .empty-cart {
+      text-align: center;
+      padding: 30px 0;
+      color: var(--text-light);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .menu-item {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .menu-actions {
+        margin-top: 15px;
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="order-confirm-popup" style="display: none;">
+    <div class="popup-content fade-in">
+      <h3>Confirm Your Order</h3>
+      <ul id="order-items-list"></ul>
+      <div class="popup-buttons">
+        <button class="confirm-btn" onclick="confirmOrderNow()">Confirm Order</button>
+        <button class="cancel-btn" onclick="closeOrderPopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <div class="header">
     <h1>Menu</h1>
   </div>
+  
   <div id="menu-items">
     <!-- Menu items will be dynamically inserted here -->
   </div>
+  
   <div class="cart-popup" id="cart-popup">
-    <h3>Cart</h3>
+    <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
     <div id="cart-items">
       <!-- Cart items will be dynamically inserted here -->
     </div>
     <div class="total-price" id="total-price">
       <!-- Total price will be dynamically inserted here -->
     </div>
-    <button onclick="orderNow()">Order Now</button>
+    <button class="order-btn" onclick="orderNow()">Order Now <i class="fas fa-arrow-right"></i></button>
   </div>
-  <button class="cart-toggle" id="cart-toggle" onclick="toggleCart()"><i class="fa fa-shopping-cart" style="font-size:24px"></i></button>
+  
+  <button class="cart-toggle" id="cart-toggle" onclick="toggleCart()">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-badge" id="cart-badge">0</span>
+  </button>
 
   <script>
     const menuItems = [
@@ -145,18 +414,30 @@
     function renderMenu() {
       const menuContainer = document.getElementById('menu-items');
       menuContainer.innerHTML = '';
+      
       menuItems.forEach(item => {
         const menuItem = document.createElement('div');
         menuItem.className = 'menu-item';
+        
+        const isInCart = cart.find(i => i.id === item.id);
+        
         menuItem.innerHTML = `
-        <div>
-          <h3>${item.name}</h3>
-          <p style="color: #555; margin: 5px 0;">${item.description || "No description available"}</p>
+          <div class="menu-info">
+            <h3>${item.name}</h3>
+            <p>${item.description || "No description available"}</p>
           </div>
-          <span class="price">$${item.price.toFixed(2)}</span>
-          <div class="quantity-adjust" id="quantity-adjust-${item.id}">
-            <input type="number" id="quantity-${item.id}" value="1" min="1" style="width: 50px; text-align: center;" class="hidden">
-            <button onclick="addToCart(${item.id})">Add to Cart</button>
+          <div class="menu-actions">
+            <span class="price">₹${item.price.toFixed(2)}</span>
+            <div class="quantity-adjust" id="quantity-adjust-${item.id}">
+              ${isInCart ? `
+                <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
+              ` : `
+                <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
+                <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
+              `}
+            </div>
           </div>
         `;
         menuContainer.appendChild(menuItem);
@@ -176,14 +457,21 @@
       }
       updateMenuItem(itemId);
       renderCart();
+      
+      // Show a brief confirmation
+      const menuItem = document.getElementById(`quantity-adjust-${itemId}`).closest('.menu-item');
+      menuItem.style.backgroundColor = '#e8f5e9';
+      setTimeout(() => {
+        menuItem.style.backgroundColor = '';
+      }, 300);
     }
 
     function updateMenuItem(itemId) {
       const quantityAdjust = document.getElementById(`quantity-adjust-${itemId}`);
       quantityAdjust.innerHTML = `
-        <button onclick="decreaseQuantity(${itemId})">-</button>
-        <input type="number" id="quantity-${itemId}" value="${cart.find(i => i.id === itemId).quantity}" min="1" style="width: 50px; text-align: center;" onchange="updateQuantity(${itemId}, this.value)">
-        <button onclick="increaseQuantity(${itemId})">+</button>
+        <button onclick="decreaseQuantity(${itemId})"><i class="fas fa-minus"></i></button>
+        <input type="number" id="quantity-${itemId}" value="${cart.find(i => i.id === itemId).quantity}" min="1" onchange="updateQuantity(${itemId}, this.value)">
+        <button onclick="increaseQuantity(${itemId})"><i class="fas fa-plus"></i></button>
       `;
     }
 
@@ -202,6 +490,18 @@
         cartItem.quantity -= 1;
         updateMenuItem(itemId);
         renderCart();
+      } else if (cartItem && cartItem.quantity === 1) {
+        // Remove from cart if quantity becomes 0
+        const index = cart.findIndex(i => i.id === itemId);
+        if (index !== -1) {
+          cart.splice(index, 1);
+          const quantityAdjust = document.getElementById(`quantity-adjust-${itemId}`);
+          quantityAdjust.innerHTML = `
+            <input type="number" id="quantity-${itemId}" value="1" min="1" class="hidden">
+            <button class="add-btn" onclick="addToCart(${itemId})"><i class="fas fa-plus"></i></button>
+          `;
+          renderCart();
+        }
       }
     }
 
@@ -209,21 +509,30 @@
       const cartContainer = document.getElementById('cart-items');
       cartContainer.innerHTML = '';
       let totalPrice = 0;
-      cart.forEach(item => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-          <span>${item.name} - $${(item.price * item.quantity).toFixed(2)}</span>
-          <div class="quantity-adjust">
-            <button onclick="decreaseQuantity(${item.id})">-</button>
-            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-            <button onclick="increaseQuantity(${item.id})">+</button>
-          </div>
-        `;
-        cartContainer.appendChild(cartItem);
-        totalPrice += item.price * item.quantity;
-      });
-      document.getElementById('total-price').innerText = `Total: $${totalPrice.toFixed(2)}`;
+      
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<div class="empty-cart"><i class="fas fa-shopping-basket" style="font-size: 48px; margin-bottom: 15px;"></i><p>Your cart is empty</p></div>';
+      } else {
+        cart.forEach(item => {
+          const cartItem = document.createElement('div');
+          cartItem.className = 'cart-item';
+          cartItem.innerHTML = `
+            <div>
+              <span class="cart-item-name">${item.name}</span>
+              <span class="cart-item-price">₹${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+            <div class="quantity-adjust">
+              <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
+              <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+              <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
+            </div>
+          `;
+          cartContainer.appendChild(cartItem);
+          totalPrice += item.price * item.quantity;
+        });
+      }
+      
+      document.getElementById('total-price').innerText = cart.length > 0 ? `Total: ₹${totalPrice.toFixed(2)}` : '';
       updateCartToggle();
     }
 
@@ -237,7 +546,46 @@
     }
 
     function orderNow() {
-      const orderItems = cart.map(item => ({ id: item.id, quantity: item.quantity }));
+      if (cart.length === 0) {
+        alert('Your cart is empty. Please add items to your cart before ordering.');
+        return;
+      }
+      
+      const orderItems = cart.map(item => ({ id: item.id, name: item.name, quantity: item.quantity }));
+      const listContainer = document.getElementById("order-items-list");
+      listContainer.innerHTML = "";
+    
+      let totalItems = 0;
+      
+      orderItems.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${item.name}</span> <span>x ${item.quantity}</span>`;
+        listContainer.appendChild(li);
+        totalItems += item.quantity;
+      });
+    
+      // Add total count
+      const totalLi = document.createElement("li");
+      totalLi.innerHTML = `<strong>Total Items</strong> <strong>${totalItems}</strong>`;
+      totalLi.style.marginTop = '10px';
+      totalLi.style.borderBottom = 'none';
+      totalLi.style.fontWeight = 'bold';
+      listContainer.appendChild(totalLi);
+      
+      // Save orderItems temporarily to use when confirm is clicked
+      window._pendingOrder = orderItems;
+    
+      document.getElementById("order-confirm-popup").style.display = "flex";
+    }
+    
+    function closeOrderPopup() {
+      document.getElementById("order-confirm-popup").style.display = "none";
+      window._pendingOrder = null;
+    }
+    
+    function confirmOrderNow() {
+      const orderItems = window._pendingOrder;
+      if (!orderItems || orderItems.length === 0) return;
     
       fetch('/menu/place-order/', {
         method: 'POST',
@@ -245,12 +593,37 @@
           'Content-Type': 'application/json',
           'X-CSRFToken': getCookie('csrftoken')
         },
-        body: JSON.stringify({ items: orderItems, room_id: {{ room.id }} })
+        body: JSON.stringify({ 
+          items: orderItems.map(i => ({ id: i.id, quantity: i.quantity })), 
+          room_id: {{ room.id }},
+          user_id: {{ user.id }}
+        })
       })
       .then(response => response.json())
       .then(data => {
         if (data.message) {
-          alert(data.message);
+          // Success notification instead of alert
+          const notification = document.createElement('div');
+          notification.style.position = 'fixed';
+          notification.style.top = '20px';
+          notification.style.left = '50%';
+          notification.style.transform = 'translateX(-50%)';
+          notification.style.backgroundColor = '#4CAF50';
+          notification.style.color = 'white';
+          notification.style.padding = '15px 25px';
+          notification.style.borderRadius = '8px';
+          notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+          notification.style.zIndex = '1100';
+          notification.style.animation = 'fadeIn 0.3s ease';
+          notification.innerHTML = '<i class="fas fa-check-circle"></i> ' + data.message;
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s';
+            setTimeout(() => document.body.removeChild(notification), 500);
+          }, 3000);
+          
           cart.length = 0;
           renderCart();
           document.getElementById('cart-popup').style.display = 'none';
@@ -261,22 +634,24 @@
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('Failed to place order.');
+        alert(`Failed to place order: ${error.message}`);
+      })
+      .finally(() => {
+        closeOrderPopup();
       });
     }
-    
 
     function getCookie(name) {
       let cookieValue = null;
       if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
         }
-      }
       }
       return cookieValue;
     }
@@ -285,18 +660,28 @@
       const cartPopup = document.getElementById('cart-popup');
       if (cartPopup.style.display === 'none' || cartPopup.style.display === '') {
         cartPopup.style.display = 'block';
+        cartPopup.classList.add('fade-in');
       } else {
         cartPopup.style.display = 'none';
       }
     }
 
     function updateCartToggle() {
-      const cartToggle = document.getElementById('cart-toggle');
+      const cartBadge = document.getElementById('cart-badge');
       const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-      cartToggle.innerText = totalQuantity;
+      
+      cartBadge.innerText = totalQuantity;
+      
+      if (totalQuantity === 0) {
+        cartBadge.classList.add('hidden');
+      } else {
+        cartBadge.classList.remove('hidden');
+      }
     }
 
+    // Initialize the page
     renderMenu();
+    renderCart();
   </script>
 </body>
 </html>

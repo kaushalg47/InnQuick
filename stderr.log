@@ -1,0 +1,2035 @@
+Traceback (most recent call last):
+  File "/home/innqaxpz/InnQuick/passenger_wsgi.py", line 15, in <module>
+    from InnQuick.wsgi import application
+ModuleNotFoundError: No module named 'InnQuick'
+Traceback (most recent call last):
+  File "/home/innqaxpz/InnQuick/passenger_wsgi.py", line 15, in <module>
+    from InnQuick.wsgi import application
+ModuleNotFoundError: No module named 'InnQuick'
+Traceback (most recent call last):
+  File "/home/innqaxpz/InnQuick/passenger_wsgi.py", line 15, in <module>
+    from InnQuick.wsgi import application
+ModuleNotFoundError: No module named 'InnQuick'
+Invalid HTTP_HOST header: 'innquick.in'. You may need to add 'innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'innquick.in'. You may need to add 'innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /wp-admin/setup-config.php
+Not Found: /wordpress/wp-admin/setup-config.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /.env
+Not Found: /robots.txt
+Not Found: /.env
+Not Found: /hostinger-logo.svg
+Not Found: /domain-default-img.svg
+Not Found: /.env
+Forbidden (Referer checking failed - no Referer.): /
+Not Found: /favicon.ico
+Not Found: /https%3A/fonts.googleapis.com/css2%3Ffamily%3DOpen%2BSans%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%26family%3DPoppins%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%26family%3DRaleway%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900%26display%3Dswap
+OSError: LSAPI: Socket read/write error
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /starting.html
+Not Found: /index.html
+Not Found: /static/vendor/swiper/e
+Not Found: /static/vendor/swiper/t.params.url
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /ads.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /api/im/v2/app/config
+Not Found: /favicon.ico
+Not Found: /h5/
+Not Found: /m/
+Not Found: /static/index/js/lk/order.js
+Not Found: /static/wap/js/order.js
+Not Found: /static/index/css/trade-history.css
+Not Found: /h5
+Not Found: /index/login
+Not Found: /a/
+Not Found: /035/index.html
+Not Found: /m/
+Not Found: /7/
+Not Found: /v2
+Not Found: /xy/
+Not Found: /api
+Not Found: /im/
+Not Found: /wap
+Not Found: /api
+Not Found: /h5
+Not Found: /h5/
+Not Found: /h5/
+Not Found: /qs/
+Not Found: /otc/
+Not Found: /app/
+Not Found: /vip/
+Not Found: /wap/
+Not Found: /imei/
+Not Found: /syn/
+Not Found: /homes/
+Not Found: /mobile
+Not Found: /config
+Not Found: /im/h5/
+Not Found: /1.html
+Not Found: /dsxs/
+Not Found: /page/
+Not Found: /bg.png
+Not Found: /conf.js
+Not Found: /pc.html
+Not Found: /api/c/a
+Not Found: /lang.js
+Not Found: /eids.js
+Not Found: /mobile/
+Not Found: /web.json
+Not Found: /platform
+Not Found: /ddoo_im/
+Not Found: /getLocale
+Not Found: /step1.asp
+Not Found: /css/skin/ymPrompt.css
+Not Found: /site/info
+Not Found: /home/help
+Not Found: /config.js
+Not Found: /home.html
+Not Found: /style.css
+Not Found: /ay-1.html
+Not Found: /chat/home
+Not Found: /js/home.js
+Not Found: /app/
+Not Found: /index/aurl
+Not Found: /api/notice
+Not Found: /api/config
+Not Found: /kline/1m/1
+Not Found: /option.png
+Not Found: /option.bin
+Not Found: /index.html
+Not Found: /categories
+Not Found: /code1.html
+Not Found: /home/index
+Not Found: /yongxing/
+Not Found: /api/config
+Not Found: /getsdkLink
+Not Found: /api/version
+Not Found: /myConfig.js
+Not Found: /js/base1.js
+Not Found: /wap/forward
+Not Found: /js/a.script
+Not Found: /js/post.js/
+Not Found: /login.html
+Not Found: /mindex.html
+Not Found: /js/index.js
+Not Found: /index.html
+Not Found: /user/reg.php
+Not Found: /f/user/index
+Not Found: /apis/globals
+Not Found: /m/allticker/1
+Not Found: /fePublicInfo/
+Not Found: /nyyh/chkjs.js
+Not Found: /css/style.css
+Not Found: /im/App/config
+Not Found: /img/xxing.png
+Not Found: /api/v1/config
+Not Found: /api/Business/
+Not Found: /zk/index.html
+Not Found: /thriveGame.css
+Not Found: /Home/Index/api
+Not Found: /js/nsc/main.js
+Not Found: /index.php/sign
+Not Found: /app/js/base.js
+Not Found: /home/login.jpg
+Not Found: /Pay_Index.html
+Not Found: /setting/global
+Not Found: /api/baseConfig
+Not Found: /img/pc-ios.png
+Not Found: /api/shop/getKF
+Not Found: /7/js/common.js
+Not Found: /addons/fastim/
+Not Found: /api/apps/config
+Not Found: /css/scanner.css
+Not Found: /api/index/index
+Not Found: /api/Event/basic
+Not Found: /api/front/index
+Not Found: /geapi/webConfig
+Not Found: /api/common/init
+Not Found: /files/pub_rem.js
+Not Found: /banner.do
+Not Found: /verification.asp
+Not Found: /friendGroup/list
+Not Found: /appxz/index.html
+Not Found: /dist/index.html
+Not Found: /index/api/getweb
+Not Found: /Ctrls/GetSysCoin
+Not Found: /home/index.html
+Not Found: /$web/index.html
+Not Found: /api/index/config
+Not Found: /css/nsc/reset.css
+Not Found: /Home/Get/getJnd28
+Not Found: /skin/js/common.js
+Not Found: /Public/initJs.php
+Not Found: /assets/js/main.js
+Not Found: /biz/server/config
+Not Found: /mobile/lists.html
+Not Found: /mytio/config/base
+Not Found: /mfzbs/config/base
+Not Found: /static/js/user.js
+Not Found: /mobile/login.html
+Not Found: /api/app/indexList
+Not Found: /api/common/config
+Not Found: /mobile/index/home
+Not Found: /banner/lunbo1.png
+Not Found: /index/login/index
+Not Found: /api/Home/videoNew
+Not Found: /dwcc/cnfig/setinf
+Not Found: /ciod/cnfig/setinf
+Not Found: /api/uploads/apimap
+Not Found: /account_domain.php
+Not Found: /kefu/css/style.css
+Not Found: /Web/js/v1/phone.js
+Not Found: /home/realtime/data
+Not Found: /h5/img/icon/rj.png
+Not Found: /checkout-dashboard
+Not Found: /api/common/configs
+Not Found: /api/user/getconfig
+Not Found: /skin/main/onload.js
+Not Found: /public/js/global.js
+Not Found: /static/guide/ab.css
+Not Found: /Public/js/common.js
+Not Found: /api/message/webInfo
+Not Found: /Content/favicon.ico
+Not Found: /api/index/webconfig
+Not Found: /static/js/common.js
+Not Found: /index_files/xzjs.js
+Not Found: /room/getRoomBangFans
+Not Found: /index/user/register
+Not Found: /xy/image/jiantou.png
+Not Found: /public/css/style.css
+Not Found: /static/css/style.css
+Not Found: /api/index/grailindex
+Not Found: /km.asmx/getPlatParam
+Not Found: /static/css/reset.css
+Not Found: /api/shares/hqStrList
+Not Found: /other/getTopQuestion
+Not Found: /static/css/index.css
+Not Found: /mobile/get_item_list
+Not Found: /index/login/register
+Not Found: /static/diff_worker.js
+Not Found: /data/json/config.json
+Not Found: /Public/Home/js/cls.js
+Not Found: /static/css/mobile.css
+Not Found: /api/user/ismustmobile
+Not Found: /api/user/ismustmobile
+Not Found: /api/user/ismustmobile
+Not Found: /static/js/download.js
+Not Found: /index/home/login.html
+Not Found: /static/css/common.css
+Not Found: /unSecurity/app/config
+Not Found: /public/wap/js/basis.js
+Not Found: /static/images/jymx.png
+Not Found: /static/home/css/css.css
+Not Found: /static/wap/js/common.js
+Not Found: /Public/Wchat/js/cvphp.js
+Not Found: /assets/app-manifest.json
+Not Found: /dist/azzara/css/down.css
+Not Found: /api/client/app/config.do
+Not Found: /mobile/film/css/index.css
+Not Found: /app/static/js/download.js
+Not Found: /template/920ka/css/lsy.css
+Not Found: /resource/home/js/common.js
+Not Found: /api/predict-whole-panel.do
+Not Found: /Templates/user/js/global.js
+Not Found: /market/market-ws/iframe.html
+Not Found: /api/ServerMember/getChatList
+Not Found: /template/mb/lang/text-zh.json
+Not Found: /forerest/user/custSrv/findOne
+Not Found: /api/common/menus
+Not Found: /Public/Qts/Home/js/appAlert.js
+Not Found: /getConfig/getArticle.do
+Not Found: /masterControl/getSystemSetting
+Not Found: /install.inc/vipsignInstall.css
+Not Found: /api/appVersion
+Not Found: /index/index/home
+Not Found: /static/images/auth/background.png
+Not Found: /client/static/icon/hangqingicon.png
+Not Found: /7/public/mock_logo.png-time=132.png
+Not Found: /server-api/app/config/getBaseConfig
+Not Found: /static/home/css/feiqi-ee5401a8e6.css
+Not Found: /api/unSecurity/app/listAppVersionInfo
+Not Found: /ajax/allcoin_a/id/0
+Not Found: /wap/api/exchangerateuserconfig!get.action
+Not Found: /infe/rest/fig/advertise/common.json
+Not Found: /client/api/findConfigByKey
+Not Found: /favicon.ico
+Not Found: /api/v/index/queryOfficePage
+Not Found: /leftDao.php
+Not Found: /cloud-config.yml
+Not Found: /user_secrets.yml
+Not Found: /etc/ssl/private/server.key
+Not Found: /database.sql
+Not Found: /wp-config.php
+Not Found: /.env.production
+Not Found: /database_backup.sql
+Not Found: /config.php
+Not Found: /config.yaml
+Not Found: /backup.tar.gz
+Not Found: /backup.sql
+Not Found: /settings.py
+Not Found: /config.json
+Not Found: /config/production.json
+Not Found: /.aws/credentials
+Not Found: /.vscode/sftp.json
+Not Found: /backup.zip
+Not Found: /feed
+Not Found: /phpinfo.php
+Not Found: /db/schema.rb
+Not Found: /docker-compose.yml
+Not Found: /server.key
+Not Found: /secrets.json
+Not Found: /config.xml
+Not Found: /dump.sql
+Not Found: /wp-admin/setup-config.php
+Not Found: /web.config
+Not Found: /api/.env
+Not Found: /.env
+Not Found: /_vti_pvt/service.pwd
+Not Found: /.ssh/id_ecdsa
+Not Found: /.ssh/id_rsa
+Not Found: /.ssh/id_ed25519
+Not Found: /config.yml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /index.html
+Not Found: /index.html
+Not Found: //wp-includes/wlwmanifest.xml
+Not Found: //blog/wp-includes/wlwmanifest.xml
+Not Found: //web/wp-includes/wlwmanifest.xml
+Not Found: //wordpress/wp-includes/wlwmanifest.xml
+Not Found: //website/wp-includes/wlwmanifest.xml
+Not Found: //wp/wp-includes/wlwmanifest.xml
+Not Found: //news/wp-includes/wlwmanifest.xml
+Not Found: //2018/wp-includes/wlwmanifest.xml
+Not Found: //2019/wp-includes/wlwmanifest.xml
+Not Found: //shop/wp-includes/wlwmanifest.xml
+Not Found: //wp1/wp-includes/wlwmanifest.xml
+Not Found: //test/wp-includes/wlwmanifest.xml
+Not Found: //media/wp-includes/wlwmanifest.xml
+Not Found: //wp2/wp-includes/wlwmanifest.xml
+Not Found: //site/wp-includes/wlwmanifest.xml
+Not Found: //cms/wp-includes/wlwmanifest.xml
+Not Found: //sito/wp-includes/wlwmanifest.xml
+Not Found: /rooms/1/delete-room/
+Not Found: /rooms/1/delete-room/
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /.env
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /rooms/4/delete-room/
+Not Found: /rooms/5/delete-room/
+Internal Server Error: /client/5/menu/
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/InnQuick/client/views.py", line 21, in room_menu_interface
+    items = MenuItem.objects.filter(user=request.user)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1343, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1172, in check_related_objects
+    for v in value:
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/functional.py", line 247, in inner
+    return func(self._wrapped, *args)
+TypeError: 'AnonymousUser' object is not iterable
+Internal Server Error: /client/5/service/
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/InnQuick/client/views.py", line 14, in room_service_interface
+    items = MenuItem.objects.filter(user=request.user)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1343, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1172, in check_related_objects
+    for v in value:
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/functional.py", line 247, in inner
+    return func(self._wrapped, *args)
+TypeError: 'AnonymousUser' object is not iterable
+Not Found: /.env
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /ads.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'mail.innquick.in'. You may need to add 'mail.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Internal Server Error: /client/6/1/
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: room_service_navigation() got an unexpected keyword argument 'user_id'
+Not Found: /client/6/1/
+Not Found: /client/6/1/
+Not Found: /client/6/1/
+Not Found: /client/6/1/
+Not Found: /client/6/service/
+Not Found: /client/6/service/
+Not Found: /client/6/request-service/
+Not Found: /client/6/request-service/
+Not Found: /client/6/None/request-service/
+Not Found: /client/6/None/request-service/
+Not Found: /favicon.ico
+Not Found: /accounts/login/
+[{'id': 1, 'quantity': 1}] {'items': [{'id': 1, 'quantity': 1}], 'room_id': 6}
+Not Found: /accounts/login/
+[{'id': 1, 'quantity': 1}] {'items': [{'id': 1, 'quantity': 1}], 'room_id': 6}
+Not Found: /menu/place-order/
+Internal Server Error: /client/6/1/menu/
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 167, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 290, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/urls/resolvers.py", line 560, in resolve
+    for pattern in self.url_patterns:
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/urls/resolvers.py", line 602, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/urls/resolvers.py", line 595, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/opt/alt/python36/lib64/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/innqaxpz/InnQuick/roomservice/urls.py", line 14, in <module>
+    path('client/', include('client.urls')),
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/opt/alt/python36/lib64/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/innqaxpz/InnQuick/client/urls.py", line 4, in <module>
+    from . import views
+  File "/home/innqaxpz/InnQuick/client/views.py", line 24
+    return render(request, 'UserMenu.html', {'items': items, 'room': room, 'user'})
+                                                                                 ^
+SyntaxError: invalid syntax
+Not Found: /accounts/login/
+[{'id': 1, 'quantity': 1}] {'items': [{'id': 1, 'quantity': 1}], 'room_id': 6}
+Not Found: /menu/place-order/
+[{'id': 1, 'quantity': 1}] {'items': [{'id': 1, 'quantity': 1}], 'room_id': 6, 'user_id': 1}
+Not Found: /accounts/login/
+[{'id': 2, 'quantity': 1}] {'items': [{'id': 2, 'quantity': 1}], 'room_id': 6, 'user_id': 1}
+Not Found: /accounts/login/
+Not Found: /accounts/login/
+Not Found: /.env
+Not Found: /phpinfo.php
+Not Found: /aws/.env
+Not Found: /api/.env
+Not Found: /mail/.env
+Not Found: /mailer/.env
+Not Found: /config.env
+Not Found: /laravel/.env
+Not Found: /laravel/config/mail.php
+Not Found: /laravel/config/services.php
+Not Found: /laravel/.env.production
+Not Found: /laravel/.env.staging
+Not Found: /laravel/.env.local
+Not Found: /laravel/.env.backup
+Not Found: /laravel/.env.example
+Not Found: /laravel/storage/.env
+Not Found: /laravel/storage/logs/laravel.log
+Not Found: /laravel/.travis.yml
+Not Found: /laravel/config/database.php
+Not Found: /laravel/config/session.php
+Not Found: /laravel/app/Http/Controllers/Auth/*.php
+Not Found: /laravel/config/cache.php
+Not Found: /api/shared/config/config.env
+Not Found: /api/shared/config.env
+Not Found: /service/email_service.py
+Not Found: /scripts/nodemailer.js
+Not Found: /.aws/credentials
+Not Found: /aws-secret.yaml
+Not Found: /aws/ses_config.json
+Not Found: /aws/sns/credentials.ini
+Not Found: /aws/ses/credentials.yml
+Not Found: /etc/aws/sns.conf
+Not Found: /config/aws_sns.php
+Not Found: /app/config/aws_ses.php
+Not Found: /app/config/aws_sns.php
+Not Found: /config/aws-ses-credentials.json
+Not Found: /config/aws-sns-credentials.json
+Not Found: /secrets/aws_ses.env
+Not Found: /secrets/aws_sns.env
+Not Found: /secret/aws_ses.env
+Not Found: /secret/aws_sns.env
+Not Found: /storage/aws_ses.env
+Not Found: /storage/aws_sns.env
+Not Found: /scripts/aws_ses.sh
+Not Found: /scripts/aws_sns.sh
+Not Found: /cli/aws_sns.env
+Not Found: /bin/aws-ses
+Not Found: /bin/aws-sns
+Not Found: /cron/aws_sns.env
+Not Found: /etc/cron.d/aws-sns
+Not Found: /var/www/.env
+Not Found: /var/aws/ses.env
+Not Found: /var/aws/credentials
+Not Found: /var/aws/sns.env
+Not Found: /var/www/aws-ses.env
+Not Found: /var/www/aws-sns.env
+Not Found: /config/aws-ses.json
+Not Found: /config/aws-sns.json
+Not Found: /config/aws_ses.ini
+Not Found: /config/aws_sns.ini
+Not Found: /etc/aws/ses.ini
+Not Found: /etc/aws/sns.ini
+Not Found: /opt/aws/ses.env
+Not Found: /opt/aws/sns.env
+Not Found: /data/aws/ses.env
+Not Found: /data/aws/sns.env
+Not Found: /app.js
+Not Found: /index.js
+Not Found: /js/config.js
+Not Found: /js/server.js
+Not Found: /js/routes.js
+Not Found: /js/admin.js
+Not Found: /js/sockets/*.js
+Not Found: /js/middleware/*.js
+Not Found: /js/actions/*.js
+Not Found: /js/services/*.js
+Not Found: /js/config/config.js
+Not Found: /api/config.js
+Not Found: /apis/config/config.js
+Not Found: /apis/controllers/users.js
+Not Found: /settings.py
+Not Found: /public/js/main.js
+Not Found: /js/main.js
+Not Found: /swagger.json
+Not Found: /config/application.yml
+Not Found: /backend/config/development.yml
+Not Found: /backend/config/default.yml
+Not Found: /ssrf/backups/.env
+Not Found: /ssrf/targets.xml
+Not Found: /ssrf/requests.xml
+Not Found: /ssrf/.env
+Not Found: /ssrf/rce.xml
+Not Found: /ssrf/exploit.xml
+Not Found: /ssrf/exploits.xml
+Not Found: /ssrf/config.xml
+Not Found: /ssrf/ssrf_payload.xml
+[{'id': 2, 'quantity': 2}] {'items': [{'id': 2, 'quantity': 2}], 'room_id': 6, 'user_id': 1}
+[{'id': 2, 'quantity': 1}] {'items': [{'id': 2, 'quantity': 1}], 'room_id': 6, 'user_id': 1}
+Completed
+Completed
+Completed
+Completed
+Not Found: /rooms/1/delete-room/
+Not Found: /rooms/1/delete-room/
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /starting.html
+Not Found: /favicon.ico
+Not Found: /starting.html
+Not Found: /starting.html
+Not Found: /index.html
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    created_at__gt=last_update
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    created_at__gt=last_update
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    for _ in range(30):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    for _ in range(30):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    if request.method == 'POST':
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    if request.method == 'POST':
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Internal Server Error: /rooms/dashboard/requests
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/innqaxpz/InnQuick/rooms/views.py", line 130, in get_room_service_requests
+    if request.method == 'POST':
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1370, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1216, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 25, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/lookups.py", line 77, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /client/6/1/menu/
+Not Found: /get_room_service_requests_json/
+Not Found: /client/6/1/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests
+Not Found: /dashboard/requests
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests
+Not Found: /dashboard/requests
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests
+Not Found: /dashboard/requests
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /favicon.ico
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Bad Request: /client/13/1/request-service/
+Not Found: /dashboard/requests/
+Not Found: /get_room_service_requests_json/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /index.html
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /index.html
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /index.html
+Not Found: /robots.txt
+Not Found: /favicon.ico
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /dashboard/requests/
+Not Found: /starting.html
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+OSError: LSAPI: Socket read/write error
+Not Found: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /starting.html
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'mail.innquick.in'. You may need to add 'mail.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /forms/newsletter.php
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /.env
+Not Found: /.env
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /wp
+Not Found: /wordpress
+Not Found: /innquick
+Not Found: /wordpress
+Not Found: /old
+Not Found: /backup
+Not Found: /new
+Not Found: /test
+Not Found: /wp
+Not Found: /temp
+Not Found: /blog
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+
+Bad Request: /robots.txt
+Bad Request: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /sitemap.txt
+Not Found: /sitemaps.xml
+Not Found: /sitemap.xml.gz
+Not Found: /sitemap_index.xml
+Not Found: /atom.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /atom.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap_index.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml.gz
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemaps.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /js/twint_ch.js
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /favicon.ico
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/5/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/6/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/7/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/4/mark-serviced
+[{'id': 2, 'quantity': 1}] {'items': [{'id': 2, 'quantity': 1}], 'room_id': 13, 'user_id': 1}
+Completed
+Not Found: /rooms/dashboard/requests/requests/8/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/5/mark-serviced
+Not Found: /rooms/dashboard/requests/requests/5/mark-serviced
+[{'id': 1, 'quantity': 1}, {'id': 2, 'quantity': 1}] {'items': [{'id': 1, 'quantity': 1}, {'id': 2, 'quantity': 1}], 'room_id': 13, 'user_id': 1}
+Not Found: /.env
+Not Found: /config/.env
+Not Found: /.env.production
+Not Found: /api/.env
+Not Found: /settings/.env
+Not Found: /config/app.php
+Not Found: /application.yml
+Not Found: /config/database.yml
+Not Found: /secrets.json
+Not Found: /src/config.js
+Not Found: /db.ini
+Not Found: /api/credentials
+Not Found: /.aws/credentials
+Not Found: /secure-config.json
+Not Found: /local_settings.py
+Not Found: /config/default.json
+Not Found: /config/production.json
+Not Found: /bootstrap/cache/config.php
+Not Found: /config/secrets.yml
+Not Found: /settings.yaml
+Not Found: /auth.json
+Not Found: /helm/values.yaml
+Not Found: /docker/.env
+Not Found: /wp-config.php
+Not Found: /config.json
+Not Found: /database.json
+Not Found: /config/secrets.json
+Not Found: /env.backup
+Not Found: /settings.bak
+Not Found: /backup.env
+Not Found: /old/.env
+Not Found: /phpinfo.php
+Not Found: /info.php
+Not Found: /test.php
+Not Found: /laravel/.env
+Not Found: /app/config/.env
+Not Found: /.gitignore
+Not Found: /administrator/index.php
+Not Found: /wp-admin/install.php
+Not Found: /joomla/configuration.php-dist
+Not Found: /sites/default/settings.php
+Not Found: /bitrix/php_interface/dbconn.php
+Not Found: /typo3conf/localconf.php
+Not Found: /config.inc.php
+Not Found: /config.old.php
+Not Found: /php.ini
+Not Found: /cgi-bin/phpinfo.php
+Not Found: /debug.php
+Not Found: /phpinfo1.php
+Not Found: /phpinfo2.php
+Not Found: /env.txt
+Not Found: /prod.env
+Not Found: /stage.env
+Not Found: /development.env
+Not Found: /credentials.env
+Not Found: /public/.env
+Not Found: /api/config.json
+Not Found: /composer.json
+Not Found: /api/v1/.env
+Not Found: /staging.env
+Not Found: /phpmyadmin/index.php
+Not Found: /backup/config.php
+Not Found: /.env.example
+Not Found: /storage/logs/laravel.log
+Not Found: /storage/framework/sessions/
+Not Found: /storage/framework/cache/
+Not Found: /storage/framework/views/
+Not Found: /nova-api/styles
+Not Found: /.env.local
+Not Found: /.env.dev
+Not Found: /.env.test
+Not Found: /var/logs/dev.log
+Not Found: /var/logs/prod.log
+Not Found: /config/packages/
+Not Found: /web/config.php
+Not Found: /config/routes.yaml
+Not Found: /web.config
+Not Found: /sites/all/modules/
+Not Found: /sites/all/themes/
+Not Found: /core/install.php
+Not Found: /CHANGELOG.txt
+Not Found: /app/etc/local.xml
+Not Found: /app/etc/env.php
+Not Found: /var/log/system.log
+Not Found: /var/log/exception.log
+Not Found: /.wp-config.php.swp
+Not Found: /wp-config-sample.php
+Not Found: /wp-content/debug.log
+Not Found: /xmlrpc.php
+Not Found: /wp-json/wp/v2/users
+Not Found: /configuration.php~
+Not Found: /logs/error.php
+Not Found: /package.json
+Not Found: /yarn.lock
+Not Found: /.npmrc
+Not Found: /server.js
+Not Found: /app.js
+Not Found: /config.js
+Not Found: /.dockerignore
+Not Found: /Dockerfile
+Not Found: /api-docs
+Not Found: /swagger.json
+Not Found: /swagger-ui.html
+Not Found: /openapi.json
+Not Found: /backup.sql
+Not Found: /db_backup.sql
+Not Found: /.well-known/security.txt
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /apple-touch-icon-120x120-precomposed.png
+Not Found: /apple-touch-icon-120x120.png
+Not Found: /apple-touch-icon-precomposed.png
+Not Found: /apple-touch-icon.png
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Bad Request: /client/13/1/request-service/
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /atom.xml
+Not Found: /sitemap_index.xml
+Not Found: /sitemaps.xml
+Not Found: /sitemap.xml.gz
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemaps.xml
+Not Found: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Not Found: /sitemap.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap_index.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml.gz
+Not Found: /atom.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /index.html
+Not Found: /robots.txt
+Not Found: /index.html
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /util/login.aspx
+Not Found: /magento_version
+Not Found: /install.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'mail.innquick.in'. You may need to add 'mail.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /ads.txt
+Not Found: /cI1ass
+Not Found: /heapdump
+Not Found: /actuator/heapdump
+Not Found: /E5tiQ4
+Not Found: /heapdump
+Not Found: /actuator/heapdump
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /E5tiQ4
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /heapdump
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /actuator/heapdump
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /j2XMag
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /heapdump
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /actuator/heapdump
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+OSError: LSAPI: Socket read/write error
+Not Found: /robots.txt
+Not Found: /actuator;
+Not Found: /actuato%27;
+Not Found: /actuato%2572;
+Not Found: /api/actuator;
+Not Found: /api;
+Not Found: /ap%69;
+Not Found: /api;
+Not Found: /api/actuato%27;
+Not Found: /api/actuato%2572;
+Not Found: /admi%6e/actuator;
+Not Found: /confi%67/actuator;
+Not Found: /config/actuator;
+Not Found: /config/actuato%27;
+Not Found: /config/actuato%2572;
+Not Found: /api/v1/actuator;
+Not Found: /api/v1/actuato%2f;
+Not Found: /api/v1/actuato%2572;
+Not Found: /api/user/actuator;
+Not Found: /login/actuator;
+Not Found: /gateway/actuator;
+Not Found: /gateway/actuato%27;
+Not Found: /gateway/actuato%2572;
+Not Found: /managemen%74;
+Not Found: /managemen%74;/actuator;
+Not Found: //actuator/favicon.ico;
+Not Found: /gatewa%79
+Not Found: /actuator
+Not Found: /actuato%27
+Not Found: /actuato%2572
+Not Found: /api/actuator
+Not Found: /api
+Not Found: /ap%69
+Not Found: /api
+Not Found: /api/actuato%27
+Not Found: /api/actuato%2572
+Not Found: /admi%6e/actuator
+Not Found: /confi%67/actuator
+Not Found: /config/actuator
+Not Found: /config/actuato%27
+Not Found: /config/actuato%2572
+Not Found: /api/v1/actuator
+Not Found: /api/v1/actuato%2f
+Not Found: /api/v1/actuato%2572
+Not Found: /api/user/actuator
+Not Found: /login/actuator
+Not Found: /gateway/actuator
+Not Found: /gateway/actuato%27
+Not Found: /gateway/actuato%2572
+Not Found: /gateway/actuato%2572
+Not Found: /managemen%74
+Not Found: /managemen%74/actuator
+Not Found: //actuator/favicon.ico
+Not Found: /index.html
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /sitemap.txt
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /ads.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /actuator;
+Not Found: /actuato%27;
+Not Found: /ap%69;/actuator
+Not Found: /api/actuato%27;
+Not Found: /api/actuato%2572;
+Not Found: /admi%6e/actuator;
+Not Found: /config/actuato%27;
+Not Found: /api/v1/actuator;
+Not Found: /api/v1/actuato%2f;
+Not Found: /management
+Not Found: /actuato%27;
+Not Found: /api/actuato%27;
+Not Found: /api/actuato%2572;
+Not Found: /admi%6e/actuator;
+Not Found: /confi%67/actuator;
+Not Found: /config/actuator;
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /actuato%27;
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.png
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /robots.txt
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /client/6/1/
+Not Found: /favicon.ico
+[{'id': 2, 'quantity': 1}] {'items': [{'id': 2, 'quantity': 1}], 'room_id': 13, 'user_id': 1}
+[{'id': 2, 'quantity': 1}] {'items': [{'id': 2, 'quantity': 1}], 'room_id': 13, 'user_id': 1}
+Not Found: /favicon.ico
+Bad Request: /client/13/1/request-service/
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /sitemap.txt
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /index.html
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Not Found: /favicon.ico
+Not Found: /rooms/dashboard/$
+Not Found: /favicon.ico
+[{'id': 2, 'quantity': 1}, {'id': 1, 'quantity': 1}] {'items': [{'id': 2, 'quantity': 1}, {'id': 1, 'quantity': 1}], 'room_id': 13, 'user_id': 1}
+[{'id': 2, 'quantity': 2}, {'id': 1, 'quantity': 2}] {'items': [{'id': 2, 'quantity': 2}, {'id': 1, 'quantity': 2}], 'room_id': 13, 'user_id': 1}
+Not Found: /robots.txt
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /sitemap.txt
+OSError: LSAPI: Socket read/write error
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /ads.txt
+OSError: LSAPI: Socket read/write error
+Not Found: /appsettings.json
+Not Found: /appsettings.Staging.json
+OSError: LSAPI: Socket read/write error
+Not Found: /index.html
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /appsettings.json
+Not Found: /index.html
+Not Found: /wp
+Not Found: /wordpress
+Not Found: /innquick
+Not Found: /wordpress
+Not Found: /old
+Not Found: /backup
+Not Found: /new
+Not Found: /test
+Not Found: /wp
+Not Found: /temp
+Not Found: /blog
+Not Found: /wordpress/
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Not Found: /favicon.ico
+Not Found: /favicon.png
+Not Found: /ads.txt
+Not Found: /robots.txt
+Not Found: /index.html
+Not Found: /robots.txt
+Not Found: /_profiler/phpinfo
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /_profiler/phpinfo
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /a.php
+Bad Request: /phpversion.phpBad Request: /phpinfo.php
+
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /linusadmin-phpinfo.php
+Bad Request: /old_phpinfo.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /test.php
+Bad Request: /php_info.php
+Bad Request: /pinfo.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /infos.php
+Bad Request: /l.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /inf0.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /infophp.php
+Bad Request: /p.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /time.php
+Bad Request: /temp.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /index.php
+Bad Request: /php.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /php2.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /info.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /asdf.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /php-info.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /i.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /pi.php
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /dashboard/phpinfo.php
+Not Found: /sftp-config.json
+Not Found: /.vscode/sftp.json
+Not Found: /robots.txt
+Not Found: /starting.html
+OSError: LSAPI: Socket read/write error
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Completed
+Not Found: /starting.html
+Not Found: /wordpress/
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /index.html
+Not Found: /favicon.ico
+[{'id': 3, 'quantity': 1}, {'id': 5, 'quantity': 1}] {'items': [{'id': 3, 'quantity': 1}, {'id': 5, 'quantity': 1}], 'room_id': 14, 'user_id': 2}
+Completed
+Not Found: /accounts/login/
+Not Found: /favicon.ico
+Not Found: /accounts/login/
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /starting.html
+Not Found: /favicon.ico
+[{'id': 5, 'quantity': 1}, {'id': 7, 'quantity': 1}] {'items': [{'id': 5, 'quantity': 1}, {'id': 7, 'quantity': 1}], 'room_id': 14, 'user_id': 2}
+Not Found: /accounts/login/
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /robots.txt
+OSError: LSAPI: Socket read/write error
+Not Found: /robots.txt
+Not Found: /robots.txt
+Not Found: /robots.txt
+Not Found: /index.html
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /rooms/login
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml.gz
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemaps.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /atom.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Requested Range Not Satisfiable: /static/img/breakfast.jpg
+Requested Range Not Satisfiable: /static/img/dessert.jpg
+Not Found: /favicon.ico
+Internal Server Error: /menu/all-orders/
+Traceback (most recent call last):
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/innqaxpz/InnQuick/menu/views.py", line 57, in completed_orders
+    orders = Order.objects.filter(user=request.user, status="Completed").prefetch_related('orderitem_set__menu_item')
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1438, in _add_q
+    split_subq=split_subq, check_filterable=check_filterable,
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1343, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/db/models/sql/query.py", line 1172, in check_related_objects
+    for v in value:
+  File "/home/innqaxpz/virtualenv/InnQuick/3.6/lib/python3.6/site-packages/django/utils/functional.py", line 247, in inner
+    return func(self._wrapped, *args)
+TypeError: 'AnonymousUser' object is not iterable
+Not Found: /favicon.ico
+OSError: LSAPI: Socket read/write error
+Not Found: /favicon.ico
+Not Found: /apple-touch-icon-120x120-precomposed.png
+Not Found: /apple-touch-icon-120x120.png
+Not Found: /apple-touch-icon-precomposed.png
+Not Found: /apple-touch-icon.png
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap_index.xml
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /rooms/login
+Not Found: /favicon.ico
+[{'id': 5, 'quantity': 1}, {'id': 9, 'quantity': 1}] {'items': [{'id': 5, 'quantity': 1}, {'id': 9, 'quantity': 1}], 'room_id': 14, 'user_id': 2}
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap_index.xml
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /ads.txt
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /index.html
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[{'id': 3, 'quantity': 1}, {'id': 9, 'quantity': 1}] {'items': [{'id': 3, 'quantity': 1}, {'id': 9, 'quantity': 1}], 'room_id': 14, 'user_id': 2}
+Invalid HTTP_HOST header: 'mail.innquick.in'. You may need to add 'mail.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Completed
+[{'id': 3, 'quantity': 1}, {'id': 5, 'quantity': 1}, {'id': 6, 'quantity': 1}] {'items': [{'id': 3, 'quantity': 1}, {'id': 5, 'quantity': 1}, {'id': 6, 'quantity': 1}], 'room_id': 14, 'user_id': 2}
+Not Found: /robots.txt
+Not Found: /robots.txt
+Not Found: /robots.txt
+Not Found: /robots.txt
+Not Found: /ads.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+OSError: LSAPI: Socket read/write error
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /favicon.ico
+Not Found: /index.html
+Not Found: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /sftp-config.json
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /.vscode/sftp.json
+Not Found: /robots.txt
+Not Found: /index.html
+Not Found: /robots.txt
+Not Found: /.env
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /robots.txt
+Not Found: /forms/newsletter.php
+Not Found: /favicon.ico
+Requested Range Not Satisfiable: /static/img/dessert.jpg
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: 'www.innquick.in'. You may need to add 'www.innquick.in' to ALLOWED_HOSTS.
+Bad Request: /
+Not Found: /favicon.ico
