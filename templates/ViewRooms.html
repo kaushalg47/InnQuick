@@ -79,6 +79,7 @@
                         <td>${data.room.number}</td>
                         <td>${data.room.url}</td>
                         <td><img src="${data.qr_code_url}" alt="QR Code" width="100" height="100"></td>
+                        <td><a href="${{data.qr_code_url}}" download="room-${data.room.number}-qr-code.png"><button><i class="fa fa-download"></i></button></a></td>
                         <td><button class="delete-btn" onclick="deleteRoom(${data.room.id})">Delete</button></td>
                     `;
                     document.getElementById("roomsTableBody").appendChild(newRow);
@@ -97,7 +98,7 @@
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
             try {
-                const response = await fetch(`/rooms/${roomId}/delete-room/`, {
+                const response = await fetch(`/rooms/${roomId}/delete-room`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

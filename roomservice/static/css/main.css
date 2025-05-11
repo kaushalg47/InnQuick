@@ -99,6 +99,43 @@ h6 {
   font-weight: 600;
 }
 
+#popupOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #popupContent {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+
+        #popupContent iframe {
+            width: 100%;
+            height: 315px;
+        }
+
+        #closePopup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #FF00005;
+        }
+
 .php-email-form .sent-message {
   display: none;
   color: #ffffff;

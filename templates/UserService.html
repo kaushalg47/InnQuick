@@ -9,135 +9,506 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <style>
+      :root {
+        --primary-color: #4caf50;
+        --primary-dark: #388e3c;
+        --primary-light: #a5d6a7;
+        --accent-color: #ff5722;
+        --text-color: #333;
+        --text-light: #666;
+        --text-white: #fff;
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --radius: 12px;
+        --transition: all 0.3s ease;
+      }
+      
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
       body {
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
         padding: 20px;
         margin: 0;
-        background-color: #f4f4f4;
+        background-color: var(--bg-color);
+        color: var(--text-color);
       }
-
+      
       .container {
-        max-width: 500px;
+        max-width: 600px;
         margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
       }
-
+      
+      .header {
+        margin-bottom: 25px;
+        text-align: center;
+      }
+      
       h1 {
-        font-size: 24px;
-        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text-color);
       }
-
-      p {
-        text-align: center;
+      
+      .subtitle {
+        display: inline-block;
+        font-size: 16px;
+        color: var(--text-light);
+        margin-bottom: 20px;
       }
-
-      h3 {
-        margin-top: 20px;
+      
+      .logo {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-left: 5px;
+        position: relative;
       }
-
+      
+      .logo::before {
+        content: '';
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background-color: var(--primary-light);
+        border-radius: 50%;
+        position: absolute;
+        left: -8px;
+        top: 2px;
+        z-index: -1;
+        opacity: 0.6;
+      }
+      
+      .section {
+        margin-bottom: 30px;
+      }
+      
+      .section-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--primary-light);
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+      
+      .section-title i {
+        margin-right: 10px;
+        color: var(--primary-color);
+      }
+      
       .grid-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
-        margin-top: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 15px;
       }
-
-      .logo {
-        color: #4caf50;
-      }
-
-      button {
-        padding: 15px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
+      
+      .service-button {
+        position: relative;
+        padding: 16px 12px;
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border: 1px solid #e0e0e0;
+        border-radius: var(--radius);
+        font-size: 15px;
+        font-weight: 500;
         cursor: pointer;
         text-align: center;
-        transition: background-color 0.3s;
+        transition: var(--transition);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        overflow: hidden;
       }
-
-      button:hover {
-        background-color: #0056b3;
+      
+      .service-button:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+        transform: translateY(-2px);
       }
-
-      #statusMessage {
-        margin-top: 20px;
+      
+      .service-button i {
+        font-size: 24px;
+        margin-bottom: 8px;
+        color: var(--primary-color);
+      }
+      
+      .service-button::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: var(--primary-color);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      
+      .service-button:hover::after {
+        transform: scaleX(1);
+      }
+      
+      .status-message {
+        margin: 20px 0;
+        padding: 15px;
         text-align: center;
-        font-weight: bold;
+        font-weight: 500;
+        border-radius: var(--radius);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        max-height: 0;
+        overflow: hidden;
+      }
+      
+      .status-message.show {
+        opacity: 1;
+        max-height: 100px;
+        margin-bottom: 20px;
+      }
+      
+      .status-message.success {
+        background-color: rgba(76, 175, 80, 0.1);
+        color: var(--primary-color);
+        border-left: 4px solid var(--primary-color);
+      }
+      
+      .status-message.error {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+        border-left: 4px solid #f44336;
+      }
+      
+      /* Modal styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      
+      .modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .modal-content {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: var(--radius);
+        text-align: center;
+        max-width: 350px;
+        width: 90%;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+      }
+      
+      .modal-overlay.show .modal-content {
+        transform: translateY(0);
+      }
+      
+      .modal-icon {
+        font-size: 48px;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+      
+      .modal-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: var(--text-color);
+      }
+      
+      .modal-message {
+        color: var(--text-light);
+        margin-bottom: 25px;
+        font-size: 16px;
+      }
+      
+      .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+      
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        transition: var(--transition);
+      }
+      
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: var(--text-white);
+      }
+      
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+      }
+      
+      .btn-danger {
+        background-color: #f44336;
+        color: var(--text-white);
+      }
+      
+      .btn-danger:hover {
+        background-color: #d32f2f;
+      }
+      
+      /* Animation for status message */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .fade-in {
+        animation: fadeIn 0.3s ease forwards;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 500px) {
+        body {
+          padding: 10px;
+        }
+        
+        .container {
+          padding: 20px;
+        }
+        
+        .grid-container {
+          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+          gap: 10px;
+        }
+        
+        .service-button {
+          height: 90px;
+          padding: 12px 10px;
+          font-size: 14px;
+        }
+        
+        .service-button i {
+          font-size: 20px;
+        }
       }
     </style>
   </head>
   <body>
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal-content">
+        <div class="modal-icon">
+          <i class="fas fa-concierge-bell"></i>
+        </div>
+        <h3 class="modal-title">Confirm Request</h3>
+        <p class="modal-message" id="popup-message"></p>
+        <div class="modal-buttons">
+          <button class="btn btn-primary" id="confirm-btn">Confirm</button>
+          <button class="btn btn-danger" onclick="closeCustomPopup()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
-      <h1>Room Service for Room {{ room.number }}</h1>
-      <p>powered by <b class="logo">InnQuick</b></p>
-      <div id="statusMessage"></div>
-      <h3>Request Cleaning</h3>
-      <div class="grid-container">
-        <button onclick="requestService('room cleaning')">Room Cleaning</button>
-        <button onclick="requestService('change sheets')">Change sheets</button>
-        <button onclick="requestService('washroom cleaning')">
-          Washroom Cleaning
-        </button>
+      <div class="header">
+        <h1>Room Service</h1>
+        <span class="subtitle">Room <strong>{{ room.number }}</strong> • powered by <span class="logo">InnQuick</span></span>
+        <div class="status-message" id="statusMessage"></div>
       </div>
-      <h3>Request Supplies</h3>
-      <div class="grid-container">
-        <button onclick="requestService('waterbottles')">Water Bottles</button>
-        <button onclick="requestService('cutlery')">Cutlery</button>
-        <button onclick="requestService('toiletries')">Toiletries</button>
+      
+      <div class="section">
+        <h3 class="section-title"><i class="fas fa-broom"></i> Cleaning Services</h3>
+        <div class="grid-container">
+          <button class="service-button" onclick="requestService('room cleaning')">
+            <i class="fas fa-bed"></i>
+            Room Cleaning
+          </button>
+          <button class="service-button" onclick="requestService('change sheets')">
+            <i class="fas fa-blanket"></i>
+            Change Sheets
+          </button>
+          <button class="service-button" onclick="requestService('washroom cleaning')">
+            <i class="fas fa-toilet"></i>
+            Washroom
+          </button>
+        </div>
       </div>
-      <h3>Report Issues</h3>
-      <div class="grid-container">
-        <button onclick="requestService('electrical repair')">
-          Electrical
-        </button>
-        <button onclick="requestService('plumbing repair')">Plumbing</button>
+      
+      <div class="section">
+        <h3 class="section-title"><i class="fas fa-box-open"></i> Request Supplies</h3>
+        <div class="grid-container">
+          <button class="service-button" onclick="requestService('waterbottles')">
+            <i class="fas fa-bottle-water"></i>
+            Water Bottles
+          </button>
+          <button class="service-button" onclick="requestService('cutlery')">
+            <i class="fas fa-utensils"></i>
+            Cutlery
+          </button>
+          <button class="service-button" onclick="requestService('toiletries')">
+            <i class="fas fa-pump-soap"></i>
+            Toiletries
+          </button>
+        </div>
       </div>
-      <h3>Services</h3>
-      <div class="grid-container">
-        <button onclick="requestService('room service')">
-          Request Attendant
-        </button>
-        <button onclick="requestService('SOS')">Report SOS</button>
-        <button onclick="requestService('checkout')">Request Checkout</button>
+      
+      <div class="section">
+        <h3 class="section-title"><i class="fas fa-wrench"></i> Report Issues</h3>
+        <div class="grid-container">
+          <button class="service-button" onclick="requestService('electrical repair')">
+            <i class="fas fa-bolt"></i>
+            Electrical
+          </button>
+          <button class="service-button" onclick="requestService('plumbing repair')">
+            <i class="fas fa-faucet"></i>
+            Plumbing
+          </button>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h3 class="section-title"><i class="fas fa-concierge-bell"></i> Other Services</h3>
+        <div class="grid-container">
+          <button class="service-button" onclick="requestService('room service')">
+            <i class="fas fa-bell-concierge"></i>
+            Request Attendant
+          </button>
+          <button class="service-button sos" onclick="requestService('SOS')" style="background-color: #ffebee; color: #d32f2f;">
+            <i class="fas fa-exclamation-circle" style="color: #d32f2f;"></i>
+            SOS Help
+          </button>
+          <button class="service-button" onclick="requestService('checkout')">
+            <i class="fas fa-sign-out-alt"></i>
+            Request Checkout
+          </button>
+        </div>
       </div>
     </div>
 
     <script>
-      async function requestService(serviceType) {
-        const roomId = "{{ room.id }}"; // Adjust to your room ID variable
-        const statusMessage = document.getElementById("statusMessage");
-
+      let currentServiceType = null;
+      const confirmModal = document.getElementById("confirmModal");
+      const statusMessage = document.getElementById("statusMessage");
+      
+      // Map service types to friendly names and icons
+      const serviceInfo = {
+        'room cleaning': { name: 'Room Cleaning', icon: 'fa-bed' },
+        'change sheets': { name: 'Change Sheets', icon: 'fa-blanket' },
+        'washroom cleaning': { name: 'Washroom Cleaning', icon: 'fa-toilet' },
+        'waterbottles': { name: 'Water Bottles', icon: 'fa-bottle-water' },
+        'cutlery': { name: 'Cutlery', icon: 'fa-utensils' },
+        'toiletries': { name: 'Toiletries', icon: 'fa-pump-soap' },
+        'electrical repair': { name: 'Electrical Repair', icon: 'fa-bolt' },
+        'plumbing repair': { name: 'Plumbing Repair', icon: 'fa-faucet' },
+        'room service': { name: 'Room Attendant', icon: 'fa-bell-concierge' },
+        'SOS': { name: 'Emergency SOS', icon: 'fa-exclamation-circle' },
+        'checkout': { name: 'Checkout', icon: 'fa-sign-out-alt' }
+      };
+    
+      function requestService(serviceType) {
+        currentServiceType = serviceType;
+        const info = serviceInfo[serviceType] || { name: serviceType, icon: 'fa-concierge-bell' };
+        
+        // Update modal content
+        document.getElementById("popup-message").innerHTML = 
+          `Are you sure you want to request <strong>${info.name}</strong>?`;
+        
+        // Show modal with animation
+        confirmModal.classList.add("show");
+      }
+    
+      function closeCustomPopup() {
+        confirmModal.classList.remove("show");
+        currentServiceType = null;
+      }
+      
+      function showStatusMessage(message, isSuccess = true) {
+        statusMessage.textContent = message;
+        statusMessage.className = "status-message " + (isSuccess ? "success" : "error");
+        statusMessage.classList.add("show", "fade-in");
+        
+        // Auto-hide after some time
+        setTimeout(() => {
+          statusMessage.classList.remove("show");
+        }, 5000);
+      }
+    
+      document.getElementById("confirm-btn").addEventListener("click", async function () {
+        if (!currentServiceType) return;
+    
+        const roomId = "{{ room.id }}";
+        const userId = "{{ user.id }}";
+        
+        // Show loading state
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        this.disabled = true;
+    
         try {
-          const response = await fetch(`/client/${roomId}/request-service/`, {
+          const response = await fetch(`/client/${roomId}/${userId}/request-service/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               "X-CSRFToken": "{{ csrf_token }}",
             },
-            body: JSON.stringify({ service_type: serviceType }),
+            body: JSON.stringify({ service_type: currentServiceType }),
           });
-
+    
           const data = await response.json();
           if (response.ok) {
-            statusMessage.textContent = data.message;
-            statusMessage.style.color = "green";
+            showStatusMessage(data.message, true);
           } else {
-            statusMessage.textContent =
-              data.error || "An error occurred, please try again.";
-            statusMessage.style.color = "red";
+            showStatusMessage(data.error || "An error occurred, please try again.", false);
           }
         } catch (error) {
-          statusMessage.textContent =
-            "An error occurred while sending the request.";
-          statusMessage.style.color = "red";
+          showStatusMessage("An error occurred while sending the request.", false);
+        } finally {
+          // Reset button state
+          const info = serviceInfo[currentServiceType] || { name: currentServiceType, icon: 'fa-concierge-bell' };
+          this.innerHTML = 'Confirm';
+          this.disabled = false;
+          closeCustomPopup();
         }
-      }
+      });
+      
+      // Close modal when clicking outside of it
+      confirmModal.addEventListener('click', function(event) {
+        if (event.target === confirmModal) {
+          closeCustomPopup();
+        }
+      });
+      
+      // Add keyboard support (Escape to close modal)
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && confirmModal.classList.contains('show')) {
+          closeCustomPopup();
+        }
+      });
     </script>
   </body>
 </html>
