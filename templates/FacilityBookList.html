@@ -1,0 +1,486 @@
+{% extends "base.html" %}
+
+{% block title %}My Bookings | Facility Booking System{% endblock %}
+
+{% block additional_styles %}
+/* Minimal custom styles to enhance Bootstrap */
+.booking-card {
+    transition: transform 0.2s;
+}
+.booking-card:hover {
+    transform: translateY(-5px);
+}
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+}
+.payment-badge {
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    z-index: 10;
+}
+.date-range {
+    display: flex;
+    align-items: center;
+}
+.date-range span {
+    margin: 0 10px;
+}
+.feature-icon {
+    width: 36px;
+    height: 36px;
+}
+.empty-state i {
+    font-size: 4rem;
+    opacity: 0.6;
+}
+.booking-actions {
+    display: flex;
+    gap: 8px;
+}
+@media (max-width: 768px) {
+    .date-range {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .date-range span {
+        margin: 10px 0;
+        align-self: center;
+    }
+    .booking-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .booking-actions .btn {
+        width: 100%;
+    }
+}
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Page Header with Add Button -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-1 fw-bold">My Bookings</h4>
+            <p class="text-muted mb-0">Manage all your facility reservations</p>
+        </div>
+        <a href="/facility/bookings/pos/" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i> Book Facility
+        </a>
+    </div>
+
+    <!-- Filter Section using Bootstrap components -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-4">
+            <form method="get" action="{% url 'view_all_bookings' %}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                            Date Range
+                        </label>
+                        <div class="date-range">
+                            <input type="date" class="form-control" name="start_date" placeholder="From" value="{{ filters.start_date }}">
+                            <span class="text-secondary">to</span>
+                            <input type="date" class="form-control" name="end_date" placeholder="To" value="{{ filters.end_date }}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            <i class="fas fa-building me-2 text-primary"></i>
+                            Facility
+                        </label>
+                        <select class="form-select" name="facility">
+                            <option value="">All Facilities</option>
+                            {% for facility in facilities %}
+                            <option value="{{ facility.id }}" {% if filters.facility == facility.id|stringformat:"s" %}selected{% endif %}>
+                                {{ facility.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <div class="d-grid w-100">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-filter me-2"></i> Apply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bookings List with Bootstrap Cards -->
+    {% if bookings %}
+    <div class="row">
+        {% for booking in bookings %}
+        <div class="col-md-6 mb-4">
+            <div class="booking-card" id="booking-card-{{ booking.id }}">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body position-relative">
+                        <!-- Booking Status Badge -->
+                        {% now "Y-m-d" as current_date %}
+                        {% if booking.time_slot.start_time.date|date:"Y-m-d" > current_date %}
+                        <span class="badge bg-primary status-badge">Upcoming</span>
+                        {% elif booking.time_slot.end_time.date|date:"Y-m-d" < current_date %}
+                        <span class="badge bg-secondary status-badge">Past</span>
+                        {% else %}
+                        <span class="badge bg-success status-badge">Today</span>
+                        {% endif %}
+                        
+                        <!-- Payment Status Badge -->
+                        {% if booking.settled %}
+                        <span class="badge bg-success payment-badge">Settled</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark payment-badge">Pending</span>
+                        {% endif %}
+                        
+                        <h5 class="card-title mb-4">{{ booking.time_slot.facility.name }}</h5>
+                        
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon bg-light rounded-circle d-flex align-items-center justify-content-center me-3">
+                                <i class="fas fa-calendar-day text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-medium">
+                                    {{ booking.time_slot.start_time|date:"l, F j, Y" }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon bg-light rounded-circle d-flex align-items-center justify-content-center me-3">
+                                <i class="fas fa-clock text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold text-primary">
+                                    {{ booking.time_slot.start_time|time:"g:i A" }} - {{ booking.time_slot.end_time|time:"g:i A" }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        {% if booking.room %}
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon bg-light rounded-circle d-flex align-items-center justify-content-center me-3">
+                                <i class="fas fa-door-open text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 text-muted">
+                                    Room: {{ booking.room.number }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if booking.time_slot.facility.price %}
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon bg-light rounded-circle d-flex align-items-center justify-content-center me-3">
+                                <i class="fas fa-tag text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 text-muted">
+                                    Price: ${{ booking.time_slot.facility.price }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <hr class="my-3">
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="text-muted small mb-0">
+                                <i class="fas fa-calendar-plus me-1"></i> Booked on: 
+                                {{ booking.booking_time|date:"M j, Y" }} at {{ booking.booking_time|time:"g:i A" }}
+                            </p>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="booking-actions mt-3">
+                            {% if not booking.settled %}
+                            <button type="button" class="btn btn-success" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#settleModal{{ booking.id }}">
+                                <i class="fas fa-check-circle me-2"></i> Settle Payment
+                            </button>
+                            {% endif %}
+                            
+                            {% now "Y-m-d" as current_date %}
+                            {% if booking.time_slot.start_time.date|date:"Y-m-d" >= current_date %}
+                            <button type="button" class="btn btn-danger" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#deleteModal{{ booking.id }}">
+                                <i class="fas fa-times-circle me-2"></i> Cancel Booking
+                            </button>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Settle Confirmation Modal -->
+                        <div class="modal fade" id="settleModal{{ booking.id }}" tabindex="-1" aria-labelledby="settleModalLabel{{ booking.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-success text-white">
+                                        <h5 class="modal-title" id="settleModalLabel{{ booking.id }}">
+                                            <i class="fas fa-check-circle me-2"></i> Confirm Payment Settlement
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to mark this booking as settled?</p>
+                                        <div class="card bg-light mb-3">
+                                            <div class="card-body">
+                                                <p class="mb-1"><strong>Facility:</strong> {{ booking.time_slot.facility.name }}</p>
+                                                <p class="mb-1"><strong>Date:</strong> {{ booking.time_slot.start_time|date:"l, F j, Y" }}</p>
+                                                <p class="mb-1"><strong>Time:</strong> {{ booking.time_slot.start_time|time:"g:i A" }} - {{ booking.time_slot.end_time|time:"g:i A" }}</p>
+                                                {% if booking.time_slot.facility.price %}
+                                                <p class="mb-0"><strong>Amount:</strong> ${{ booking.time_slot.facility.price }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <p class="text-muted small">This action cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form method="POST" action="{% url 'settle_booking' booking.id %}" class="d-inline settle-form">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fas fa-check me-1"></i> Confirm Settlement
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteModal{{ booking.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ booking.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ booking.id }}">
+                                            <i class="fas fa-exclamation-triangle me-2"></i> Cancel Booking
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to cancel this booking?</p>
+                                        <div class="card bg-light mb-3">
+                                            <div class="card-body">
+                                                <p class="mb-1"><strong>Facility:</strong> {{ booking.time_slot.facility.name }}</p>
+                                                <p class="mb-1"><strong>Date:</strong> {{ booking.time_slot.start_time|date:"l, F j, Y" }}</p>
+                                                <p class="mb-1"><strong>Time:</strong> {{ booking.time_slot.start_time|time:"g:i A" }} - {{ booking.time_slot.end_time|time:"g:i A" }}</p>
+                                                {% if booking.time_slot.facility.price %}
+                                                <p class="mb-0"><strong>Amount:</strong> ${{ booking.time_slot.facility.price }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <p class="text-muted small">This action cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep Booking</button>
+                                        <form method="POST" action="{% url 'delete_booking' booking.id %}" class="d-inline delete-form">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt me-1"></i> Cancel Booking
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Empty State with Bootstrap -->
+    <div class="card text-center p-5 shadow-sm">
+        <div class="card-body empty-state">
+            <i class="far fa-calendar-alt text-secondary mb-3"></i>
+            <h5 class="card-title">No Bookings Found</h5>
+            <p class="card-text text-muted mb-4">You don't have any bookings yet, or none match your filter criteria.</p>
+            <a href="{% url 'booking_list' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i> Book a Facility
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Success Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="fas fa-check-circle me-2"></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize toast
+        const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+        
+        // Auto-submit form when select changes
+        document.querySelector('select[name="facility"]').addEventListener('change', function() {
+            this.form.submit();
+        });
+        
+        // Enable tooltips (Bootstrap 5)
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Add fade-in animation to cards
+        const cards = document.querySelectorAll('.booking-card');
+        cards.forEach((card, index) => {
+            card.classList.add('opacity-0');
+            setTimeout(() => {
+                card.classList.remove('opacity-0');
+                card.classList.add('opacity-100', 'transition-opacity', 'duration-500');
+            }, 100 * index);
+        });
+        
+        // Get CSRF token for AJAX requests
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrfToken = getCookie('csrftoken');
+        
+        // Handle AJAX form submission for settling bookings
+        document.querySelectorAll('.settle-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const url = form.getAttribute('action');
+                const bookingId = url.split('/').filter(part => part !== '').pop();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('settleModal' + bookingId));
+                
+                fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrfToken
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Close the modal
+                    modal.hide();
+                    
+                    if (data.status === 'success') {
+                        // Update the UI without page refresh
+                        const card = document.getElementById('booking-card-' + bookingId);
+                        const pendingBadge = card.querySelector('.payment-badge');
+                        const settleButton = card.querySelector('.btn-success');
+                        
+                        // Update badge
+                        pendingBadge.classList.remove('bg-warning', 'text-dark');
+                        pendingBadge.classList.add('bg-success');
+                        pendingBadge.textContent = 'Settled';
+                        
+                        // Remove settle button
+                        if (settleButton) {
+                            settleButton.remove();
+                        }
+                        
+                        // Show toast notification
+                        document.getElementById('toastMessage').textContent = data.message;
+                        successToast.show();
+                    } else {
+                        // Show error message in the modal
+                        alert(data.message || 'An error occurred while processing your request.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your request.');
+                });
+            });
+        });
+        
+        // Handle AJAX form submission for deleting bookings
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const url = form.getAttribute('action');
+                const bookingId = url.split('/').filter(part => part !== '').pop();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal' + bookingId));
+                
+                fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrfToken
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Close the modal
+                    modal.hide();
+                    
+                    if (data.status === 'success') {
+                        // Remove the booking card with animation
+                        const card = document.getElementById('booking-card-' + bookingId);
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        
+                        // After animation completes, remove the element
+                        setTimeout(() => {
+                            card.remove();
+                            
+                            // Check if there are any bookings left
+                            const remainingBookings = document.querySelectorAll('.booking-card').length;
+                            if (remainingBookings === 0) {
+                                // If no bookings left, show empty state
+                                location.reload();
+                            }
+                        }, 500);
+                        
+                        // Show toast notification
+                        document.getElementById('toastMessage').textContent = data.message;
+                        successToast.show();
+                    } else {
+                        // Show error message
+                        alert(data.message || 'An error occurred while processing your request.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your request.', error);
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

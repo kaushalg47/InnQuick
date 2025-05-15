@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Service Settings</h2>
+    <form method="POST" action="{% url 'update_settings' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="tax_percentage" class="form-label">Tax Percentage (%)</label>
+            <input type="number" step="0.01" class="form-control" id="tax_percentage" name="tax_percentage" value="{{ settings.tax_percentage }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="additional_charge" class="form-label">Additional Charges (₹)</label>
+            <input type="number" step="0.01" class="form-control" id="additional_charge" name="additional_charge" value="{{ settings.additional_charge }}">
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="is_menu_available" id="is_menu_available" {% if settings.is_menu_available %}checked{% endif %}>
+            <label class="form-check-label" for="is_menu_available">Menu Available</label>
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" name="is_service_available" id="is_service_available" {% if settings.is_service_available %}checked{% endif %}>
+            <label class="form-check-label" for="is_service_available">Service Available</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Settings</button>
+    </form>
+
+    <!-- Service Types Section -->
+    <div class="mt-5">
+        <h3>Service Types</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <form id="addServiceForm" class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" name="name" class="form-control" id="serviceName" placeholder="Service Name" required>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" name="price" step="0.01" class="form-control" id="servicePrice" placeholder="Price">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-success">Add Service</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" id="serviceTable">
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>Price (₹)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in services %}
+                            <tr data-id="{{ service.id }}">
+                                <td>{{ service.name|title }}</td>
+                                <td>{{ service.price }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger delete-service">Delete</button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr id="noServices">
+                                <td colspan="3" class="text-center">No services added yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Service Type Management -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addServiceForm = document.getElementById('addServiceForm');
+        const serviceTable = document.getElementById('serviceTable').querySelector('tbody');
+        const noServicesRow = document.getElementById('noServices');
+
+        // Add Service
+        addServiceForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('serviceName').value;
+            const price = document.getElementById('servicePrice').value;
+            
+            fetch('{% url "add_service_type" %}', {
+                method: 'POST',
+                body: new FormData(addServiceForm),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                
+                // Remove "no services" row if it exists
+                if (noServicesRow) {
+                    noServicesRow.remove();
+                }
+                
+                // Add new row to table
+                const newRow = document.createElement('tr');
+                newRow.dataset.id = data.item.id;
+                newRow.innerHTML = `
+                    <td>${data.item.name.charAt(0).toUpperCase() + data.item.name.slice(1)}</td>
+                    <td>${data.item.price}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger delete-service">Delete</button>
+                    </td>
+                `;
+                serviceTable.appendChild(newRow);
+                
+                // Clear form
+                addServiceForm.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the service.');
+            });
+        });
+        
+        // Delete Service (using event delegation)
+        serviceTable.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-service')) {
+                if (!confirm('Are you sure you want to delete this service?')) {
+                    return;
+                }
+                
+                const row = e.target.closest('tr');
+                const serviceId = row.dataset.id;
+                
+                fetch(`{% url "delete_service_type" 0 %}`.replace('0', serviceId), {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    row.remove();
+                    
+                    // If no services left, add "no services" row
+                    if (serviceTable.querySelectorAll('tr').length === 0) {
+                        const noServicesRow = document.createElement('tr');
+                        noServicesRow.id = 'noServices';
+                        noServicesRow.innerHTML = '<td colspan="3" class="text-center">No services added yet</td>';
+                        serviceTable.appendChild(noServicesRow);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the service.');
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

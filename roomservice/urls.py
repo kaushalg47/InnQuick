@@ -13,4 +13,7 @@ urlpatterns = [
     path('rooms/', include('rooms.urls')),
     path('client/', include('client.urls')),
     path('menu/', include('menu.urls')),
+    path('core/', include('core.urls')),
+    path('facility/', include('facility.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

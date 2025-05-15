@@ -1,0 +1,524 @@
+<!-- templates/facilities/mobile_facilities.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilities Booking</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+        body {
+            padding-bottom: 70px; /* For bottom nav */
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .facility-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .facility-card:hover {
+            transform: translateY(-5px);
+        }
+        .facility-price {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .modal-content {
+            border-radius: 15px;
+        }
+        .time-slot {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+        .time-slot.available {
+            border-left: 4px solid #2ecc71;
+            cursor: pointer;
+        }
+        .time-slot.available:hover {
+            background-color: #f1f9f6;
+        }
+        .time-slot.unavailable {
+            border-left: 4px solid #e74c3c;
+            opacity: 0.7;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,.1);
+            z-index: 1000;
+        }
+        .bottom-nav .nav-link {
+            color: #6c757d;
+            text-align: center;
+            padding: 10px;
+        }
+        .bottom-nav .nav-link.active {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .bottom-nav i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+        }
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+        }
+        .loading-spinner:after {
+            content: " ";
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6px solid #007bff;
+            border-color: #007bff transparent #007bff transparent;
+            animation: loading-spinner 1.2s linear infinite;
+        }
+        @keyframes loading-spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Success animation */
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid #4CAF50;
+        }
+        .check-icon::before {
+            top: 3px;
+            left: -2px;
+            width: 30px;
+            transform-origin: 100% 50%;
+            border-radius: 100px 0 0 100px;
+        }
+        .check-icon::after {
+            top: 0;
+            left: 30px;
+            width: 60px;
+            transform-origin: 0 50%;
+            border-radius: 0 100px 100px 0;
+            animation: rotate-circle 4.25s ease-in;
+        }
+        .check-icon::before, .check-icon::after {
+            content: '';
+            height: 100px;
+            position: absolute;
+            background: #f8f9fa;
+            transform: rotate(-45deg);
+        }
+        .check-icon .icon-line {
+            height: 5px;
+            background-color: #4CAF50;
+            display: block;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+        }
+        .check-icon .icon-line.line-tip {
+            top: 46px;
+            left: 14px;
+            width: 25px;
+            transform: rotate(45deg);
+            animation: icon-line-tip 0.75s;
+        }
+        .check-icon .icon-line.line-long {
+            top: 38px;
+            right: 8px;
+            width: 47px;
+            transform: rotate(-45deg);
+            animation: icon-line-long 0.75s;
+        }
+        @keyframes icon-line-tip {
+            0% { width: 0; left: 1px; top: 19px; }
+            54% { width: 0; left: 1px; top: 19px; }
+            70% { width: 50px; left: -8px; top: 37px; }
+            84% { width: 17px; left: 21px; top: 48px; }
+            100% { width: 25px; left: 14px; top: 45px; }
+        }
+        @keyframes icon-line-long {
+            0% { width: 0; right: 46px; top: 54px; }
+            65% { width: 0; right: 46px; top: 54px; }
+            84% { width: 55px; right: 0px; top: 35px; }
+            100% { width: 47px; right: 8px; top: 38px; }
+        }
+    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Facilities</a>
+            <div class="ms-auto d-flex">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user me-1"></i> {{ request.user.username }}
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="row">
+            <!-- Facilities List -->
+            <div class="col-12">
+                <h4 class="mb-3">Available Facilities</h4>
+                {% for facility in facilities %}
+                <div class="facility-card bg-white" data-facility-id="{{ facility.id }}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ facility.name }}</h5>
+                            <p class="card-text text-muted">{{ facility.description|truncatechars:100 }}</p>
+                            {% if facility.price %}
+                            <div class="facility-price">${{ facility.price }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Created by: {{ facility.user.username }}</small>
+                            <button class="btn btn-sm btn-primary view-slots-btn">View Slots</button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-info">No facilities available yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Slots Modal -->
+    <div class="modal fade" id="timeSlotModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="facilityName">Facility Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="facilityDescription" class="mb-3"></div>
+                    <div id="facilityPrice" class="badge bg-info mb-3"></div>
+                    
+                    <h6 class="mb-3">Available Time Slots</h6>
+                    <div id="loadingSlots" class="text-center py-4">
+                        <div class="loading-spinner"></div>
+                        <p class="mt-3">Loading time slots...</p>
+                    </div>
+                    <div id="timeSlotsList">
+                        <!-- Time slots will be populated here -->
+                    </div>
+                    <div id="noSlots" class="alert alert-warning" style="display: none;">
+                        No time slots available for this facility.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div class="modal fade" id="confirmBookingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Booking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to book:</p>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 id="confirmFacilityName">Facility Name</h6>
+                            <p id="confirmSlotDetails" class="mb-1">Date and Time</p>
+                            <p id="confirmPrice" class="mb-0">Price</p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedFacilityId">
+                    
+                    <div class="mb-3">
+                        <label for="roomSelect" class="form-label">Select Room (Optional)</label>
+                        <select class="form-select" id="roomSelect">
+                            <option value="">No room needed</option>
+                            {% for room in rooms %}
+                            <option value="{{ room.id }}">{{ room.number }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <input type="hidden" id="selectedSlotId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmBookingBtn">Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Success Modal -->
+    <div class="modal fade" id="bookingSuccessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center py-4">
+                    <div class="success-checkmark mb-3">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                        </div>
+                    </div>
+                    <h4 class="mb-3">Booking Confirmed!</h4>
+                    <p id="successMessage">Your booking has been successfully confirmed.</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-primary" onclick="window.location.href='/facility/bookings/'">View My Bookings</button>
+                        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Continue Browsing</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav py-2">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-6">
+                    <a href="/facility/facilities/" class="nav-link active">
+                        <i class="fas fa-building"></i>
+                        Facilities
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a href="/facility/bookings/" class="nav-link">
+                        <i class="fas fa-calendar-check"></i>
+                        My Bookings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrfToken = getCookie('csrftoken');
+            
+            // Modal elements
+            const timeSlotModal = new bootstrap.Modal(document.getElementById('timeSlotModal'));
+            const confirmBookingModal = new bootstrap.Modal(document.getElementById('confirmBookingModal'));
+            const bookingSuccessModal = new bootstrap.Modal(document.getElementById('bookingSuccessModal'));
+            
+            // Handle facility card click
+            document.querySelectorAll('.facility-card, .view-slots-btn').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get facility ID from the card or parent card
+                    const facilityId = this.closest('.facility-card').dataset.facilityId;
+                    
+                    // Reset and show modal
+                    document.getElementById('loadingSlots').style.display = 'block';
+                    document.getElementById('timeSlotsList').innerHTML = '';
+                    document.getElementById('noSlots').style.display = 'none';
+                    timeSlotModal.show();
+                    
+                    // Fetch time slots
+                    fetch(`/facility/bookings/time-slots/${facilityId}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update modal content
+                            document.getElementById('facilityName').textContent = data.facility.name;
+                            document.getElementById('facilityDescription').textContent = data.facility.description;
+                            
+                            if (data.facility.price) {
+                                document.getElementById('facilityPrice').textContent = `$${data.facility.price}`;
+                                document.getElementById('facilityPrice').style.display = 'inline-block';
+                            } else {
+                                document.getElementById('facilityPrice').style.display = 'none';
+                            }
+                            
+                            // Hide loading spinner
+                            document.getElementById('loadingSlots').style.display = 'none';
+                            
+                            // Check if there are time slots
+                            if (data.time_slots.length === 0) {
+                                document.getElementById('noSlots').style.display = 'block';
+                                return;
+                            }
+                            
+                            // Group time slots by date
+                            const slotsByDate = {};
+                            data.time_slots.forEach(slot => {
+                                if (!slotsByDate[slot.date]) {
+                                    slotsByDate[slot.date] = [];
+                                }
+                                slotsByDate[slot.date].push(slot);
+                            });
+                            
+                            // Generate HTML for time slots
+                            let slotsHtml = '';
+                            Object.keys(slotsByDate).sort().forEach(date => {
+                                slotsHtml += `<h6 class="mt-4 mb-3">${formatDate(date)}</h6>`;
+                                
+                                slotsByDate[date].forEach(slot => {
+                                    const availabilityClass = slot.is_available ? 'available' : 'unavailable';
+                                    const availabilityText = slot.is_available ? 'Available' : 'Booked';
+                                    const availabilityBadge = slot.is_available ? 
+                                        '<span class="badge bg-success">Available</span>' : 
+                                        '<span class="badge bg-danger">Booked</span>';
+                                    
+                                    slotsHtml += `
+                                        <div class="time-slot ${availabilityClass}" data-slot-id="${slot.id}" 
+                                             data-facility-name="${data.facility.name}"
+                                             data-slot-date="${formatDate(slot.date)}"
+                                             data-slot-time="${slot.start_time} - ${slot.end_time}"
+                                             data-facility-price="${data.facility.price || 'Free'}">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <strong>${slot.start_time} - ${slot.end_time}</strong>
+                                                    <div class="text-muted small">${availabilityText}</div>
+                                                </div>
+                                                <div>
+                                                    ${availabilityBadge}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                });
+                            });
+                            
+                            document.getElementById('timeSlotsList').innerHTML = slotsHtml;
+                            
+                            // Add click event to available time slots
+                            document.querySelectorAll('.time-slot.available').forEach(slot => {
+                                slot.addEventListener('click', function() {
+                                    const slotData = this.dataset;
+                                    
+                                    // Set confirmation modal data
+                                    document.getElementById('confirmFacilityName').textContent = slotData.facilityName;
+                                    document.getElementById('confirmSlotDetails').textContent = `${slotData.slotDate}, ${slotData.slotTime}`;
+                                    document.getElementById('confirmPrice').textContent = `Price: ${slotData.facilityPrice === 'Free' ? 'Free' : '$' + slotData.facilityPrice}`;
+                                    document.getElementById('selectedSlotId').value = slotData.slotId;
+                                    document.getElementById('selectedFacilityId').value = facilityId;
+                                    
+                                    // Hide time slots modal and show confirmation modal
+                                    timeSlotModal.hide();
+                                    confirmBookingModal.show();
+                                });
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching time slots:', error);
+                            document.getElementById('loadingSlots').style.display = 'none';
+                            document.getElementById('timeSlotsList').innerHTML = '<div class="alert alert-danger">Error loading time slots. Please try again.</div>';
+                        });
+                });
+            });
+            
+            // Handle confirm booking button click
+            document.getElementById('confirmBookingBtn').addEventListener('click', function() {
+                const slotId = document.getElementById('selectedSlotId').value;
+                const facilityId = document.getElementById('selectedFacilityId').value;
+                const roomId = document.getElementById('roomSelect').value;
+                
+                // Disable button and show loading
+                this.disabled = true;
+                this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+                
+                // Send booking request
+                fetch(`/facility/create-booking/${facilityId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        slot_id: slotId,
+                        room_id: roomId
+                        
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Reset button
+                    this.disabled = false;
+                    this.innerHTML = 'Confirm Booking';
+                    
+                    if (data.status === 'success') {
+                        // Hide confirmation modal
+                        confirmBookingModal.hide();
+                        
+                        // Show success message
+                        document.getElementById('successMessage').textContent = data.message;
+                        bookingSuccessModal.show();
+                    } else {
+                        alert(data.message || 'Error booking the time slot. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error making booking:', error);
+                    this.disabled = false;
+                    this.innerHTML = 'Confirm Booking';
+                    alert('Error processing your booking. Please try again.');
+                });
+            });
+            
+            // Format date function
+            function formatDate(dateString) {
+                const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString(undefined, options);
+            }
+        });
+    </script>
+</body>
+</html>

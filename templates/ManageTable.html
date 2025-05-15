@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% block title %}Manage Tables{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header with icon -->
+    <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+        <i class="bi bi-grid-3x3-gap-fill fs-2 me-3 text-primary"></i>
+        <h2 class="m-0 fw-bold">Manage Tables</h2>
+    </div>
+
+    <!-- Alert container for dynamic messages -->
+    <div id="alertContainer" class="mb-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0" role="alert">
+                    <i class="bi {% if message.tags == 'success' %}bi-check-circle{% else %}bi-exclamation-circle{% endif %} me-2"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        <!-- Add Table Form Section -->
+        <div class="col-lg-4 col-md-5">
+            <div class="card h-100 border-0 shadow-sm rounded-3 bg-light">
+                <div class="card-body p-4">
+                    <h5 class="card-title d-flex align-items-center mb-4">
+                        <i class="bi bi-plus-circle-fill text-primary me-2"></i>
+                        Add New Table
+                    </h5>
+                    <form action="/menu/tables/add/" method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="tableNumber" class="form-label fw-semibold">Table Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-hash text-secondary"></i>
+                                </span>
+                                <input type="text" class="form-control border-start-0 ps-0" 
+                                       id="tableNumber" name="name" 
+                                       placeholder="Enter table number" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid table number.
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 mt-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-plus-lg me-2"></i>
+                            Add Table
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Grid -->
+        <div class="col-lg-8 col-md-7">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body p-4">
+                    <h5 class="card-title d-flex align-items-center mb-4">
+                        <i class="bi bi-layout-text-window-reverse text-primary me-2"></i>
+                        Current Tables
+                    </h5>
+                    
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="tableGrid">
+                        {% for table in tables %}
+                        <div class="col" data-table-id="{{ table.id }}">
+                            <div class="card h-100 border-0 shadow-sm table-card position-relative transition-card">
+                                <div class="card-status-indicator position-absolute top-0 end-0 mt-2 me-2">
+                                    {% if table.order_set.filter.status == 'Pending' %}
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">
+                                        <i class="bi bi-hourglass-split me-1"></i> Active
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-success px-3 py-2 rounded-pill">
+                                        <i class="bi bi-check-circle me-1"></i> Available
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0 fs-4 fw-bold text-primary">
+                                            Table {{ table.table_number }}
+                                        </h5>
+                                    </div>
+                                    <div class="mt-4 d-flex justify-content-end">
+                                        <button class="btn btn-outline-danger delete-table-btn" 
+                                                data-table-id="{{ table.id }}" 
+                                                data-table-number="{{ table.table_number }}">
+                                            <i class="bi bi-trash me-2"></i>
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12" id="emptyTableMessage">
+                            <div class="alert alert-info border-0 shadow-sm text-center p-4">
+                                <i class="bi bi-info-circle-fill fs-1 mb-3 d-block text-info"></i>
+                                <p class="mb-0">No tables found. Add a table using the form to get started.</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get CSRF token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    // Form validation
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+    
+    // Function to show alerts
+    function showAlert(message, type) {
+        const alertContainer = document.getElementById('alertContainer');
+        const icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle';
+        
+        const alertHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show shadow-sm border-0" role="alert">
+                <i class="bi ${icon} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        alertContainer.innerHTML = alertHTML;
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            const alert = alertContainer.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alertContainer.innerHTML = '', 150);
+            }
+        }, 5000);
+    }
+    
+    // Function to attach delete event listeners
+    function attachDeleteListeners() {
+        const deleteTableBtns = document.querySelectorAll('.delete-table-btn');
+        deleteTableBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tableId = this.getAttribute('data-table-id');
+                const tableNumber = this.getAttribute('data-table-number');
+                
+                // Enhanced confirmation dialog
+                if (confirm(`Are you sure you want to delete Table ${tableNumber}? This action cannot be undone.`)) {
+                    // Add loading state to button
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Removing...';
+                    this.disabled = true;
+                    
+                    deleteTable(tableId, tableNumber);
+                }
+            });
+        });
+    }
+    
+    // Function to delete a table
+    function deleteTable(tableId, tableNumber) {
+        // Send AJAX request to delete table
+        fetch(`/menu/tables/${tableId}/delete/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                showAlert(`Table ${data.table_number} has been deleted successfully.`, 'success');
+                
+                // Remove the table from the grid with animation
+                const tableElement = document.querySelector(`.col[data-table-id="${tableId}"]`);
+                if (tableElement) {
+                    tableElement.style.opacity = '0';
+                    tableElement.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        tableElement.remove();
+                        
+                        // If no tables left, show empty message
+                        const tableGrid = document.getElementById('tableGrid');
+                        if (tableGrid.querySelectorAll('.col[data-table-id]').length === 0) {
+                            tableGrid.innerHTML = `
+                                <div class="col-12" id="emptyTableMessage">
+                                    <div class="alert alert-info border-0 shadow-sm text-center p-4">
+                                        <i class="bi bi-info-circle-fill fs-1 mb-3 d-block text-info"></i>
+                                        <p class="mb-0">No tables found. Add a table using the form to get started.</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }, 300);
+                }
+            } else if (data.error) {
+                showAlert(`Error: ${data.error}`, 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showAlert(`An error occurred. Please try again.`, 'danger');
+        });
+    }
+    
+    // Initial attachment of delete listeners
+    attachDeleteListeners();
+    
+    // Console log for debugging
+    console.log('Table management script loaded');
+});
+</script>
+
+<style>
+/* Custom styles for the page */
+.transition-card {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.transition-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.card-status-indicator {
+    z-index: 2;
+}
+
+/* Transition for removing tables */
+.col[data-table-id] {
+    transition: all 0.3s ease;
+}
+
+/* Improved alert styling */
+.alert {
+    border-radius: 8px;
+}
+
+/* Input focus styling */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+/* Button hover effects */
+.btn-primary {
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+}
+
+.btn-outline-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+}
+</style>
+{% endblock %}

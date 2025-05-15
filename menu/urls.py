@@ -1,5 +1,28 @@
 from django.urls import path
-from .views import menu_list, place_order, order_list, mark_order_done, add_menu_item, completed_orders, delete_item, toggle_active, update_discount, create_category, toggle_category_active, update_category_discount
+from .views import (
+    menu_list,
+    place_order,
+    order_list,
+    mark_order_done,
+    add_menu_item,
+    completed_orders,
+    delete_item,
+    toggle_active,
+    update_discount,
+    create_category,
+    toggle_category_active,
+    update_category_discount,
+    delete_category,
+    table_list,
+    add_table,
+    delete_table,
+    rpos_screen,
+    rpos_place_order,
+    settle_all_table_orders,
+    pos_table_list,
+    add_bill_to_table,
+    pos_orders,
+)
 
 urlpatterns = [
     path('menu/', menu_list, name='menu_list'),
@@ -14,5 +37,16 @@ urlpatterns = [
     path('create-category/', create_category, name='create_category'),
     path('<int:category_id>/toggle-active/', toggle_category_active, name='toggle_category_active'),
     path('<int:category_id>/update-discount/', update_category_discount, name='update_category_discount'),
+    path('category/<int:category_id>/delete/', delete_category, name='delete_category'),
+
+    path('tables/', table_list, name='table_list'),
+    path('tables/add/', add_table, name='add_table'),
+    path('tables/<int:pk>/delete/', delete_table, name='delete_table'),
+    path('rpos/<int:table_id>/', rpos_screen, name='rpos_screen'),
+    path('rpos/place-order/', rpos_place_order, name='rpos_place_order'),
+    path('rpos/', pos_table_list, name='pos_table_list'),
+    path('settle-table-orders/<int:table_id>/', settle_all_table_orders, name='settle_all_table_orders'),
+    path('room-table-orders/<int:table_id>/', add_bill_to_table, name='add_bill_to_table'),
+    path('pos-orders/', pos_orders, name='pos_orders'),
 
 ]

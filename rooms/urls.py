@@ -13,5 +13,9 @@ urlpatterns = [
     path('dashboard/get-room', views.fetch_rooms, name='fetch_rooms'),
     path('dashboard/requests/', views.get_room_service_requests, name='get_room_service_requests'),
     path('dashboard/requests/<int:request_id>/mark-serviced', views.mark_as_serviced, name='mark-as-serviced'),
-    path('dashboard/manage-services', views.manage_services, name='manage_services'),
+    path('room-dashboard/', views.room_dashboard, name='room_dashboard'),
+    
+    path('api/room-dashboard/<int:room_id>/', views.room_data_api, name='room_data_api'),
+    
+    
 ]

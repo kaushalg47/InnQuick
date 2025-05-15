@@ -12,7 +12,7 @@
     <div class="order-card" id="order-{{ order.id }}">
       <div class="order-header">
         <div class="order-info">
-          <span class="room-number">Room {{ order.room }}</span>
+          <span class="room-number">{{ order.location_label }} {{ order.location_info }}</span>
           <span class="order-id">Order #{{ order.id }}</span>
         </div>
         <span class="order-time">{{ order.created_at }}</span>

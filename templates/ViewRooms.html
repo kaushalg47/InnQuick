@@ -3,123 +3,361 @@
 {% block title %}Admin Rooms{% endblock %}
 
 {% block content %}
-    <h1>Rooms</h1>
+<div class="admin-container">
+    <h1 class="page-title">Rooms Management</h1>
     
     <!-- Add Room Section -->
-    <div class="form-container">
-        <h2>Add New Room</h2>
-        <form id="addRoomForm" method="POST">
+    <div class="card form-container">
+        <h2 class="section-title">Add New Room</h2>
+        <form id="addRoomForm" method="POST" class="styled-form">
             {% csrf_token %}
             <div class="form-group">
                 <label for="roomNumber">Room Number:</label>
-                <input type="text" id="roomNumber" name="number" required>
+                <input type="text" id="roomNumber" name="number" required placeholder="Enter room number">
             </div>
-            <button type="submit">Create Room</button>
+            <button type="submit" class="primary-button">Create Room</button>
         </form>
-        <p id="message"></p>
+        <p id="message" class="status-message"></p>
     </div>
 
     <!-- View Added Rooms Section -->
-    <div class="form-container">
-        <h2>Added Rooms</h2>
-        <table id="roomsTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Room Number</th>
-                    <th>URL</th>
-                    <th>QR Code</th>
-                    <th>Download</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="roomsTableBody">
-                {% for room in rooms %}
-                    <tr id="room-{{ room.id }}">
-                        <td>{{ room.id }}</td>
-                        <td>{{ room.number }}</td>
-                        <td>{{ room.url }}</td>
-                        <td><img src="{{ room.qr_code.url }}" alt="QR Code" width="100" height="100"></td>
-                        <td><a href="${{data.qr_code_url}}" download="room-${room.number}-qr-code.png"><button><i class="fa fa-download"></i></button></a></td>
-                        <td>
-                            <button class="delete-btn" onclick="deleteRoom({{ room.id }})">Delete</button>
-                        </td>
+    <div class="card rooms-container">
+        <h2 class="section-title">Added Rooms</h2>
+        <div class="table-responsive">
+            <table id="roomsTable" class="styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Room Number</th>
+                        <th>URL</th>
+                        <th>QR Code</th>
+                        <th>Download</th>
+                        <th>Action</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody id="roomsTableBody">
+                    {% for room in rooms %}
+                        <tr id="room-{{ room.id }}">
+                            <td>{{ room.id }}</td>
+                            <td>{{ room.number }}</td>
+                            <td><a href="{{ room.url }}" class="room-url" target="_blank">{{ room.url }}</a></td>
+                            <td><img src="{{ room.qr_code.url }}" alt="QR Code" class="qr-image"></td>
+                            <td><a href="{{ data.qr_code_url }}" download="room-{{ room.number }}-qr-code.png" class="download-link"><button class="icon-button"><i class="fa fa-download"></i></button></a></td>
+                            <td>
+                                <button class="delete-btn" onclick="deleteRoom({{ room.id }})">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 
-    <script>
-        document.getElementById("addRoomForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
+<style>
+    /* Overall Page Styling */
+    .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     
-            const roomNumber = document.getElementById("roomNumber").value;
-            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    .page-title {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 32px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
     
-            try {
-                const response = await fetch("/rooms/add-room", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": csrfToken,
-                    },
-                    body: JSON.stringify({ number: roomNumber }),
-                });
+    /* Card Styling */
+    .card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+
     
-                const data = await response.json();
-                if (response.ok) {
-                    document.getElementById("message").innerText = "Room created successfully!";
-                    
-                    // Add the new room to the table
-                    const newRow = document.createElement("tr");
-                    newRow.id = `room-${data.room.id}`;
-                    newRow.innerHTML = `
-                        <td>${data.room.id}</td>
-                        <td>${data.room.number}</td>
-                        <td>${data.room.url}</td>
-                        <td><img src="${data.qr_code_url}" alt="QR Code" width="100" height="100"></td>
-                        <td><a href="${{data.qr_code_url}}" download="room-${data.room.number}-qr-code.png"><button><i class="fa fa-download"></i></button></a></td>
-                        <td><button class="delete-btn" onclick="deleteRoom(${data.room.id})">Delete</button></td>
-                    `;
-                    document.getElementById("roomsTableBody").appendChild(newRow);
-                    
-                    // Clear the input field
-                    document.getElementById("roomNumber").value = "";
-                } else {
-                    document.getElementById("message").innerText = "Error: " + data.error;
-                }
-            } catch (error) {
-                document.getElementById("message").innerText = "An error occurred: " + error.message;
+    
+    .section-title {
+        color: #34495e;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 22px;
+    }
+
+    .th {
+        color: #2c3e50;
+    }
+    
+    /* Form Styling */
+    .styled-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #2c3e50;
+    }
+    
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+    
+    .form-group input:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+    
+    .primary-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s;
+        align-self: flex-start;
+    }
+    
+    .primary-button:hover {
+        background-color: #2980b9;
+    }
+    
+    /* Table Styling */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        white-space: nowrap;
+        font-size: 14px;
+        
+    }
+    
+    .styled-table thead {
+        background-color: #f8f9fa;
+    }
+    
+    .styled-table th {
+        text-align: left;
+        padding: 14px 12px;
+        font-weight: 600;
+        color: #2c3e50;
+        border-bottom: 2px solid #e9ecef;
+    }
+    
+    .styled-table td {
+        padding: 14px 12px;
+        border-bottom: 1px solid #e9ecef;
+        vertical-align: middle;
+    }
+    
+    .styled-table tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    /* QR Code and Image Styling */
+    .qr-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 4px;
+        border: 1px solid #e9ecef;
+    }
+    
+    /* Button Styling */
+    .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .delete-btn:hover {
+        background-color: #c0392b;
+    }
+    
+    .icon-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .icon-button:hover {
+        background-color: #2980b9;
+    }
+    
+    /* Link Styling */
+    .room-url {
+        color: #3498db;
+        text-decoration: none;
+        max-width: 200px;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .room-url:hover {
+        text-decoration: underline;
+    }
+    
+    /* Status Message */
+    .status-message {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    
+    .status-message:not(:empty) {
+        background-color: #e8f4fd;
+        border-left: 4px solid #3498db;
+    }
+</style>
+
+<script>
+    document.getElementById("addRoomForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const roomNumber = document.getElementById("roomNumber").value;
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const messageElement = document.getElementById("message");
+
+        try {
+            messageElement.innerText = "Creating room...";
+            messageElement.style.backgroundColor = "#e8f4fd";
+            messageElement.style.borderLeft = "4px solid #3498db";
+            
+            const response = await fetch("/rooms/add-room", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken,
+                },
+                body: JSON.stringify({ number: roomNumber }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                messageElement.innerText = "Room created successfully!";
+                messageElement.style.backgroundColor = "#d4edda";
+                messageElement.style.borderLeft = "4px solid #28a745";
+                
+                // Add the new room to the table
+                const newRow = document.createElement("tr");
+                newRow.id = `room-${data.room.id}`;
+                newRow.innerHTML = `
+                    <td>${data.room.id}</td>
+                    <td>${data.room.number}</td>
+                    <td><a href="${data.room.url}" class="room-url" target="_blank">${data.room.url}</a></td>
+                    <td><img src="${data.qr_code_url}" alt="QR Code" class="qr-image"></td>
+                    <td><a href="${data.qr_code_url}" download="room-${data.room.number}-qr-code.png" class="download-link"><button class="icon-button"><i class="fa fa-download"></i></button></a></td>
+                    <td><button class="delete-btn" onclick="deleteRoom(${data.room.id})">Delete</button></td>
+                `;
+                document.getElementById("roomsTableBody").appendChild(newRow);
+                
+                // Clear the input field
+                document.getElementById("roomNumber").value = "";
+                
+                // Clear message after 3 seconds
+                setTimeout(() => {
+                    messageElement.innerText = "";
+                    messageElement.style.backgroundColor = "transparent";
+                    messageElement.style.borderLeft = "none";
+                }, 3000);
+            } else {
+                messageElement.innerText = "Error: " + data.error;
+                messageElement.style.backgroundColor = "#f8d7da";
+                messageElement.style.borderLeft = "4px solid #dc3545";
             }
-        });
-    
-        async function deleteRoom(roomId) {
-            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-            try {
-                const response = await fetch(`/rooms/${roomId}/delete-room`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken
-                    }
-                });
-
-                const data = await response.json();
-                if (data.message) {
-                    
-                    // Remove the deleted room from the table
-                    const rowToDelete = document.getElementById(`room-${roomId}`);
-                    if (rowToDelete) {
-                        rowToDelete.remove();
-                    }
-                } else {
-                    alert('Failed to delete the room.');
-                }
-            } catch (error) {
-                alert("An error occurred: " + error.message);
-            }
+        } catch (error) {
+            messageElement.innerText = "An error occurred: " + error.message;
+            messageElement.style.backgroundColor = "#f8d7da";
+            messageElement.style.borderLeft = "4px solid #dc3545";
         }
-    </script>
+    });
+
+    async function deleteRoom(roomId) {
+        if(!confirm("Are you sure you want to delete this room?")) {
+            return;
+        }
+        
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        try {
+            const response = await fetch(`/rooms/${roomId}/delete-room`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                }
+            });
+
+            const data = await response.json();
+            if (data.message) {
+                // Remove the deleted room from the table with animation
+                const rowToDelete = document.getElementById(`room-${roomId}`);
+                if (rowToDelete) {
+                    rowToDelete.style.backgroundColor = "#ffebee";
+                    rowToDelete.style.transition = "opacity 0.5s";
+                    
+                    setTimeout(() => {
+                        rowToDelete.style.opacity = "0";
+                        setTimeout(() => {
+                            rowToDelete.remove();
+                        }, 500);
+                    }, 100);
+                }
+                
+                // Show temporary success message
+                const messageElement = document.getElementById("message");
+                messageElement.innerText = "Room deleted successfully!";
+                messageElement.style.backgroundColor = "#d4edda";
+                messageElement.style.borderLeft = "4px solid #28a745";
+                
+                setTimeout(() => {
+                    messageElement.innerText = "";
+                    messageElement.style.backgroundColor = "transparent";
+                    messageElement.style.borderLeft = "none";
+                }, 3000);
+            } else {
+                alert('Failed to delete the room.');
+            }
+        } catch (error) {
+            alert("An error occurred: " + error.message);
+        }
+    }
+</script>
 {% endblock %}

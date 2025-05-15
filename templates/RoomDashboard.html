@@ -1,0 +1,766 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Room Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: rgb(47, 154, 73);
+        --success-color: #2ecc71;
+        --light-bg: #f8f9fa;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+    }
+
+    body {
+        background-color: var(--light-bg);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Dashboard Header */
+    .dashboard-header {
+        padding: 1.5rem 0;
+    }
+
+    .dashboard-title {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.75rem;
+        margin-bottom: 0;
+    }
+
+    .status-badge {
+        border-radius: var(--border-radius);
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .status-badge.online {
+        background-color: var(--success-color);
+        color: white;
+    }
+
+    .current-time {
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+    }
+
+    /* Cards */
+    .dashboard-card {
+        border-radius: var(--border-radius);
+        border: none;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        overflow: hidden;
+    }
+
+    .dashboard-card:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .card-header {
+        border-bottom: none;
+        background-color: white;
+        padding: 1.25rem 1.5rem;
+    }
+
+    .card-header-title {
+        font-weight: 600;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .card-header-title i {
+        color: var(--accent-color);
+    }
+
+    /* Room Selection */
+    .room-card {
+        transition: var(--transition);
+        overflow: hidden;
+        border-radius: var(--border-radius);
+        border: none;
+        box-shadow: var(--box-shadow);
+    }
+
+    .room-btn {
+        border-radius: var(--border-radius);
+        color: var(--primary-color);
+        background-color: white;
+        transition: var(--transition);
+        padding: 1.25rem 0;
+    }
+
+    .room-btn:hover {
+        background-color: var(--accent-color);
+        color: white;
+    }
+
+    .room-btn i {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+        transition: var(--transition);
+    }
+
+    .room-number {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    /* Summary Cards */
+    .summary-card {
+        border-radius: var(--border-radius);
+        border: none;
+        box-shadow: var(--box-shadow);
+        padding: 1.5rem;
+        height: 100%;
+    }
+
+    .summary-card.primary {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+    }
+
+    .summary-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .summary-title {
+        font-size: 0.875rem;
+        opacity: 0.8;
+        margin-bottom: 6px;
+    }
+
+    .summary-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .summary-footer {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: right;
+    }
+
+    .summary-card:not(.primary) .summary-footer {
+        border-top-color: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Tabs */
+    .nav-pills .nav-link {
+        color: var(--secondary-color);
+        font-weight: 500;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--border-radius);
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: var(--accent-color);
+    }
+
+    /* Tables */
+    .dashboard-table th {
+        font-weight: 600;
+        color: var(--secondary-color);
+        border-top: none;
+        border-bottom: 2px solid var(--light-bg);
+    }
+
+    .dashboard-table td {
+        vertical-align: middle;
+        padding: 1rem 0.75rem;
+        border-color: var(--light-bg);
+    }
+
+    .table-badge {
+        padding: 0.4rem 0.75rem;
+        border-radius: var(--border-radius);
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    /* Food Orders */
+    .order-card {
+        margin-bottom: 1.5rem;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        border: none;
+    }
+
+    .order-header {
+        padding: 1.25rem;
+        border-bottom: 1px solid var(--light-bg);
+    }
+
+    .order-body {
+        padding: 1.25rem;
+    }
+
+    .order-title {
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .order-total {
+        font-size: 1.125rem;
+        font-weight: 700;
+    }
+
+    /* Buttons */
+    .btn-back {
+        color: var(--secondary-color);
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius);
+        padding: 0.5rem 0.75rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: var(--transition);
+    }
+
+    .btn-back:hover {
+        background-color: var(--secondary-color);
+        color: white;
+    }
+
+    /* Loading Indicator */
+    .loading-container {
+        padding: 3rem 0;
+        text-align: center;
+    }
+
+    .spinner {
+        width: 3rem;
+        height: 3rem;
+        border-width: 3px;
+        color: var(--accent-color);
+    }
+
+    .loading-text {
+        margin-top: 1rem;
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+    }
+
+    /* Alerts */
+    .dashboard-alert {
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        border-left: 4px solid;
+    }
+
+    .dashboard-alert.info {
+        background-color: rgba(52, 152, 219, 0.1);
+        border-left-color: #3498db;
+        color: #2980b9;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header d-flex justify-content-between align-items-center">
+                <h1 class="dashboard-title">Room Dashboard</h1>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="status-badge online">
+                        <i class="bi bi-circle-fill small"></i> Online
+                    </span>
+                    <span id="currentTime" class="current-time"></span>
+                </div>
+            </div>
+            
+            <!-- Room selection -->
+            <div id="roomSelectionView">
+                <div class="dashboard-card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-header-title"><i class="bi bi-grid-3x3-gap"></i>Select a Room</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            {% for room in rooms %}
+                                <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-6">
+                                    <div class="room-card">
+                                        <button 
+                                            class="btn room-btn w-100 h-100 d-flex flex-column align-items-center justify-content-center" 
+                                            data-room-id="{{ room.id }}"
+                                            data-room-number="{{ room.number }}">
+                                            <i class="bi bi-door-closed"></i>
+                                            <span class="room-number">Room {{ room.number }}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="col-12">
+                                    <div class="dashboard-alert info">
+                                        <i class="bi bi-info-circle me-2"></i>No rooms available. Please add rooms first.
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Room details container -->
+            <div id="roomDetailsContainer" class="d-none">
+                <div class="dashboard-card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-back me-3" id="backToRooms">
+                                    <i class="bi bi-arrow-left"></i> Back
+                                </button>
+                                <h5 class="card-header-title mb-0" id="roomTitle"></h5>
+                            </div>
+                            <span class="status-badge online" id="roomStatusBadge">
+                                <i class="bi bi-check-circle"></i> Active
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Loading indicator -->
+                        <div id="loadingIndicator" class="loading-container">
+                            <div class="spinner-border spinner" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="loading-text">Loading room data...</p>
+                        </div>
+
+                        <!-- Room data content -->
+                        <div id="roomData" class="d-none">
+                            <!-- Summary cards -->
+                            <div class="row g-4 mb-4">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="summary-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="summary-icon bg-primary bg-opacity-10 me-3">
+                                                <i class="bi bi-tools text-primary fs-4"></i>
+                                            </div>
+                                            <div>
+                                                <div class="summary-title">Service Requests</div>
+                                                <h3 class="summary-value" id="serviceRequestsCount">0</h3>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <span class="opacity-75">Total:</span>
+                                            <span class="fw-bold ms-1">$<span id="servicesTotal">0.00</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="summary-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="summary-icon bg-success bg-opacity-10 me-3">
+                                                <i class="bi bi-cart3 text-success fs-4"></i>
+                                            </div>
+                                            <div>
+                                                <div class="summary-title">Food Orders</div>
+                                                <h3 class="summary-value" id="foodOrdersCount">0</h3>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <span class="opacity-75">Total:</span>
+                                            <span class="fw-bold ms-1">$<span id="foodTotal">0.00</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="summary-card primary">
+                                        <div class="d-flex align-items-center">
+                                            <div class="summary-icon bg-white bg-opacity-25 me-3">
+                                                <i class="bi bi-cash-coin text-white fs-4"></i>
+                                            </div>
+                                            <div>
+                                                <div class="summary-title">Grand Total</div>
+                                                <h3 class="summary-value">$<span id="grandTotal">0.00</span></h3>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <span class="badge bg-white text-primary">Room Charges</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data tabs -->
+                            <div class="dashboard-card">
+                                <div class="card-body p-0">
+                                    <!-- Tabs Navigation -->
+                                    <nav class="card-header border-bottom">
+                                        <ul class="nav nav-pills" id="roomDataTabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="service-tab" data-bs-toggle="tab" data-bs-target="#service-requests" type="button" role="tab" aria-controls="service-requests" aria-selected="true">
+                                                    <i class="bi bi-tools me-2"></i>Service Requests
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="food-tab" data-bs-toggle="tab" data-bs-target="#food-orders" type="button" role="tab" aria-controls="food-orders" aria-selected="false">
+                                                    <i class="bi bi-cart3 me-2"></i>Food Orders
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+
+                                    <!-- Tab content -->
+                                    <div class="tab-content p-4" id="roomDataTabsContent">
+                                        <!-- Service Requests Tab -->
+                                        <div class="tab-pane fade show active" id="service-requests" role="tabpanel" aria-labelledby="service-tab">
+                                            <div class="table-responsive">
+                                                <table class="table dashboard-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Service Type</th>
+                                                            <th>Date Requested</th>
+                                                            <th>Price</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="serviceRequestsTable">
+                                                        <!-- Service requests will be inserted here -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="noServiceRequests" class="dashboard-alert info d-none">
+                                                <i class="bi bi-info-circle me-2"></i>No service requests found for this room.
+                                            </div>
+                                        </div>
+
+                                        <!-- Food Orders Tab -->
+                                        <div class="tab-pane fade" id="food-orders" role="tabpanel" aria-labelledby="food-tab">
+                                            <div id="foodOrdersList">
+                                                <!-- Food orders will be inserted here -->
+                                            </div>
+                                            <div id="noFoodOrders" class="dashboard-alert info d-none">
+                                                <i class="bi bi-info-circle me-2"></i>No food orders found for this room.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Display current time
+    function updateTime() {
+        const now = new Date();
+        const timeElement = document.getElementById('currentTime');
+        timeElement.textContent = now.toLocaleString();
+    }
+    
+    updateTime();
+    setInterval(updateTime, 60000); // Update every minute
+
+    // Get all elements
+    const roomSelectionView = document.getElementById('roomSelectionView');
+    const roomButtons = document.querySelectorAll('.room-btn');
+    const roomDetailsContainer = document.getElementById('roomDetailsContainer');
+    const roomTitle = document.getElementById('roomTitle');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const roomData = document.getElementById('roomData');
+    const backToRoomsBtn = document.getElementById('backToRooms');
+    
+    // Stats elements
+    const serviceRequestsCount = document.getElementById('serviceRequestsCount');
+    const foodOrdersCount = document.getElementById('foodOrdersCount');
+    const servicesTotal = document.getElementById('servicesTotal');
+    const foodTotal = document.getElementById('foodTotal');
+    const grandTotal = document.getElementById('grandTotal');
+    
+    // Tab elements
+    const serviceTab = document.getElementById('service-tab');
+    const foodTab = document.getElementById('food-tab');
+    const serviceRequestsTabPane = document.getElementById('service-requests');
+    const foodOrdersTabPane = document.getElementById('food-orders');
+    
+    // Tables and containers
+    const serviceRequestsTable = document.getElementById('serviceRequestsTable');
+    const foodOrdersList = document.getElementById('foodOrdersList');
+    const noServiceRequests = document.getElementById('noServiceRequests');
+    const noFoodOrders = document.getElementById('noFoodOrders');
+    
+    // Add hover effect to room buttons
+    roomButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.querySelector('i').classList.remove('bi-door-closed');
+            this.querySelector('i').classList.add('bi-door-open');
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.querySelector('i').classList.remove('bi-door-open');
+            this.querySelector('i').classList.add('bi-door-closed');
+        });
+    });
+    
+    // Add click event to room buttons
+    roomButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const roomId = this.dataset.roomId;
+            const roomNumber = this.dataset.roomNumber;
+            
+            // Hide room selection view
+            roomSelectionView.classList.add('d-none');
+            
+            // Show room details container
+            roomDetailsContainer.classList.remove('d-none');
+            roomTitle.textContent = `Room ${roomNumber}`;
+            
+            // Show loading indicator
+            loadingIndicator.classList.remove('d-none');
+            roomData.classList.add('d-none');
+            
+            // Fetch room data
+            fetchRoomData(roomId);
+        });
+    });
+    
+    // Back button
+    backToRoomsBtn.addEventListener('click', function() {
+        roomDetailsContainer.classList.add('d-none');
+        roomSelectionView.classList.remove('d-none');
+    });
+    
+    // Tab switching
+    serviceTab.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Activate service tab
+        serviceTab.classList.add('active');
+        serviceTab.setAttribute('aria-selected', 'true');
+        serviceRequestsTabPane.classList.add('show', 'active');
+        
+        // Deactivate food tab
+        foodTab.classList.remove('active');
+        foodTab.setAttribute('aria-selected', 'false');
+        foodOrdersTabPane.classList.remove('show', 'active');
+    });
+    
+    foodTab.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Activate food tab
+        foodTab.classList.add('active');
+        foodTab.setAttribute('aria-selected', 'true');
+        foodOrdersTabPane.classList.add('show', 'active');
+        
+        // Deactivate service tab
+        serviceTab.classList.remove('active');
+        serviceTab.setAttribute('aria-selected', 'false');
+        serviceRequestsTabPane.classList.remove('show', 'active');
+    });
+    
+    // Fetch room data function
+    function fetchRoomData(roomId) {
+        fetch(`/rooms/api/room-dashboard/${roomId}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Update room data
+                displayRoomData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching room data:', error);
+                alert('Error loading room data. Please try again.');
+                roomDetailsContainer.classList.add('d-none');
+                roomSelectionView.classList.remove('d-none');
+            });
+    }
+    
+    // Display room data function
+    function displayRoomData(data) {
+        // Update stats
+        serviceRequestsCount.textContent = data.service_requests.length;
+        foodOrdersCount.textContent = data.food_orders.length;
+        servicesTotal.textContent = data.services_total.toFixed(2);
+        foodTotal.textContent = data.food_total.toFixed(2);
+        grandTotal.textContent = data.grand_total.toFixed(2);
+        
+        // Display service requests
+        serviceRequestsTable.innerHTML = '';
+        if (data.service_requests.length > 0) {
+            noServiceRequests.classList.add('d-none');
+            
+            data.service_requests.forEach(request => {
+                const date = new Date(request.created_at);
+                const formattedDate = date.toLocaleString();
+                
+                const row = document.createElement('tr');
+                
+                // Determine status class and icon
+                let statusClass = request.is_serviced ? 'bg-success' : 'bg-warning';
+                let statusIcon = request.is_serviced ? 
+                    '<i class="bi bi-check-circle"></i>' : 
+                    '<i class="bi bi-clock"></i>';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary bg-opacity-10 p-2 me-2">
+                                <i class="bi bi-tools text-primary"></i>
+                            </div>
+                            <span class="fw-medium">${request.service_type.name}</span>
+                        </div>
+                    </td>
+                    <td>${formattedDate}</td>
+                    <td>
+                        <span class="fw-bold">$${request.service_type.price.toFixed(2)}</span>
+                    </td>
+                    <td>
+                        <span class="table-badge ${statusClass}">
+                            ${statusIcon} ${request.is_serviced ? 'Completed' : 'Pending'}
+                        </span>
+                    </td>
+                `;
+                serviceRequestsTable.appendChild(row);
+            });
+        } else {
+            noServiceRequests.classList.remove('d-none');
+        }
+        
+        // Display food orders
+        foodOrdersList.innerHTML = '';
+        if (data.food_orders.length > 0) {
+            noFoodOrders.classList.add('d-none');
+            
+            data.food_orders.forEach(order => {
+                const date = new Date(order.created_at);
+                const formattedDate = date.toLocaleString();
+                
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card mb-4';
+                
+                // Get status badge class and icon
+                let statusClass, statusIcon;
+                switch(order.status) {
+                    case 'pending':
+                        statusClass = 'bg-warning';
+                        statusIcon = '<i class="bi bi-hourglass"></i>';
+                        break;
+                    case 'preparing':
+                        statusClass = 'bg-info';
+                        statusIcon = '<i class="bi bi-gear"></i>';
+                        break;
+                    case 'completed':
+                        statusClass = 'bg-success';
+                        statusIcon = '<i class="bi bi-check-circle"></i>';
+                        break;
+                    case 'cancelled':
+                        statusClass = 'bg-danger';
+                        statusIcon = '<i class="bi bi-x-circle"></i>';
+                        break;
+                    default:
+                        statusClass = 'bg-secondary';
+                        statusIcon = '<i class="bi bi-question-circle"></i>';
+                }
+                
+                // Order header
+                let orderHeader = `
+                    <div class="order-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-2 me-2">
+                                    <i class="bi bi-cart3 text-success"></i>
+                                </div>
+                                <h6 class="order-title">Order #${order.id} - ${formattedDate}</h6>
+                            </div>
+                            <span class="table-badge ${statusClass}">
+                                ${statusIcon} ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                // Order items
+                let orderItems = `
+                    <div class="order-body">
+                        <div class="table-responsive">
+                            <table class="table dashboard-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-end">Price</th>
+                                        <th class="text-end">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+                
+                // Add rows for each item
+                order.items.forEach(item => {
+                    let priceDisplay = item.discounted_price !== null ? 
+                        `<del class="text-muted">$${item.price.toFixed(2)}</del> <span class="text-success">$${item.discounted_price.toFixed(2)}</span>` : 
+                        `$${item.price.toFixed(2)}`;
+                    
+                    orderItems += `
+                        <tr>
+                            <td class="fw-medium">${item.name}</td>
+                            <td class="text-center">${item.quantity}</td>
+                            <td class="text-end">${priceDisplay}</td>
+                            <td class="text-end fw-bold">$${item.subtotal.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                
+                // Close the table and add order total
+                orderItems += `
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                            <span class="text-muted small">Items: ${order.items.length}</span>
+                            <div>
+                                <span class="me-2">Total:</span>
+                                <span class="order-total">$${order.total_price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                orderCard.innerHTML = orderHeader + orderItems;
+                foodOrdersList.appendChild(orderCard);
+            });
+        } else {
+            noFoodOrders.classList.remove('d-none');
+        }
+        
+        // Hide loading indicator and show data
+        loadingIndicator.classList.add('d-none');
+        roomData.classList.remove('d-none');
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

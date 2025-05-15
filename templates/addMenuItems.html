@@ -64,12 +64,12 @@
                         </div>
                         <div style="margin-bottom: 15px;">
                             <label for="startTime" style="display: block; font-size: 14px; font-weight: 500; color: #555; margin-bottom: 5px;">Start Time</label>
-                            <input type="time" id="startTime" name="start_time" required
+                            <input type="time" id="startTime" name="start_time" 
                                 style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <div style="margin-bottom: 15px;">
                             <label for="endTime" style="display: block; font-size: 14px; font-weight: 500; color: #555; margin-bottom: 5px;">End Time</label>
-                            <input type="time" id="endTime" name="end_time" required
+                            <input type="time" id="endTime" name="end_time" 
                                 style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <button type="submit"
@@ -101,7 +101,27 @@
                                             ({{ category.start_time|time:"g:i A" }} - {{ category.end_time|time:"g:i A" }})
                                         </span>
                                     </h3>
-                                    <span class="toggle-icon" id="icon-category-{{ category.id }}" style="font-size: 18px;">▼</span>
+                                    <div class="category-controls" style="display: flex; align-items: center; gap: 10px;margin-right: 15px" onclick="event.stopPropagation();">
+                                        <!-- Category toggle button -->
+                                        <button onclick="toggleCategoryItems({{ category.id }}, event)" class="toggle-category-btn" 
+                                            style="background-color: #22c55e; color: white; font-size: 12px; padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer;">
+                                            Status
+                                        </button>
+                                        
+                                        <!-- Category discount button -->
+                                        <button onclick="setCategoryDiscount({{ category.id }}, event)" class="discount-category-btn"
+                                            style="background-color: #f59e0b; color: white; font-size: 12px; padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer;">
+                                            Discount
+                                        </button>
+
+                                        <button onclick="deleteCategory({{ category.id }}, event)" class="delete-category-btn"
+                                            style="background-color: #ef4444; color: white; font-size: 12px; padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer;">
+                                            Delete
+                                        </button>
+                                        
+                                        <span class="toggle-icon" id="icon-category-{{ category.id }}" style="font-size: 18px;">▼</span>
+                                    </div>
+                                    
                                 </div>
                                 
                                 <div class="category-content" id="category-{{ category.id }}" style="display: none;">
@@ -340,6 +360,67 @@
             }
         });
 
+        async function deleteCategory(categoryId, event) {
+            // Prevent the category from expanding/collapsing
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            if (!confirm("WARNING: Are you sure you want to delete this entire category and ALL its menu items? This cannot be undone.")) {
+                return;
+            }
+            
+            // Double-check with user due to destructive nature
+            if (!confirm("Please confirm again: All menu items in this category will be permanently deleted.")) {
+                return;
+            }
+            
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            try {
+                const response = await fetch(`/menu/category/${categoryId}/delete/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    
+                    // Remove the category section from the DOM
+                    const categorySection = document.querySelector(`.category-section:has(#category-${categoryId})`);
+                    if (categorySection) {
+                        categorySection.remove();
+                    }
+                    
+                    // If it was the last category, show the "no categories" message
+                    const remainingCategories = document.querySelectorAll('.category-section');
+                    if (remainingCategories.length === 0) {
+                        const menuItemsContainer = document.querySelector('.category-accordion').parentElement;
+                        menuItemsContainer.innerHTML = `
+                            <div style="text-align: center; color: #6b7280; padding: 20px;">
+                                No categories have been created yet.
+                            </div>
+                        `;
+                    }
+                } else {
+                    alert('Failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error("Error deleting category:", error);
+                alert('Error: ' + error.message);
+            }
+        }
+
         
         // Category Modal Controls
         const categoryModal = document.getElementById("categoryModal");
@@ -500,6 +581,113 @@
                 }
             } catch (err) {
                 alert("Error occurred: " + err.message);
+            }
+        }
+
+        async function toggleCategoryItems(categoryId, event) {
+            // Prevent the category from expanding/collapsing
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            if (!confirm("Are you sure you want to toggle the active status for all items in this category?")) {
+                return;
+            }
+            
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            try {
+                const response = await fetch(`/menu/${categoryId}/toggle-active/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({}), // Empty object, server will determine the new status
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Find all toggle inputs in this category and update them
+                    const categoryContent = document.getElementById(`category-${categoryId}`);
+                    if (categoryContent) {
+                        const toggleInputs = categoryContent.querySelectorAll('.toggle-input');
+                        const statusLabels = categoryContent.querySelectorAll('.status-label');
+                        
+                        toggleInputs.forEach(input => {
+                            input.checked = data.new_status;
+                        });
+                        
+                        statusLabels.forEach(label => {
+                            label.textContent = data.new_status ? "Active" : "Inactive";
+                        });
+                        
+                        alert(`Updated ${data.updated_count} items in "${data.category}" category`);
+                    }
+                } else {
+                    alert('Failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error("Error toggling category items:", error);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        // Set discount for all items in a category
+        async function setCategoryDiscount(categoryId, event) {
+            // Prevent the category from expanding/collapsing
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            const discount = prompt("Enter discount percentage for all items in this category (0-100):");
+            if (discount === null) return; // User cancelled
+            
+            // Validate input is a number between 0-100
+            const discountValue = parseFloat(discount);
+            if (isNaN(discountValue) || discountValue < 0 || discountValue > 100) {
+                alert("Please enter a valid discount percentage between 0 and 100");
+                return;
+            }
+            
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            try {
+                const response = await fetch(`/menu/${categoryId}/update-discount/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ 
+                        discount: discountValue 
+                    }),
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Discount of ${data.discount}% applied to ${data.updated_count} items in "${data.category}" category`);
+                    
+                    // Reload the page to show updated prices
+                    location.reload();
+                } else {
+                    alert('Failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error("Error setting category discount:", error);
+                alert('Error: ' + error.message);
             }
         }
 

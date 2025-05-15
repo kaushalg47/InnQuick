@@ -1,0 +1,44 @@
+<!-- templates/facilities/all_bookings.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>All Bookings</h2>
+    
+    <div class="mb-3">
+        <a href="{% url 'booking_list' %}" class="btn btn-primary">My Bookings</a>
+        <a href="{% url 'facility_list' %}" class="btn btn-secondary">Facilities</a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Facility</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Room</th>
+                    <th>Booked On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.time_slot.facility.name }}</td>
+                    <td>{{ booking.time_slot.start_time|date:"Y-m-d" }}</td>
+                    <td>{{ booking.time_slot.start_time|date:"H:i" }} - {{ booking.time_slot.end_time|date:"H:i" }}</td>
+                    <td>{% if booking.room %}{{ booking.room.name }}{% else %}No room selected{% endif %}</td>
+                    <td>{{ booking.booking_time|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No bookings found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

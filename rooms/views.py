@@ -3,7 +3,7 @@ from io import BytesIO
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Room
-from client.models import RoomServiceRequest, ServiceAvailability
+from client.models import RoomServiceRequest
 import json
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -158,18 +158,118 @@ def generate_qr_code(url):
     return base64.b64encode(buffer.getvalue()).decode()  
 
 
-@login_required
-def manage_services(request):
-    # Fetch all service availability records
-    services = ServiceAvailability.objects.all()
 
-    if request.method == 'POST':
-        # Iterate over the services to update availability based on POST data
-        for service in services:
-            service.is_available = f"service_{service.id}" in request.POST
-            service.save()
-        # After saving, redirect to the same page to show the updated status
-        return redirect('manage_services')
+# views.py
+from django.shortcuts import render
+from django.http import JsonResponse
+from .models import Room
+from client.models import RoomServiceRequest
+from menu.models import Order, OrderItem
+from django.db.models import Sum, F
+from decimal import Decimal
 
-    # Render the template with the services context
-    return render(request, 'ManageServices.html', {'services': services})
+def room_dashboard(request):
+    """
+    Render the room dashboard template with all available rooms
+    """
+    rooms = Room.objects.filter(user=request.user).order_by('number')
+    return render(request, 'RoomDashboard.html', {
+        'rooms': rooms
+    })
+
+def room_data_api(request, room_id):
+    """
+    API endpoint to get all service requests and food orders for a specific room
+    """
+    try:
+        # Fetch the room
+        room = Room.objects.get(id=room_id, user=request.user)
+        
+        # Get all service requests for this room
+        service_requests = RoomServiceRequest.objects.filter(
+            room=room
+        ).select_related('service_type').order_by('-created_at')
+        
+        # Get all food orders for this room
+        orders = Order.objects.filter(
+            room=room
+        ).prefetch_related('orderitem_set__menu_item').order_by('-created_at')
+        
+        # Calculate service requests total
+        services_total = Decimal('0.00')
+        for service in service_requests:
+            if service.service_type.price:
+                if isinstance(service.service_type.price, float):
+                    services_total += Decimal(str(service.service_type.price))
+                else:
+                    services_total += service.service_type.price
+        
+        # Prepare service request data
+        service_requests_data = []
+        for service in service_requests:
+            service_requests_data.append({
+                'id': service.id,
+                'is_serviced': service.is_serviced,
+                'created_at': service.created_at.isoformat(),
+                'service_type': {
+                    'name': service.service_type.name,
+                    'price': float(service.service_type.price) if service.service_type.price else 0.00
+                }
+            })
+        
+        # Prepare food order data
+        food_orders_data = []
+        
+        
+        for order in orders:
+            order_items = []
+            for order_item in order.orderitem_set.all():
+                menu_item = order_item.menu_item
+                price = menu_item.discounted_price if menu_item.discounted_price is not None else menu_item.price
+                
+                order_items.append({
+                    'name': menu_item.name,
+                    'quantity': order_item.quantity,
+                    'price': float(price),
+                    'discounted_price': float(menu_item.discounted_price) if menu_item.discounted_price else None,
+                    'subtotal': float(order_item.subtotal)
+                })
+            
+            # Add order total to the running total
+            
+            food_total = Decimal('0.00')
+            for order in orders:
+                # ... code for order items ...
+                if isinstance(order.total_price, float):
+                    food_total += Decimal(str(order.total_price))
+                else:
+                    food_total += order.total_price
+            
+            food_orders_data.append({
+                'id': order.id,
+                'status': order.status,
+                'created_at': order.created_at.isoformat(),
+                'items': order_items,
+                'total_price': float(order.total_price)
+            })
+        
+        # Prepare response
+        data = {
+            'room_id': room.id,
+            'room_number': room.number,
+            'service_requests': service_requests_data,
+            'food_orders': food_orders_data,
+            'services_total': float(services_total),
+            'food_total': float(food_total),
+            'grand_total': float(services_total + food_total)
+        }
+        
+        return JsonResponse(data)
+    
+    except Room.DoesNotExist:
+        return JsonResponse({'error': 'Room not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+

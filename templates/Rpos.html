@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Tables</h1>
+    <div class="table-grid">
+        {% for table in tables %}
+            <a href="/menu/rpos/{{ table.table_number }}/" class="table-block {% if not table.empty %}occupied{% endif %}">
+                {{ table.table_number }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .table-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .table-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        background-color: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #212529;
+        font-size: 24px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+    
+    .table-block:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background-color: #e9ecef;
+    }
+    
+    .occupied {
+        border: 2px solid yellow;
+        box-shadow: 0 0 8px rgba(255,255,0,0.5);
+    }
+</style>
+{% endblock %}

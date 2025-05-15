@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rooms',
     'corsheaders',
     'client',
-    'menu'
+    'menu',
+    'core',
+    'facility',
 ]
 
 

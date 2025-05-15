@@ -10,6 +10,7 @@
       --primary-color: #4CAF50;
       --primary-dark: #3d8b40;
       --primary-light: #a5d6a7;
+      --accent-color: #ff5722;
       --text-color: #333;
       --text-light: #666;
       --bg-color: #f8f9fa;
@@ -48,10 +49,56 @@
       font-weight: 600;
     }
     
-    #menu-items {
+    .category-section {
       max-width: 800px;
-      margin: 20px auto;
+      margin: 25px auto;
       padding: 0 15px;
+    }
+    
+    .category-header {
+      background-color: var(--primary-light);
+      color: var(--text-color);
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      margin-bottom: 15px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .category-header:hover {
+      background-color: #b8e0b9;
+    }
+    
+    .category-header h2 {
+      font-size: 20px;
+      margin: 0;
+    }
+    
+    .category-header .availability {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+    
+    .category-header .category-toggle {
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+    
+    .category-header.collapsed .category-toggle {
+      transform: rotate(-90deg);
+    }
+    
+    .menu-items {
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .menu-items.collapsed {
+      max-height: 0;
     }
     
     .menu-item {
@@ -91,6 +138,23 @@
       display: flex;
       align-items: center;
       gap: 15px;
+    }
+    
+    .price-container {
+      text-align: right;
+    }
+    
+    .original-price {
+      text-decoration: line-through;
+      color: var(--text-light);
+      font-size: 14px;
+      display: block;
+    }
+    
+    .discounted-price {
+      font-weight: bold;
+      color: var(--accent-color);
+      font-size: 18px;
     }
     
     .price {
@@ -148,6 +212,32 @@
       background-color: var(--primary-dark);
     }
     
+    .disabled-item {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    
+    .category-unavailable {
+      background-color: #f5f5f5;
+      opacity: 0.7;
+    }
+    
+    .category-unavailable h2 {
+      color: var(--text-light);
+    }
+    
+    .category-unavailable-msg {
+      background-color: #fff3e0;
+      color: #e65100;
+      padding: 10px 15px;
+      border-radius: var(--radius);
+      margin: 10px 0;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
     .cart-popup {
       position: fixed;
       bottom: 0;
@@ -179,12 +269,23 @@
       border-bottom: 1px solid #eee;
     }
     
+    .cart-item-details {
+      flex: 1;
+    }
+    
     .cart-item-name {
       font-weight: 500;
+      display: block;
+    }
+    
+    .cart-item-category {
+      font-size: 12px;
+      color: var(--text-light);
     }
     
     .cart-item-price {
       font-weight: 600;
+      margin-right: 15px;
     }
     
     .total-price {
@@ -381,8 +482,8 @@
     <h1>Menu</h1>
   </div>
   
-  <div id="menu-items">
-    <!-- Menu items will be dynamically inserted here -->
+  <div id="menu-categories">
+    <!-- Categories and menu items will be dynamically inserted here -->
   </div>
   
   <div class="cart-popup" id="cart-popup">
@@ -402,46 +503,219 @@
   </button>
 
   <script>
+    // Data structure for categories and menu items
+    const categories = [
+      {% for category in categories %}
+        {
+          id: {{ category.id }},
+          name: "{{ category.name }}",
+          startTime: {% if category.start_time %}"{{ category.start_time|time:"H:i" }}"{% else %}null{% endif %},
+          endTime: {% if category.end_time %}"{{ category.end_time|time:"H:i" }}"{% else %}null{% endif %}
+        }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ];
+    
     const menuItems = [
       {% for item in items %}
-          { id: {{ item.id }}, name: "{{ item.name }}", price: {{ item.price }}, description: "{{ item.description }}" }{% if not forloop.last %},{% endif %}
+        { 
+          id: {{ item.id }}, 
+          name: "{{ item.name }}", 
+          categoryId: {% if item.category_id %}{{ item.category_id }}{% else %}null{% endif %},
+          description: "{{ item.description }}", 
+          price: {{ item.price }},
+          discount: {{ item.discount }}, 
+          discountedPrice: {% if item.discounted_price %}{{ item.discounted_price }}{% else %}null{% endif %},
+          isActive: {{ item.is_active|lower }}
+        }{% if not forloop.last %},{% endif %}
       {% endfor %}
-      // Add more items as needed
     ];
 
     const cart = [];
-
+    
+    // Check if a category is available based on time
+    function isCategoryAvailable(category) {
+      if (!category.startTime || !category.endTime) {
+        return true; // Always available if no times are set
+      }
+      
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTime = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+      
+      return currentTime >= category.startTime && currentTime <= category.endTime;
+    }
+    
+    function getCategoryAvailabilityText(category) {
+      if (!category.startTime || !category.endTime) {
+        return "";
+      }
+      return `Available: ${category.startTime} - ${category.endTime}`;
+    }
+    
+    // Render the menu organized by categories
     function renderMenu() {
-      const menuContainer = document.getElementById('menu-items');
+      const menuContainer = document.getElementById('menu-categories');
       menuContainer.innerHTML = '';
       
-      menuItems.forEach(item => {
-        const menuItem = document.createElement('div');
-        menuItem.className = 'menu-item';
-        
-        const isInCart = cart.find(i => i.id === item.id);
-        
-        menuItem.innerHTML = `
-          <div class="menu-info">
-            <h3>${item.name}</h3>
-            <p>${item.description || "No description available"}</p>
-          </div>
-          <div class="menu-actions">
-            <span class="price">₹${item.price.toFixed(2)}</span>
-            <div class="quantity-adjust" id="quantity-adjust-${item.id}">
-              ${isInCart ? `
-                <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-                <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
-              ` : `
-                <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
-                <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
-              `}
-            </div>
-          </div>
-        `;
-        menuContainer.appendChild(menuItem);
+      // Group items by category
+      const itemsByCategory = {};
+      menuItems.filter(item => item.isActive).forEach(item => {
+        const categoryId = item.categoryId || 'uncategorized';
+        if (!itemsByCategory[categoryId]) {
+          itemsByCategory[categoryId] = [];
+        }
+        itemsByCategory[categoryId].push(item);
       });
+      
+      // Render each category with its items
+      categories.forEach(category => {
+        const categoryItems = itemsByCategory[category.id] || [];
+        if (categoryItems.length === 0) return; // Skip empty categories
+        
+        const isCategoryAvailableNow = isCategoryAvailable(category);
+        
+        const categorySection = document.createElement('div');
+        categorySection.className = 'category-section';
+        
+        const categoryHeader = document.createElement('div');
+        categoryHeader.className = `category-header ${isCategoryAvailableNow ? '' : 'category-unavailable'}`;
+        categoryHeader.innerHTML = `
+          <div>
+            <h2>${category.name}</h2>
+            <span class="availability">${getCategoryAvailabilityText(category)}</span>
+          </div>
+          <span class="category-toggle"><i class="fas fa-chevron-down"></i></span>
+        `;
+        categorySection.appendChild(categoryHeader);
+        
+        if (!isCategoryAvailableNow) {
+          const unavailableMsg = document.createElement('div');
+          unavailableMsg.className = 'category-unavailable-msg';
+          unavailableMsg.innerHTML = `
+            <i class="fas fa-clock"></i> 
+            <span>This category is currently unavailable. Please check back during operating hours.</span>
+          `;
+          categorySection.appendChild(unavailableMsg);
+        }
+        
+        const menuItemsContainer = document.createElement('div');
+        menuItemsContainer.className = `menu-items ${!isCategoryAvailableNow ? 'collapsed' : ''}`;
+        menuItemsContainer.id = `category-items-${category.id}`;
+        
+        categoryItems.forEach(item => {
+          const menuItem = document.createElement('div');
+          menuItem.className = `menu-item ${!isCategoryAvailableNow ? 'disabled-item' : ''}`;
+          
+          const isInCart = cart.find(i => i.id === item.id);
+          const hasDiscount = item.discount > 0 && item.discountedPrice !== null;
+          
+          menuItem.innerHTML = `
+            <div class="menu-info">
+              <h3>${item.name}</h3>
+              <p>${item.description || "No description available"}</p>
+            </div>
+            <div class="menu-actions">
+              <div class="price-container">
+                ${hasDiscount ? 
+                  `<span class="original-price">₹${item.price.toFixed(2)}</span>
+                   <span class="discounted-price">₹${item.discountedPrice.toFixed(2)}</span>` : 
+                  `<span class="price">₹${item.price.toFixed(2)}</span>`
+                }
+              </div>
+              <div class="quantity-adjust" id="quantity-adjust-${item.id}">
+                ${isInCart ? `
+                  <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
+                  <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                  <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
+                ` : `
+                  <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
+                  <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
+                `}
+              </div>
+            </div>
+          `;
+          menuItemsContainer.appendChild(menuItem);
+        });
+        
+        categorySection.appendChild(menuItemsContainer);
+        menuContainer.appendChild(categorySection);
+        
+        // Add toggle functionality for category
+        categoryHeader.addEventListener('click', function() {
+          menuItemsContainer.classList.toggle('collapsed');
+          categoryHeader.classList.toggle('collapsed');
+          const toggle = categoryHeader.querySelector('.category-toggle i');
+          toggle.classList.toggle('fa-chevron-down');
+          toggle.classList.toggle('fa-chevron-right');
+        });
+      });
+      
+      // Render uncategorized items if any
+      const uncategorizedItems = itemsByCategory['uncategorized'] || [];
+      if (uncategorizedItems.length > 0) {
+        const uncategorizedSection = document.createElement('div');
+        uncategorizedSection.className = 'category-section';
+        
+        const uncategorizedHeader = document.createElement('div');
+        uncategorizedHeader.className = 'category-header';
+        uncategorizedHeader.innerHTML = `
+          <h2>Other Items</h2>
+          <span class="category-toggle"><i class="fas fa-chevron-down"></i></span>
+        `;
+        uncategorizedSection.appendChild(uncategorizedHeader);
+        
+        const menuItemsContainer = document.createElement('div');
+        menuItemsContainer.className = 'menu-items';
+        menuItemsContainer.id = 'category-items-uncategorized';
+        
+        uncategorizedItems.forEach(item => {
+          const menuItem = document.createElement('div');
+          menuItem.className = 'menu-item';
+          
+          const isInCart = cart.find(i => i.id === item.id);
+          const hasDiscount = item.discount > 0 && item.discountedPrice !== null;
+          
+          menuItem.innerHTML = `
+            <div class="menu-info">
+              <h3>${item.name}</h3>
+              <p>${item.description || "No description available"}</p>
+            </div>
+            <div class="menu-actions">
+              <div class="price-container">
+                ${hasDiscount ? 
+                  `<span class="original-price">₹${item.price.toFixed(2)}</span>
+                   <span class="discounted-price">₹${item.discountedPrice.toFixed(2)}</span>` : 
+                  `<span class="price">₹${item.price.toFixed(2)}</span>`
+                }
+              </div>
+              <div class="quantity-adjust" id="quantity-adjust-${item.id}">
+                ${isInCart ? `
+                  <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
+                  <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                  <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
+                ` : `
+                  <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
+                  <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
+                `}
+              </div>
+            </div>
+          `;
+          menuItemsContainer.appendChild(menuItem);
+        });
+        
+        uncategorizedSection.appendChild(menuItemsContainer);
+        menuContainer.appendChild(uncategorizedSection);
+        
+        // Add toggle functionality for uncategorized
+        uncategorizedHeader.addEventListener('click', function() {
+          menuItemsContainer.classList.toggle('collapsed');
+          uncategorizedHeader.classList.toggle('collapsed');
+          const toggle = uncategorizedHeader.querySelector('.category-toggle i');
+          toggle.classList.toggle('fa-chevron-down');
+          toggle.classList.toggle('fa-chevron-right');
+        });
+      }
     }
 
     function addToCart(itemId) {
@@ -449,12 +723,32 @@
       const quantityInput = document.getElementById(`quantity-${itemId}`);
       quantityInput.classList.remove('hidden');
       const quantity = parseInt(quantityInput.value);
+      
+      if (!item) return;
+      
+      // Get the category for this item
+      const category = item.categoryId ? categories.find(c => c.id === item.categoryId) : null;
+      
+      // Check if category is available
+      if (category && !isCategoryAvailable(category)) {
+        alert(`Sorry, items from ${category.name} are only available between ${category.startTime} and ${category.endTime}.`);
+        return;
+      }
+      
       const cartItem = cart.find(i => i.id === itemId);
       if (cartItem) {
         cartItem.quantity += quantity;
       } else {
-        cart.push({ ...item, quantity });
+        // Determine the actual price considering discounts
+        const actualPrice = item.discountedPrice !== null ? item.discountedPrice : item.price;
+        cart.push({ 
+          ...item, 
+          quantity,
+          actualPrice,
+          categoryName: category ? category.name : 'Other'
+        });
       }
+      
       updateMenuItem(itemId);
       renderCart();
       
@@ -468,6 +762,8 @@
 
     function updateMenuItem(itemId) {
       const quantityAdjust = document.getElementById(`quantity-adjust-${itemId}`);
+      if (!quantityAdjust) return;
+      
       quantityAdjust.innerHTML = `
         <button onclick="decreaseQuantity(${itemId})"><i class="fas fa-minus"></i></button>
         <input type="number" id="quantity-${itemId}" value="${cart.find(i => i.id === itemId).quantity}" min="1" onchange="updateQuantity(${itemId}, this.value)">
@@ -496,44 +792,15 @@
         if (index !== -1) {
           cart.splice(index, 1);
           const quantityAdjust = document.getElementById(`quantity-adjust-${itemId}`);
-          quantityAdjust.innerHTML = `
-            <input type="number" id="quantity-${itemId}" value="1" min="1" class="hidden">
-            <button class="add-btn" onclick="addToCart(${itemId})"><i class="fas fa-plus"></i></button>
-          `;
+          if (quantityAdjust) {
+            quantityAdjust.innerHTML = `
+              <input type="number" id="quantity-${itemId}" value="1" min="1" class="hidden">
+              <button class="add-btn" onclick="addToCart(${itemId})"><i class="fas fa-plus"></i></button>
+            `;
+          }
           renderCart();
         }
       }
-    }
-
-    function renderCart() {
-      const cartContainer = document.getElementById('cart-items');
-      cartContainer.innerHTML = '';
-      let totalPrice = 0;
-      
-      if (cart.length === 0) {
-        cartContainer.innerHTML = '<div class="empty-cart"><i class="fas fa-shopping-basket" style="font-size: 48px; margin-bottom: 15px;"></i><p>Your cart is empty</p></div>';
-      } else {
-        cart.forEach(item => {
-          const cartItem = document.createElement('div');
-          cartItem.className = 'cart-item';
-          cartItem.innerHTML = `
-            <div>
-              <span class="cart-item-name">${item.name}</span>
-              <span class="cart-item-price">₹${(item.price * item.quantity).toFixed(2)}</span>
-            </div>
-            <div class="quantity-adjust">
-              <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
-              <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-              <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
-            </div>
-          `;
-          cartContainer.appendChild(cartItem);
-          totalPrice += item.price * item.quantity;
-        });
-      }
-      
-      document.getElementById('total-price').innerText = cart.length > 0 ? `Total: ₹${totalPrice.toFixed(2)}` : '';
-      updateCartToggle();
     }
 
     function updateQuantity(itemId, quantity) {
@@ -545,31 +812,120 @@
       }
     }
 
+    function renderCart() {
+      const cartContainer = document.getElementById('cart-items');
+      cartContainer.innerHTML = '';
+      let totalPrice = 0;
+      
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<div class="empty-cart"><i class="fas fa-shopping-basket" style="font-size: 48px; margin-bottom: 15px;"></i><p>Your cart is empty</p></div>';
+      } else {
+        // Sort cart items by category
+        const sortedCart = [...cart].sort((a, b) => {
+          if (a.categoryName === b.categoryName) return 0;
+          return a.categoryName < b.categoryName ? -1 : 1;
+        });
+        
+        let currentCategory = null;
+        
+        sortedCart.forEach(item => {
+          // Add category header if it's a new category
+          if (item.categoryName !== currentCategory) {
+            currentCategory = item.categoryName;
+            const categoryHeader = document.createElement('div');
+            categoryHeader.style.fontWeight = 'bold';
+            categoryHeader.style.marginTop = '15px';
+            categoryHeader.style.paddingBottom = '5px';
+            categoryHeader.style.borderBottom = '1px solid #eee';
+            categoryHeader.innerHTML = currentCategory;
+            cartContainer.appendChild(categoryHeader);
+          }
+          
+          const cartItem = document.createElement('div');
+          cartItem.className = 'cart-item';
+          
+          const itemPrice = item.actualPrice * item.quantity;
+          
+          cartItem.innerHTML = `
+            <div class="cart-item-details">
+              <span class="cart-item-name">${item.name}</span>
+              <span class="cart-item-category">${item.categoryName}</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+              <span class="cart-item-price">₹${itemPrice.toFixed(2)}</span>
+              <div class="quantity-adjust">
+                <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
+                <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)" style="width: 40px;">
+                <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+          `;
+          cartContainer.appendChild(cartItem);
+          totalPrice += itemPrice;
+        });
+      }
+      
+      document.getElementById('total-price').innerText = cart.length > 0 ? `Total: ₹${totalPrice.toFixed(2)}` : '';
+      updateCartToggle();
+    }
+
     function orderNow() {
       if (cart.length === 0) {
         alert('Your cart is empty. Please add items to your cart before ordering.');
         return;
       }
       
-      const orderItems = cart.map(item => ({ id: item.id, name: item.name, quantity: item.quantity }));
+      const orderItems = cart.map(item => ({ 
+        id: item.id, 
+        name: item.name, 
+        quantity: item.quantity,
+        price: item.actualPrice,
+        category: item.categoryName
+      }));
+      
       const listContainer = document.getElementById("order-items-list");
       listContainer.innerHTML = "";
     
       let totalItems = 0;
+      let totalCost = 0;
+      let currentCategory = null;
       
       orderItems.forEach(item => {
+        // Add category header if it's a new category
+        if (item.category !== currentCategory) {
+          currentCategory = item.category;
+          const categoryHeader = document.createElement("li");
+          categoryHeader.style.fontWeight = "bold";
+          categoryHeader.style.backgroundColor = "#f5f5f5";
+          categoryHeader.style.padding = "8px";
+          categoryHeader.style.marginTop = "10px";
+          categoryHeader.innerHTML = currentCategory;
+          categoryHeader.style.borderBottom = "none";
+          listContainer.appendChild(categoryHeader);
+        }
+        
         const li = document.createElement("li");
-        li.innerHTML = `<span>${item.name}</span> <span>x ${item.quantity}</span>`;
+        const itemTotal = item.price * item.quantity;
+        
+        li.innerHTML = `
+          <div>
+            <span>${item.name}</span>
+            <small style="display: block; color: #666;">₹${item.price.toFixed(2)} × ${item.quantity}</small>
+          </div>
+          <span>₹${itemTotal.toFixed(2)}</span>
+        `;
         listContainer.appendChild(li);
         totalItems += item.quantity;
+        totalCost += itemTotal;
       });
     
-      // Add total count
+      // Add total row
       const totalLi = document.createElement("li");
-      totalLi.innerHTML = `<strong>Total Items</strong> <strong>${totalItems}</strong>`;
-      totalLi.style.marginTop = '10px';
+      totalLi.innerHTML = `<strong>Total (${totalItems} items)</strong> <strong>₹${totalCost.toFixed(2)}</strong>`;
+      totalLi.style.marginTop = '15px';
       totalLi.style.borderBottom = 'none';
       totalLi.style.fontWeight = 'bold';
+      totalLi.style.fontSize = '16px';
       listContainer.appendChild(totalLi);
       
       // Save orderItems temporarily to use when confirm is clicked
@@ -682,6 +1038,11 @@
     // Initialize the page
     renderMenu();
     renderCart();
+    
+    // Check category availability periodically (every minute)
+    setInterval(() => {
+      renderMenu();
+    }, 60000);
   </script>
 </body>
 </html>

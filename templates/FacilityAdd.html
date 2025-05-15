@@ -1,0 +1,46 @@
+<!-- templates/facilities/add_facility.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add New Facility</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="/menu/tables/add/" method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="facilityName" class="form-label fw-semibold">Facility</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-hash text-secondary"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0 ps-0" 
+                                id="facilityName" name="name" 
+                                placeholder="Enter table number" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid table number.
+                        </div>
+                    </div>
+                    <label for="facilityPrice" class="form-label fw-semibold">Facility</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-hash text-secondary"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0 ps-0" 
+                                id="facilityPrice" name="name" 
+                                placeholder="Enter table number" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid table number.
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2 mt-3 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Add Table
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

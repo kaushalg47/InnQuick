@@ -1,514 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Room Service Request</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Service</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      :root {
-        --primary-color: #4caf50;
-        --primary-dark: #388e3c;
-        --primary-light: #a5d6a7;
-        --accent-color: #ff5722;
-        --text-color: #333;
-        --text-light: #666;
-        --text-white: #fff;
-        --bg-color: #f8f9fa;
-        --card-bg: #ffffff;
-        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        --radius: 12px;
-        --transition: all 0.3s ease;
-      }
-      
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      
-      body {
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        line-height: 1.6;
-        padding: 20px;
-        margin: 0;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-      }
-      
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: var(--card-bg);
-        padding: 30px;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-      }
-      
-      .header {
-        margin-bottom: 25px;
-        text-align: center;
-      }
-      
-      h1 {
-        font-size: 28px;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: var(--text-color);
-      }
-      
-      .subtitle {
-        display: inline-block;
-        font-size: 16px;
-        color: var(--text-light);
-        margin-bottom: 20px;
-      }
-      
-      .logo {
-        color: var(--primary-color);
-        font-weight: 700;
-        margin-left: 5px;
-        position: relative;
-      }
-      
-      .logo::before {
-        content: '';
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        background-color: var(--primary-light);
-        border-radius: 50%;
-        position: absolute;
-        left: -8px;
-        top: 2px;
-        z-index: -1;
-        opacity: 0.6;
-      }
-      
-      .section {
-        margin-bottom: 30px;
-      }
-      
-      .section-title {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid var(--primary-light);
-        font-size: 20px;
-        font-weight: 600;
-        color: var(--text-color);
-      }
-      
-      .section-title i {
-        margin-right: 10px;
-        color: var(--primary-color);
-      }
-      
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-        gap: 15px;
-      }
-      
-      .service-button {
-        position: relative;
-        padding: 16px 12px;
-        background-color: var(--card-bg);
-        color: var(--text-color);
-        border: 1px solid #e0e0e0;
-        border-radius: var(--radius);
-        font-size: 15px;
-        font-weight: 500;
-        cursor: pointer;
-        text-align: center;
-        transition: var(--transition);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100px;
-        overflow: hidden;
-      }
-      
-      .service-button:hover {
-        border-color: var(--primary-color);
-        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      .service-button i {
-        font-size: 24px;
-        margin-bottom: 8px;
-        color: var(--primary-color);
-      }
-      
-      .service-button::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background-color: var(--primary-color);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-      
-      .service-button:hover::after {
-        transform: scaleX(1);
-      }
-      
-      .status-message {
-        margin: 20px 0;
-        padding: 15px;
-        text-align: center;
-        font-weight: 500;
-        border-radius: var(--radius);
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        max-height: 0;
-        overflow: hidden;
-      }
-      
-      .status-message.show {
-        opacity: 1;
-        max-height: 100px;
-        margin-bottom: 20px;
-      }
-      
-      .status-message.success {
-        background-color: rgba(76, 175, 80, 0.1);
-        color: var(--primary-color);
-        border-left: 4px solid var(--primary-color);
-      }
-      
-      .status-message.error {
-        background-color: rgba(244, 67, 54, 0.1);
-        color: #f44336;
-        border-left: 4px solid #f44336;
-      }
-      
-      /* Modal styles */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-      }
-      
-      .modal-overlay.show {
-        opacity: 1;
-        visibility: visible;
-      }
-      
-      .modal-content {
-        background: var(--card-bg);
-        padding: 30px;
-        border-radius: var(--radius);
-        text-align: center;
-        max-width: 350px;
-        width: 90%;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        transform: translateY(20px);
-        transition: transform 0.3s ease;
-      }
-      
-      .modal-overlay.show .modal-content {
-        transform: translateY(0);
-      }
-      
-      .modal-icon {
-        font-size: 48px;
-        color: var(--primary-color);
-        margin-bottom: 15px;
-      }
-      
-      .modal-title {
-        font-size: 20px;
-        margin-bottom: 10px;
-        color: var(--text-color);
-      }
-      
-      .modal-message {
-        color: var(--text-light);
-        margin-bottom: 25px;
-        font-size: 16px;
-      }
-      
-      .modal-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-      }
-      
-      .btn {
-        padding: 12px 24px;
-        border: none;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 15px;
-        transition: var(--transition);
-      }
-      
-      .btn-primary {
-        background-color: var(--primary-color);
-        color: var(--text-white);
-      }
-      
-      .btn-primary:hover {
-        background-color: var(--primary-dark);
-      }
-      
-      .btn-danger {
-        background-color: #f44336;
-        color: var(--text-white);
-      }
-      
-      .btn-danger:hover {
-        background-color: #d32f2f;
-      }
-      
-      /* Animation for status message */
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      
-      .fade-in {
-        animation: fadeIn 0.3s ease forwards;
-      }
-      
-      /* Responsive adjustments */
-      @media (max-width: 500px) {
         body {
-          padding: 10px;
+            background-color: #f8f9fa;
         }
-        
-        .container {
-          padding: 20px;
+        .service-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        
-        .grid-container {
-          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-          gap: 10px;
+        .service-card:hover {
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
         }
-        
-        .service-button {
-          height: 90px;
-          padding: 12px 10px;
-          font-size: 14px;
+        .service-icon {
+            font-size: 2.5rem;
+            color: #6c757d;
+            margin-bottom: 15px;
         }
-        
-        .service-button i {
-          font-size: 20px;
+        .card-title {
+            font-weight: 600;
+            color: #212529;
         }
-      }
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        .success-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+        }
+        .room-badge {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+        }
     </style>
-  </head>
-  <body>
-    <div class="modal-overlay" id="confirmModal">
-      <div class="modal-content">
-        <div class="modal-icon">
-          <i class="fas fa-concierge-bell"></i>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">Room Service</h2>
+                <span class="badge bg-primary room-badge">Room {{ room.room_number }}</span>
+            </div>
         </div>
-        <h3 class="modal-title">Confirm Request</h3>
-        <p class="modal-message" id="popup-message"></p>
-        <div class="modal-buttons">
-          <button class="btn btn-primary" id="confirm-btn">Confirm</button>
-          <button class="btn btn-danger" onclick="closeCustomPopup()">Cancel</button>
-        </div>
-      </div>
     </div>
 
-    <div class="container">
-      <div class="header">
-        <h1>Room Service</h1>
-        <span class="subtitle">Room <strong>{{ room.number }}</strong> • powered by <span class="logo">InnQuick</span></span>
-        <div class="status-message" id="statusMessage"></div>
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title"><i class="fas fa-broom"></i> Cleaning Services</h3>
-        <div class="grid-container">
-          <button class="service-button" onclick="requestService('room cleaning')">
-            <i class="fas fa-bed"></i>
-            Room Cleaning
-          </button>
-          <button class="service-button" onclick="requestService('change sheets')">
-            <i class="fas fa-blanket"></i>
-            Change Sheets
-          </button>
-          <button class="service-button" onclick="requestService('washroom cleaning')">
-            <i class="fas fa-toilet"></i>
-            Washroom
-          </button>
+    <div class="container mb-5">
+        <!-- Success Toast -->
+        <div class="toast success-toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="successToast">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i> Service requested successfully!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         </div>
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title"><i class="fas fa-box-open"></i> Request Supplies</h3>
-        <div class="grid-container">
-          <button class="service-button" onclick="requestService('waterbottles')">
-            <i class="fas fa-bottle-water"></i>
-            Water Bottles
-          </button>
-          <button class="service-button" onclick="requestService('cutlery')">
-            <i class="fas fa-utensils"></i>
-            Cutlery
-          </button>
-          <button class="service-button" onclick="requestService('toiletries')">
-            <i class="fas fa-pump-soap"></i>
-            Toiletries
-          </button>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {% for service in available_services %}
+            <div class="col">
+                <div class="card service-card h-100 text-center p-4" 
+                     data-service-id="{{ service.id }}" 
+                     data-service-name="{{ service.name }}" 
+                     data-service-price="{{ service.price|default:'None' }}">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <div class="service-icon mb-3">
+                            {% if service.name == 'Cleaning' %}
+                                <i class="fas fa-broom"></i>
+                            {% elif service.name == 'Food' %}
+                                <i class="fas fa-utensils"></i>
+                            {% elif service.name == 'Laundry' %}
+                                <i class="fas fa-tshirt"></i>
+                            {% elif service.name == 'Maintenance' %}
+                                <i class="fas fa-tools"></i>
+                            {% else %}
+                                <i class="fas fa-concierge-bell"></i>
+                            {% endif %}
+                        </div>
+                        <h4 class="card-title mb-3">{{ service.name }}</h4>
+                        {% if service.price %}
+                            <p class="card-text text-muted mb-0">₹{{ service.price }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title"><i class="fas fa-wrench"></i> Report Issues</h3>
-        <div class="grid-container">
-          <button class="service-button" onclick="requestService('electrical repair')">
-            <i class="fas fa-bolt"></i>
-            Electrical
-          </button>
-          <button class="service-button" onclick="requestService('plumbing repair')">
-            <i class="fas fa-faucet"></i>
-            Plumbing
-          </button>
-        </div>
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title"><i class="fas fa-concierge-bell"></i> Other Services</h3>
-        <div class="grid-container">
-          <button class="service-button" onclick="requestService('room service')">
-            <i class="fas fa-bell-concierge"></i>
-            Request Attendant
-          </button>
-          <button class="service-button sos" onclick="requestService('SOS')" style="background-color: #ffebee; color: #d32f2f;">
-            <i class="fas fa-exclamation-circle" style="color: #d32f2f;"></i>
-            SOS Help
-          </button>
-          <button class="service-button" onclick="requestService('checkout')">
-            <i class="fas fa-sign-out-alt"></i>
-            Request Checkout
-          </button>
-        </div>
-      </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Service Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>You are requesting <span id="serviceName" class="fw-bold"></span> service for Room {{ room.room_number }}.</p>
+                    <div id="priceInfo"></div>
+                    <p class="mb-0">Do you want to proceed?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelButton">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmButton">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and other scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      let currentServiceType = null;
-      const confirmModal = document.getElementById("confirmModal");
-      const statusMessage = document.getElementById("statusMessage");
-      
-      // Map service types to friendly names and icons
-      const serviceInfo = {
-        'room cleaning': { name: 'Room Cleaning', icon: 'fa-bed' },
-        'change sheets': { name: 'Change Sheets', icon: 'fa-blanket' },
-        'washroom cleaning': { name: 'Washroom Cleaning', icon: 'fa-toilet' },
-        'waterbottles': { name: 'Water Bottles', icon: 'fa-bottle-water' },
-        'cutlery': { name: 'Cutlery', icon: 'fa-utensils' },
-        'toiletries': { name: 'Toiletries', icon: 'fa-pump-soap' },
-        'electrical repair': { name: 'Electrical Repair', icon: 'fa-bolt' },
-        'plumbing repair': { name: 'Plumbing Repair', icon: 'fa-faucet' },
-        'room service': { name: 'Room Attendant', icon: 'fa-bell-concierge' },
-        'SOS': { name: 'Emergency SOS', icon: 'fa-exclamation-circle' },
-        'checkout': { name: 'Checkout', icon: 'fa-sign-out-alt' }
-      };
-    
-      function requestService(serviceType) {
-        currentServiceType = serviceType;
-        const info = serviceInfo[serviceType] || { name: serviceType, icon: 'fa-concierge-bell' };
-        
-        // Update modal content
-        document.getElementById("popup-message").innerHTML = 
-          `Are you sure you want to request <strong>${info.name}</strong>?`;
-        
-        // Show modal with animation
-        confirmModal.classList.add("show");
-      }
-    
-      function closeCustomPopup() {
-        confirmModal.classList.remove("show");
-        currentServiceType = null;
-      }
-      
-      function showStatusMessage(message, isSuccess = true) {
-        statusMessage.textContent = message;
-        statusMessage.className = "status-message " + (isSuccess ? "success" : "error");
-        statusMessage.classList.add("show", "fade-in");
-        
-        // Auto-hide after some time
-        setTimeout(() => {
-          statusMessage.classList.remove("show");
-        }, 5000);
-      }
-    
-      document.getElementById("confirm-btn").addEventListener("click", async function () {
-        if (!currentServiceType) return;
-    
-        const roomId = "{{ room.id }}";
-        const userId = "{{ user.id }}";
-        
-        // Show loading state
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        this.disabled = true;
-    
-        try {
-          const response = await fetch(`/client/${roomId}/${userId}/request-service/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": "{{ csrf_token }}",
-            },
-            body: JSON.stringify({ service_type: currentServiceType }),
-          });
-    
-          const data = await response.json();
-          if (response.ok) {
-            showStatusMessage(data.message, true);
-          } else {
-            showStatusMessage(data.error || "An error occurred, please try again.", false);
-          }
-        } catch (error) {
-          showStatusMessage("An error occurred while sending the request.", false);
-        } finally {
-          // Reset button state
-          const info = serviceInfo[currentServiceType] || { name: currentServiceType, icon: 'fa-concierge-bell' };
-          this.innerHTML = 'Confirm';
-          this.disabled = false;
-          closeCustomPopup();
-        }
-      });
-      
-      // Close modal when clicking outside of it
-      confirmModal.addEventListener('click', function(event) {
-        if (event.target === confirmModal) {
-          closeCustomPopup();
-        }
-      });
-      
-      // Add keyboard support (Escape to close modal)
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && confirmModal.classList.contains('show')) {
-          closeCustomPopup();
-        }
-      });
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            const confirmBtn = document.getElementById('confirmButton');
+            const serviceNameSpan = document.getElementById('serviceName');
+            const priceInfoDiv = document.getElementById('priceInfo');
+            const successToast = new bootstrap.Toast(document.getElementById('successToast'), { delay: 3000 });
+            
+            let selectedServiceId = null;
+            let selectedServiceName = null;
+            
+            // Open modal when service card is clicked
+            serviceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    selectedServiceId = this.getAttribute('data-service-id');
+                    selectedServiceName = this.getAttribute('data-service-name');
+                    const servicePrice = this.getAttribute('data-service-price');
+                    
+                    serviceNameSpan.textContent = selectedServiceName;
+                    
+                    if (servicePrice && servicePrice !== 'None') {
+                        priceInfoDiv.innerHTML = `<p class="text-muted">Price: ₹${servicePrice}</p>`;
+                    } else {
+                        priceInfoDiv.innerHTML = '';
+                    }
+                    
+                    confirmationModal.show();
+                });
+            });
+            
+            // Handle confirmation
+            confirmBtn.addEventListener('click', function() {
+                // Send AJAX request to backend
+                fetch(`/client/{{ room.id }}/{{ user.id }}/request-service/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') // Django CSRF token
+                    },
+                    body: JSON.stringify({
+                        service_id: selectedServiceId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    confirmationModal.hide();
+                    
+                    // Show success toast
+                    successToast.show();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error processing your request.');
+                    confirmationModal.hide();
+                });
+            });
+            
+            // Function to get CSRF token from cookies (for Django)
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
     </script>
-  </body>
+</body>
 </html>
