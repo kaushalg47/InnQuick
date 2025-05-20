@@ -279,6 +279,7 @@
 </style>
 
 <div class="container">
+    {% csrf_token %}
     <div class="row">
         <div class="col-12">
             <!-- Dashboard Header -->
@@ -388,7 +389,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12">
-                                    <div class="summary-card primary">
+                                    <div class="summary-card primary" id="settleRoomCard" role="button" style="cursor: pointer;">
                                         <div class="d-flex align-items-center">
                                             <div class="summary-icon bg-white bg-opacity-25 me-3">
                                                 <i class="bi bi-cash-coin text-white fs-4"></i>
@@ -400,6 +401,7 @@
                                         </div>
                                         <div class="summary-footer">
                                             <span class="badge bg-white text-primary">Room Charges</span>
+                                            <span class="ms-2 badge bg-success text-white">Click to Settle</span>
                                         </div>
                                     </div>
                                 </div>
@@ -464,6 +466,25 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal Confirmation Dialog -->
+            <div class="modal fade" id="settleConfirmationModal" tabindex="-1" aria-labelledby="settleConfirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="settleConfirmationModalLabel">Confirm Room Settlement</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to mark this room as settled? This will update all service requests and orders for this room.
+                            <p class="mt-2">Total amount: $<span id="confirmAmount">0.00</span></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="confirmSettleBtn">Yes, Settle Room</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -508,6 +529,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const foodOrdersList = document.getElementById('foodOrdersList');
     const noServiceRequests = document.getElementById('noServiceRequests');
     const noFoodOrders = document.getElementById('noFoodOrders');
+
+    const settleRoomCard = document.getElementById('settleRoomCard');
+    const confirmSettleBtn = document.getElementById('confirmSettleBtn');
+
+    let currentRoomId = null; // To store the current room ID
+      // Assuming you have the room ID in your template context
+    
+    // Update confirmation modal with current amount when opened
+    settleRoomCard.addEventListener('click', function() {
+        const currentAmount = document.getElementById('grandTotal').textContent;
+        document.getElementById('confirmAmount').textContent = currentAmount;
+        
+        // Show the modal using Bootstrap
+        const modal = new bootstrap.Modal(document.getElementById('settleConfirmationModal'));
+        modal.show();
+    });
+    
+    // Handle the confirmation button click
+    
     
     // Add hover effect to room buttons
     roomButtons.forEach(button => {
@@ -527,6 +567,8 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const roomId = this.dataset.roomId;
             const roomNumber = this.dataset.roomNumber;
+
+            currentRoomId = roomId; // Store the current room ID
             
             // Hide room selection view
             roomSelectionView.classList.add('d-none');
@@ -541,6 +583,62 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Fetch room data
             fetchRoomData(roomId);
+        });
+    });
+
+    confirmSettleBtn.addEventListener('click', function() {
+        // Get CSRF token - assuming you have the csrf_token in your template
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        // Send AJAX request to settle the room
+        fetch(`/rooms/api/room-dashboard/${currentRoomId}/settle/`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Close the modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('settleConfirmationModal'));
+                modal.hide();
+                
+                // Update UI to show room is settled
+                settleRoomCard.classList.remove('primary');
+                settleRoomCard.classList.add('success');
+                settleRoomCard.style.cursor = 'default';
+                settleRoomCard.removeAttribute('role');
+                
+                // Update the footer badge
+                const footerBadge = settleRoomCard.querySelector('.summary-footer .badge.bg-success');
+                if (footerBadge) {
+                    footerBadge.textContent = 'Room Settled';
+                }
+                
+                // Optional: Show success message
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-success mt-3';
+                alertContainer.textContent = 'Room has been successfully settled!';
+                settleRoomCard.closest('.row').insertAdjacentElement('afterend', alertContainer);
+                
+                // Remove the alert after 5 seconds
+                setTimeout(() => {
+                    alertContainer.remove();
+                }, 5000);
+                
+                // Remove the click event listener
+                settleRoomCard.removeEventListener('click', function(){});
+            } else {
+                // Handle error
+                alert('Error settling room. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while settling the room. Please try again.');
         });
     });
     

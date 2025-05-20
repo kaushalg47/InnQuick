@@ -51,6 +51,7 @@ class Order(models.Model):
   table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True)
   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
   settled = models.BooleanField(default=False)
+  room_settled = models.BooleanField(default=False)
 
   def __str__(self):
     return f"Order {self.id} - {self.status}"

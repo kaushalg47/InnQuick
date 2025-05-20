@@ -16,7 +16,7 @@ from decimal import Decimal
 @login_required
 def menu_list(request):
   items = MenuItem.objects.filter(user=request.user)
-  categories = Category.objects.all()
+  categories = Category.objects.filter(created_by=request.user)
   print([category.name for category in categories])
   print([items.discounted_price for items in items])
 
@@ -142,7 +142,7 @@ def add_menu_item(request):
         category = None
         if category_id:
             try:
-                category = Category.objects.get(id=category_id)
+                category = Category.objects.get(id=category_id, created_by=request.user)
             except Category.DoesNotExist:
                 return JsonResponse({"error": "Category not found."}, status=404)
 
@@ -353,7 +353,7 @@ def create_category(request):
             name=name,
             created_by=user,
             start_time=start,
-            end_time=end
+            end_time=end,
         )
 
         return JsonResponse({
@@ -427,7 +427,7 @@ def rpos_screen(request, table_id):
     """Render the RPOS screen for a specific table."""
     table = get_object_or_404(Table, id=table_id, user=request.user)
     menu_items = MenuItem.objects.filter(user=request.user)
-    categories = Category.objects.all()
+    categories = Category.objects.filter(created_by=request.user)
     orders = Order.objects.filter(table=table, settled=False).order_by('-created_at')
 
     # Map categories to their menu items

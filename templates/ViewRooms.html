@@ -25,7 +25,7 @@
         <h2 class="section-title">Added Rooms</h2>
         <div class="table-responsive">
             <table id="roomsTable" class="styled-table">
-                <thead>
+                <thead class="bg-custom-primary">
                     <tr>
                         <th>ID</th>
                         <th>Room Number</th>
@@ -89,8 +89,10 @@
         font-size: 22px;
     }
 
-    .th {
-        color: #2c3e50;
+    /* Fixed: Changed from .th to .styled-table th */
+    .styled-table th {
+        color: white;
+        background-color: #2c3e50; /* Added background color for better contrast */
     }
     
     /* Form Styling */
@@ -127,7 +129,7 @@
     }
     
     .primary-button {
-        background-color: #3498db;
+        background-color: #2c3e50;
         color: white;
         border: none;
         padding: 12px 20px;
@@ -157,14 +159,14 @@
     }
     
     .styled-table thead {
-        background-color: #f8f9fa;
+        background-color: #3498db; /* Changed from #f8f9fa for better contrast with white text */
     }
     
     .styled-table th {
         text-align: left;
         padding: 14px 12px;
         font-weight: 600;
-        color: #2c3e50;
+        color: white; /* Changed from #2c3e50 to white */
         border-bottom: 2px solid #e9ecef;
     }
     

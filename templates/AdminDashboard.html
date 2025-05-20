@@ -1,7 +1,739 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
-    <div></div>
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="h3 mb-0 text-gray-800">Admin Dashboard</h1>
+                    <p class="text-muted">Overview of all hotel operations and earnings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Revenue</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<span id="totalRevenue">0</span></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-currency-dollar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Room Service</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="totalServiceRequests">0</span></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-tools fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Food Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="totalFoodOrders">0</span></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-cart-fill fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Facility Bookings</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><span id="totalFacilityBookings">0</span></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-calendar-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Revenue Breakdown Pie Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="revenuePieChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Room Service
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Food Orders
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Facility Bookings
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Monthly Revenue Overview</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="monthlyRevenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Status & Trends -->
+    <div class="row mb-4">
+        <!-- Service Request Status -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Service Request Status</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="serviceRequestStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Food Order Status -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Food Order Status</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="foodOrderStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables Row -->
+    <div class="row">
+        <!-- Service Requests Table -->
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Service Requests</h6>
+                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#serviceRequestsCollapse" aria-expanded="false" aria-controls="serviceRequestsCollapse">
+                        Toggle View
+                    </button>
+                </div>
+                <div class="collapse show" id="serviceRequestsCollapse">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="serviceRequestsTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Room</th>
+                                        <th>Service Type</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Settled</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="serviceRequestsTableBody">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Food Orders Table -->
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Food Orders</h6>
+                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#foodOrdersCollapse" aria-expanded="false" aria-controls="foodOrdersCollapse">
+                        Toggle View
+                    </button>
+                </div>
+                <div class="collapse show" id="foodOrdersCollapse">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="foodOrdersTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Settled</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="foodOrdersTableBody">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facility Bookings Table -->
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Facility Bookings</h6>
+                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#facilityBookingsCollapse" aria-expanded="false" aria-controls="facilityBookingsCollapse">
+                        Toggle View
+                    </button>
+                </div>
+                <div class="collapse show" id="facilityBookingsCollapse">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="facilityBookingsTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Facility</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Settled</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facilityBookingsTableBody">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    /* Custom styles for the dashboard */
+    .border-left-primary {
+        border-left: 0.25rem solid #2c3e50 !important;
+    }
+    .border-left-success {
+        border-left: 0.25rem solid #1cc88a !important;
+    }
+    .border-left-info {
+        border-left: 0.25rem solid #34495e !important;
+    }
+    .border-left-warning {
+        border-left: 0.25rem solid #f6c23e !important;
+    }
+    
+    .chart-area {
+        position: relative;
+        height: 20rem;
+    }
+    
+    .chart-pie {
+        position: relative;
+        height: 15rem;
+    }
+    
+    .chart-bar {
+        position: relative;
+        height: 20rem;
+    }
+    
+    .text-gray-300 {
+        color: #dddfeb !important;
+    }
+    
+    .text-gray-800 {
+        color: #5a5c69 !important;
+    }
+    
+    .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+    
+    .btn-primary:hover {
+        background-color: #2e59d9;
+        border-color: #2653d4;
+    }
+    
+    .text-primary {
+        color: #4e73df !important;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch data from the API
+        fetchDashboardData();
+        
+        // Set up event handlers and other initializations
+        setupCharts();
+    });
+    
+    function fetchDashboardData() {
+        fetch('/core/get-all-data/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Process and display the data
+                processData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+                showErrorMessage('Failed to load dashboard data. Please try again later.');
+            });
+    }
+    
+    function processData(data) {
+        // Update summary statistics
+        const serviceRequests = data.service_requests;
+        const foodOrders = data.food_orders;
+        const facilityBookings = data.facility_bookings;
+        
+        // Update counts
+        document.getElementById('totalServiceRequests').textContent = serviceRequests.length;
+        document.getElementById('totalFoodOrders').textContent = foodOrders.length;
+        document.getElementById('totalFacilityBookings').textContent = facilityBookings.length;
+        
+        // Estimate total revenue (you would need actual price data for accurate calculation)
+        // This is just a placeholder calculation
+        const revenue = estimateRevenue(serviceRequests, foodOrders, facilityBookings);
+        document.getElementById('totalRevenue').textContent = revenue.toFixed(2);
+        
+        // Populate tables
+        populateServiceRequestsTable(serviceRequests);
+        populateFoodOrdersTable(foodOrders);
+        populateFacilityBookingsTable(facilityBookings);
+        
+        // Update charts with the new data
+        updateCharts(serviceRequests, foodOrders, facilityBookings);
+    }
+    
+    function estimateRevenue(serviceRequests, foodOrders, facilityBookings) {
+        // This is a placeholder function - replace with actual revenue calculation
+        // In a real implementation, you would sum the actual prices from the data
+        let totalRevenue = 0;
+        
+        // Assume average values for this demo
+        const avgServiceRequestValue = 50;
+        const avgFoodOrderValue = 75;
+        const avgFacilityBookingValue = 100;
+        
+        // Count only settled items for revenue
+        const settledServiceRequests = serviceRequests.filter(sr => sr.room_settled).length;
+        const settledFoodOrders = foodOrders.filter(order => order.settled).length;
+        const settledFacilityBookings = facilityBookings.filter(booking => booking.settled).length;
+        
+        totalRevenue += settledServiceRequests * avgServiceRequestValue;
+        totalRevenue += settledFoodOrders * avgFoodOrderValue;
+        totalRevenue += settledFacilityBookings * avgFacilityBookingValue;
+        
+        return totalRevenue;
+    }
+    
+    function populateServiceRequestsTable(serviceRequests) {
+        const tableBody = document.getElementById('serviceRequestsTableBody');
+        tableBody.innerHTML = '';
+        
+        // Sort by date, newest first
+        serviceRequests.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        // Take only the most recent 10 items
+        const recentRequests = serviceRequests.slice(0, 10);
+        
+        recentRequests.forEach(request => {
+            const row = document.createElement('tr');
+            
+            // Define status class
+            let statusClass = request.is_serviced ? 'bg-success text-white' : 'bg-warning';
+            let settledClass = request.room_settled ? 'bg-success text-white' : 'bg-light';
+            
+            row.innerHTML = `
+                <td>${request.id}</td>
+                <td>Room ${request.room}</td>
+                <td>${request.service_type}</td>
+                <td><span class="badge ${statusClass}">${request.is_serviced ? 'Completed' : 'Pending'}</span></td>
+                <td>${formatDateTime(request.created_at)}</td>
+                <td><span class="badge ${settledClass}">${request.room_settled ? 'Settled' : 'Unsettled'}</span></td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+    
+    function populateFoodOrdersTable(foodOrders) {
+        const tableBody = document.getElementById('foodOrdersTableBody');
+        tableBody.innerHTML = '';
+        
+        // Sort by date, newest first
+        foodOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        // Take only the most recent 10 items
+        const recentOrders = foodOrders.slice(0, 10);
+        
+        recentOrders.forEach(order => {
+            const row = document.createElement('tr');
+            
+            // Define status class based on order status
+            let statusClass;
+            switch(order.status) {
+                case 'completed':
+                    statusClass = 'bg-success text-white';
+                    break;
+                case 'preparing':
+                    statusClass = 'bg-info text-white';
+                    break;
+                case 'pending':
+                    statusClass = 'bg-warning';
+                    break;
+                case 'cancelled':
+                    statusClass = 'bg-danger text-white';
+                    break;
+                default:
+                    statusClass = 'bg-warning';
+            }
+            
+            let settledClass = order.settled ? 'bg-success text-white' : 'bg-light';
+            
+            row.innerHTML = `
+                <td>${order.id}</td>
+                <td>${order.room ? 'Room ' + order.room : 'N/A'}</td>
+                <td><span class="badge ${statusClass}">${capitalizeFirstLetter(order.status)}</span></td>
+                <td>${formatDateTime(order.created_at)}</td>
+                <td><span class="badge ${settledClass}">${order.settled ? 'Settled' : 'Unsettled'}</span></td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+    
+    function populateFacilityBookingsTable(facilityBookings) {
+        const tableBody = document.getElementById('facilityBookingsTableBody');
+        tableBody.innerHTML = '';
+        
+        // Sort by start time, newest first
+        facilityBookings.sort((a, b) => new Date(b.start_time) - new Date(a.start_time));
+        
+        // Take only the most recent 10 items
+        const recentBookings = facilityBookings.slice(0, 10);
+        
+        recentBookings.forEach(booking => {
+            const row = document.createElement('tr');
+            
+            let settledClass = booking.settled ? 'bg-success text-white' : 'bg-light';
+            
+            row.innerHTML = `
+                <td>${booking.id}</td>
+                <td>${booking.facility}</td>
+                <td>${formatDateTime(booking.start_time)}</td>
+                <td>${formatDateTime(booking.end_time)}</td>
+                <td><span class="badge ${settledClass}">${booking.settled ? 'Settled' : 'Unsettled'}</span></td>
+            `;
+            
+            tableBody.appendChild(row);
+        });
+    }
+    
+    // Chart setup and update functions
+    let revenueChart, serviceChart, foodChart, revenuePieChart;
+    
+    function setupCharts() {
+        // Setup Monthly Revenue Chart
+        const revenueCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
+        revenueChart = new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: getLastSixMonths(),
+                datasets: [{
+                    label: 'Revenue ($)',
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: [0, 0, 0, 0, 0, 0],
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // Setup Service Request Status Chart
+        const serviceCtx = document.getElementById('serviceRequestStatusChart').getContext('2d');
+        serviceChart = new Chart(serviceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Pending', 'Completed'],
+                datasets: [{
+                    label: 'Service Requests',
+                    backgroundColor: [
+                        'rgba(246, 194, 62, 0.8)',
+                        'rgba(28, 200, 138, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(246, 194, 62)',
+                        'rgb(28, 200, 138)'
+                    ],
+                    borderWidth: 1,
+                    data: [0, 0],
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // Setup Food Order Status Chart
+        const foodCtx = document.getElementById('foodOrderStatusChart').getContext('2d');
+        foodChart = new Chart(foodCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Pending', 'Preparing', 'Completed', 'Cancelled'],
+                datasets: [{
+                    label: 'Food Orders',
+                    backgroundColor: [
+                        'rgba(246, 194, 62, 0.8)',
+                        'rgba(54, 185, 204, 0.8)',
+                        'rgba(28, 200, 138, 0.8)',
+                        'rgba(231, 74, 59, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(246, 194, 62)',
+                        'rgb(54, 185, 204)',
+                        'rgb(28, 200, 138)',
+                        'rgb(231, 74, 59)'
+                    ],
+                    borderWidth: 1,
+                    data: [0, 0, 0, 0],
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        // Setup Revenue Sources Pie Chart
+        const pieCtx = document.getElementById('revenuePieChart').getContext('2d');
+        revenuePieChart = new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Room Service', 'Food Orders', 'Facility Bookings'],
+                datasets: [{
+                    backgroundColor: [
+                        'rgba(78, 115, 223, 0.8)',
+                        'rgba(28, 200, 138, 0.8)',
+                        'rgba(54, 185, 204, 0.8)'
+                    ],
+                    hoverBackgroundColor: [
+                        'rgba(78, 115, 223, 1)',
+                        'rgba(28, 200, 138, 1)',
+                        'rgba(54, 185, 204, 1)'
+                    ],
+                    data: [0, 0, 0],
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+    
+    function updateCharts(serviceRequests, foodOrders, facilityBookings) {
+        // Update the service request status chart
+        const pendingServices = serviceRequests.filter(req => !req.is_serviced).length;
+        const completedServices = serviceRequests.filter(req => req.is_serviced).length;
+        
+        serviceChart.data.datasets[0].data = [pendingServices, completedServices];
+        serviceChart.update();
+        
+        // Update the food order status chart
+        const pendingOrders = foodOrders.filter(order => order.status === 'pending').length;
+        const preparingOrders = foodOrders.filter(order => order.status === 'preparing').length;
+        const completedOrders = foodOrders.filter(order => order.status === 'completed').length;
+        const cancelledOrders = foodOrders.filter(order => order.status === 'cancelled').length;
+        
+        foodChart.data.datasets[0].data = [pendingOrders, preparingOrders, completedOrders, cancelledOrders];
+        foodChart.update();
+        
+        // Update revenue sources pie chart
+        // Assume average values for this demo
+        const avgServiceRequestValue = 50;
+        const avgFoodOrderValue = 75;
+        const avgFacilityBookingValue = 100;
+        
+        // Count only settled items for revenue
+        const settledServiceRequests = serviceRequests.filter(sr => sr.room_settled).length;
+        const settledFoodOrders = foodOrders.filter(order => order.settled).length;
+        const settledFacilityBookings = facilityBookings.filter(booking => booking.settled).length;
+        
+        const serviceRevenue = settledServiceRequests * avgServiceRequestValue;
+        const foodRevenue = settledFoodOrders * avgFoodOrderValue;
+        const facilityRevenue = settledFacilityBookings * avgFacilityBookingValue;
+        
+        revenuePieChart.data.datasets[0].data = [serviceRevenue, foodRevenue, facilityRevenue];
+        revenuePieChart.update();
+        
+        // Update monthly revenue chart with simulated data
+        // In a real implementation, you would aggregate actual data by month
+        const monthlyData = simulateMonthlyRevenue(serviceRequests, foodOrders, facilityBookings);
+        revenueChart.data.datasets[0].data = monthlyData;
+        revenueChart.update();
+    }
+    
+    function simulateMonthlyRevenue(serviceRequests, foodOrders, facilityBookings) {
+        // This is a simplified simulation for the demo
+        // In a real implementation, you would aggregate actual data by month
+        const monthlyData = [];
+        const months = getLastSixMonths();
+        
+        // Create some simulated monthly data based on the total number of requests/orders
+        const totalItems = serviceRequests.length + foodOrders.length + facilityBookings.length;
+        
+        // Distribute the items somewhat realistically across months with some growth trend
+        const baseValue = totalItems * 20; // Arbitrary base value
+        
+        for (let i = 0; i < 6; i++) {
+            // Add some randomness and a slight growth trend
+            const growthFactor = 1 + (i * 0.15); // 15% growth each month
+            const randomFactor = 0.8 + (Math.random() * 0.4); // Random factor between 0.8 and 1.2
+            
+            const monthlyRevenue = Math.round(baseValue * growthFactor * randomFactor);
+            monthlyData.push(monthlyRevenue);
+        }
+        
+        return monthlyData;
+    }
+    
+    // Helper functions
+    function getLastSixMonths() {
+        const months = [];
+        const now = new Date();
+        
+        for (let i = 5; i >= 0; i--) {
+            const month = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            months.push(month.toLocaleString('default', { month: 'short' }));
+        }
+        
+        return months;
+    }
+    
+    function formatDateTime(dateTimeStr) {
+        const date = new Date(dateTimeStr);
+        return date.toLocaleString();
+    }
+    
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
+    function showErrorMessage(message) {
+        // Create an alert element
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-danger';
+        alertDiv.role = 'alert';
+        alertDiv.textContent = message;
+        
+        // Insert at the top of the container
+        const container = document.querySelector('.container-fluid');
+        container.insertBefore(alertDiv, container.firstChild);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 5000);
+    }
+</script>
+{% endblock %}
 {% endblock %}

@@ -2,53 +2,227 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Room Service</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
+        :root {
+            --primary-color:rgb(55, 170, 91);
+            --secondary-color:rgb(55, 201, 75);
+            --accent-color:rgb(9, 14, 19);
+            --success-color: #4cc9a8;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --medium-text: #495057;
+            --light-text: #6c757d;
+            --border-radius: 16px;
+            --card-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            --hover-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
+        
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 40px;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h2 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 1.5rem;
+        }
+        
+        .header p {
+            font-size: 0.85rem;
+        }
+        
+        .room-badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .service-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+            position: relative;
+        }
+        
+        .category-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        /* Mobile optimized grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Always 2 columns for mobile */
+            gap: 12px;
+            padding: 0 5px;
+        }
+        
         .service-card {
             transition: all 0.3s ease;
             cursor: pointer;
-            height: 100%;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             border: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: var(--card-shadow);
+            background-color: white;
+            overflow: hidden;
+            position: relative;
+            padding: 15px 10px;
+            height: 100%;
+            /* Better touch target for mobile */
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            -webkit-touch-callout: none; /* Prevent callout to copy image, etc when tap on iOS */
         }
-        .service-card:hover {
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            transform: translateY(-5px);
+        
+        .service-card:active {
+            background-color: rgba(67, 97, 238, 0.03);
+            transform: scale(0.98);
         }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+        
+        .service-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(67, 97, 238, 0.1);
+            margin: 0 auto 15px;
+        }
+        
         .service-icon {
-            font-size: 2.5rem;
-            color: #6c757d;
-            margin-bottom: 15px;
+            font-size: 1.8rem;
+            color: var(--primary-color);
         }
+        
         .card-title {
             font-weight: 600;
-            color: #212529;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            font-size: 1rem;
+            text-align: center;
         }
-        .header {
-            background-color: #fff;
-            border-bottom: 1px solid #e9ecef;
-            padding: 20px 0;
-            margin-bottom: 30px;
+        
+        .service-price {
+            font-weight: 500;
+            color: var(--accent-color);
+            background: rgba(72, 149, 239, 0.1);
+            padding: 3px 12px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.8rem;
         }
+        
         .success-toast {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            bottom: 20px; /* Position at bottom for easier access on mobile */
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1100;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 80%; /* Wider for better visibility on mobile */
         }
-        .room-badge {
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
+        
+        /* Animation for service cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .service-item {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .service-item:nth-child(odd) { animation-delay: 0.1s; }
+        .service-item:nth-child(even) { animation-delay: 0.2s; }
+        
+        /* Mobile optimizations for modal */
+        .modal-dialog {
+            margin: 0.5rem;
+        }
+        
+        .modal-content {
+            border-radius: var(--border-radius);
+        }
+        
+        /* Prevent scrolling when modal is open */
+        body.modal-open {
+            position: fixed;
+            width: 100%;
+        }
+        
+        /* Improved scrolling */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            
+            .service-card {
+                padding: 15px 8px;
+            }
+            
+            .services-grid {
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -56,8 +230,14 @@
     <div class="header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">Room Service</h2>
-                <span class="badge bg-primary room-badge">Room {{ room.room_number }}</span>
+                <div>
+                    <h2 class="mb-0">Room Service</h2>
+                    <p class="text-white-50 mb-0">Select a service you'd like to request</p>
+                </div>
+                <div class="room-badge">
+                    <i class="fas fa-door-open me-2"></i>
+                    Room {{ room.number }}
+                </div>
             </div>
         </div>
     </div>
@@ -73,39 +253,49 @@
             </div>
         </div>
         
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            {% for service in available_services %}
-            <div class="col">
-                <div class="card service-card h-100 text-center p-4" 
-                     data-service-id="{{ service.id }}" 
-                     data-service-name="{{ service.name }}" 
-                     data-service-price="{{ service.price|default:'None' }}">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="service-icon mb-3">
-                            {% if service.name == 'Cleaning' %}
-                                <i class="fas fa-broom"></i>
-                            {% elif service.name == 'Food' %}
-                                <i class="fas fa-utensils"></i>
-                            {% elif service.name == 'Laundry' %}
-                                <i class="fas fa-tshirt"></i>
-                            {% elif service.name == 'Maintenance' %}
-                                <i class="fas fa-tools"></i>
-                            {% else %}
-                                <i class="fas fa-concierge-bell"></i>
-                            {% endif %}
+        <div class="service-category">
+            <div class="services-grid">
+                {% for service in available_services %}
+                <div class="service-item">
+                    <div class="service-card" 
+                         data-service-id="{{ service.id }}" 
+                         data-service-name="{{ service.name }}" 
+                         data-service-price="{{ service.price|default:'None' }}">
+                        <div class="service-icon-wrapper">
+                            <div class="service-icon">
+                                {% if service.name == 'Cleaning' %}
+                                    <i class="fas fa-broom"></i>
+                                {% elif service.name == 'Food' %}
+                                    <i class="fas fa-utensils"></i>
+                                {% elif service.name == 'Laundry' %}
+                                    <i class="fas fa-tshirt"></i>
+                                {% elif service.name == 'Maintenance' %}
+                                    <i class="fas fa-tools"></i>
+                                {% elif service.name == 'Towels' %}
+                                    <i class="fas fa-hot-tub"></i>
+                                {% elif service.name == 'Toiletries' %}
+                                    <i class="fas fa-pump-soap"></i>
+                                {% elif service.name == 'Minibar' %}
+                                    <i class="fas fa-cocktail"></i>
+                                {% else %}
+                                    <i class="fas fa-concierge-bell"></i>
+                                {% endif %}
+                            </div>
                         </div>
-                        <h4 class="card-title mb-3">{{ service.name }}</h4>
+                        <h4 class="card-title">{{ service.name }}</h4>
                         {% if service.price %}
-                            <p class="card-text text-muted mb-0">₹{{ service.price }}</p>
+                            <div class="service-price">₹{{ service.price }}</div>
+                        {% else %}
+                            <div class="service-price">Free</div>
                         {% endif %}
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
+    <!-- Confirmation Modal (keeping exactly as is) -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -126,7 +316,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap and other scripts -->
+    <!-- Bootstrap and other scripts (keeping exactly as is) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -136,6 +326,21 @@
             const serviceNameSpan = document.getElementById('serviceName');
             const priceInfoDiv = document.getElementById('priceInfo');
             const successToast = new bootstrap.Toast(document.getElementById('successToast'), { delay: 3000 });
+            
+            // Add active tap effect for mobile
+            serviceCards.forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.classList.add('active-tap');
+                });
+                
+                card.addEventListener('touchend', function() {
+                    this.classList.remove('active-tap');
+                });
+                
+                card.addEventListener('touchcancel', function() {
+                    this.classList.remove('active-tap');
+                });
+            });
             
             let selectedServiceId = null;
             let selectedServiceName = null;
@@ -161,6 +366,10 @@
             
             // Handle confirmation
             confirmBtn.addEventListener('click', function() {
+                // Add loading state for better mobile feedback
+                this.disabled = true;
+                this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...';
+                
                 // Send AJAX request to backend
                 fetch(`/client/{{ room.id }}/{{ user.id }}/request-service/`, {
                     method: 'POST',
@@ -176,11 +385,20 @@
                 .then(data => {
                     confirmationModal.hide();
                     
+                    // Reset button state
+                    this.disabled = false;
+                    this.innerHTML = 'Confirm';
+                    
                     // Show success toast
                     successToast.show();
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    
+                    // Reset button state
+                    this.disabled = false;
+                    this.innerHTML = 'Confirm';
+                    
                     alert('There was an error processing your request.');
                     confirmationModal.hide();
                 });
@@ -201,6 +419,14 @@
                 }
                 return cookieValue;
             }
+            
+            // Fix for iOS 100vh issue
+            function setHeight() {
+                document.body.style.setProperty('--vh', window.innerHeight + 'px');
+            }
+            
+            setHeight();
+            window.addEventListener('resize', setHeight);
         });
     </script>
 </body>

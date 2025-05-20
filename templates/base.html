@@ -92,7 +92,7 @@
         }
         
         .sidebar .nav-link.active {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             color: white;
         }
         
@@ -155,6 +155,12 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
+
+        .bg-custom-primary {
+            background-color: var(--primary-color) !important;
+            color: white; /* Optional */
+        }
+
         
         /* Grid layout */
         .grid-container {
@@ -400,6 +406,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-chart-pie"></i> Analytics
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'user_settings_view' %}">
                     <i class="fas fa-cog"></i> Settings
                 </a>
@@ -429,134 +440,124 @@
     
     <!-- Base JavaScript -->
     <script>
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            sidebar.classList.toggle('active');
-            
-            // Adjust content margin when sidebar is toggled on mobile
-            if (window.innerWidth <= 768) {
-                if (sidebar.classList.contains('active')) {
-                    content.style.marginLeft = '0';
-                } else {
-                    content.style.marginLeft = '0';
-                }
-            }
+        // Base JavaScript with fixed dropdown behavior
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    sidebar.classList.toggle('active');
+    
+    // Adjust content margin when sidebar is toggled on mobile
+    if (window.innerWidth <= 768) {
+        if (sidebar.classList.contains('active')) {
+            content.style.marginLeft = '0';
+        } else {
+            content.style.marginLeft = '0';
         }
-        
-        // Check for mobile devices and adjust UI accordingly
-        function checkScreenSize() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('active');
-                content.style.marginLeft = '0';
-            } else {
-                sidebar.classList.remove('active'); // Remove mobile active class
-                content.style.marginLeft = window.innerWidth <= 1024 ? '250px' : '280px';
-            }
-        }
+    }
+}
 
-        // Keep dropdown menus open based on the current page URL
-        function setActiveNavItem() {
-            // Get current URL path
-            const currentPath = window.location.pathname;
+// Check for mobile devices and adjust UI accordingly
+function checkScreenSize() {
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove('active');
+        content.style.marginLeft = '0';
+    } else {
+        sidebar.classList.remove('active'); // Remove mobile active class
+        content.style.marginLeft = window.innerWidth <= 1024 ? '250px' : '280px';
+    }
+}
+
+// Keep dropdown menus open based on the current page URL, but prevent auto-opening
+function setActiveNavItem() {
+    // Get current URL path
+    const currentPath = window.location.pathname;
+    
+    // Find all links and mark the active one
+    const navLinks = document.querySelectorAll('.nav-link');
+    let foundActiveMenu = false;
+    
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+            foundActiveMenu = true;
             
-            // Define which URLs belong to which dropdown
-            const viewUrls = [
-                '{% url 'get_room_service_requests' %}',
-                '{% url 'order_list' %}',
-                '{% url 'view_all_bookings' %}',
-                '{% url 'completed_orders' %}'
-            ];
-            
-            const manageUrls = [
-                '{% url 'fetch_rooms' %}',
-                '{% url 'table_list' %}',
-                '{% url 'menu_list' %}',
-                '{% url 'facilities_dashboard' %}'
-            ];
-            
-            // Find all links and mark the active one
-            const navLinks = document.querySelectorAll('.nav-link');
-            let foundActiveMenu = false;
-            
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('active');
-                    foundActiveMenu = true;
-                    
-                    // Find parent dropdown if any
-                    const dropdownParent = link.closest('.collapse');
-                    if (dropdownParent) {
-                        // Show this dropdown
-                        dropdownParent.classList.add('show');
-                        // Also highlight the dropdown toggle
-                        const dropdownToggle = document.querySelector(`[href="#${dropdownParent.id}"]`);
-                        if (dropdownToggle) {
-                            dropdownToggle.classList.add('active');
-                            dropdownToggle.setAttribute('aria-expanded', 'true');
-                        }
-                    }
-                }
-            });
-            
-            // If no exact match was found, try to match by section
-            if (!foundActiveMenu) {
-                // Check if current URL is in the view section
-                if (viewUrls.some(url => currentPath.includes(url.replace(/\?.*$/, '')))) {
-                    document.querySelector('[href="#viewSubmenu"]').click();
-                }
-                // Check if current URL is in the manage section
-                else if (manageUrls.some(url => currentPath.includes(url.replace(/\?.*$/, '')))) {
-                    document.querySelector('[href="#manageSubmenu"]').click();
+            // Find parent dropdown if any
+            const dropdownParent = link.closest('.collapse');
+            if (dropdownParent) {
+                // Show this dropdown
+                dropdownParent.classList.add('show');
+                // Also highlight the dropdown toggle
+                const dropdownToggle = document.querySelector(`[href="#${dropdownParent.id}"]`);
+                if (dropdownToggle) {
+                    dropdownToggle.classList.add('active');
+                    dropdownToggle.setAttribute('aria-expanded', 'true');
                 }
             }
         }
-        
-        // Initialize when document is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            checkScreenSize();
+    });
+    
+    // Remove the auto-opening section that was causing the problem
+    // We're not going to try to match by section anymore
+}
+
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    checkScreenSize();
+    
+    // Check if Bootstrap JavaScript is loaded
+    if (typeof bootstrap === 'undefined') {
+        console.warn('Bootstrap JavaScript is not loaded. Some UI components may not work properly.');
+    }
+    
+    // Set active navigation based on current URL
+    setActiveNavItem();
+    
+    // Store dropdown state in localStorage when toggled
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(event) {
+            // Prevent event bubbling to avoid unwanted interactions
+            event.stopPropagation();
             
-            // Check if Bootstrap JavaScript is loaded
-            if (typeof bootstrap === 'undefined') {
-                console.warn('Bootstrap JavaScript is not loaded. Some UI components may not work properly.');
-            }
+            const targetId = this.getAttribute('href').substring(1);
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
             
-            // Set active navigation based on current URL
-            setActiveNavItem();
-            
-            // Store dropdown state in localStorage when toggled
-            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    const targetId = this.getAttribute('href').substring(1);
-                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                    
-                    // Save state to localStorage
-                    localStorage.setItem(`dropdown_${targetId}`, isExpanded ? 'closed' : 'open');
-                });
-            });
-            
-            // Restore dropdown states from localStorage
-            const restoreDropdowns = () => {
-                const dropdowns = document.querySelectorAll('.collapse');
-                dropdowns.forEach(dropdown => {
-                    const savedState = localStorage.getItem(`dropdown_${dropdown.id}`);
-                    if (savedState === 'open' && !dropdown.classList.contains('show')) {
-                        const bsCollapse = new bootstrap.Collapse(dropdown);
-                        bsCollapse.show();
-                    }
-                });
-            };
-            
-            // Apply stored states after a short delay to ensure Bootstrap is initialized
-            setTimeout(restoreDropdowns, 100);
+            // Save state to localStorage
+            localStorage.setItem(`dropdown_${targetId}`, isExpanded ? 'closed' : 'open');
         });
-        
-        // Adjust on window resize
-        window.addEventListener('resize', checkScreenSize);
+    });
+    
+    // Clean up any click events that might be interfering
+    document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+        link.addEventListener('click', function(event) {
+            // Don't trigger parent elements
+            event.stopPropagation();
+        });
+    });
+    
+    // Restore dropdown states from localStorage only for the active section
+    const restoreDropdowns = () => {
+        // Find the active menu item
+        const activeItem = document.querySelector('.nav-link.active');
+        if (activeItem) {
+            // Only restore the dropdown containing the active item
+            const dropdownParent = activeItem.closest('.collapse');
+            if (dropdownParent) {
+                const bsCollapse = new bootstrap.Collapse(dropdownParent);
+                bsCollapse.show();
+            }
+        }
+    };
+    
+    // Apply stored states after a short delay to ensure Bootstrap is initialized
+    setTimeout(restoreDropdowns, 100);
+});
+
+// Adjust on window resize
+window.addEventListener('resize', checkScreenSize);
     </script>
     
     <!-- Template-specific JavaScript block for child templates -->

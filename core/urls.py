@@ -10,4 +10,7 @@ urlpatterns = [
     path('service-types/', views.service_type_list, name='service_type_list'),
     path('service-types/add/', views.add_service_type, name='add_service_type'),
     path('service-types/delete/<int:service_id>/', views.delete_service_type, name='delete_service_type'),
+
+    path('get-all-data/', views.get_all_data, name='get_all_data'),
+    path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 ]

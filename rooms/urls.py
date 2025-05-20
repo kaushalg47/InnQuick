@@ -16,6 +16,7 @@ urlpatterns = [
     path('room-dashboard/', views.room_dashboard, name='room_dashboard'),
     
     path('api/room-dashboard/<int:room_id>/', views.room_data_api, name='room_data_api'),
+    path('api/room-dashboard/<int:room_id>/settle/', views.update_room_settled, name='update_room_settled'),
     
     
 ]

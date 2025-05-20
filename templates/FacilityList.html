@@ -10,7 +10,7 @@
     transform: translateY(-2px);
 }
 .facility-card.active {
-    border-left: 4px solid #0d6efd;
+    border-left: 4px solid var(--primary-color);
 }
 .action-button {
     width: 80px;
@@ -41,7 +41,7 @@
     <!-- Mobile Add Facility Form (Collapsible) -->
     <div class="collapse d-md-none mb-4" id="addFacilityFormMobile">
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-custom-primary text-white">
                 <h5 class="card-title mb-0">Add New Facility</h5>
             </div>
             <div class="card-body">
@@ -76,7 +76,7 @@
         <!-- Add New Facility Section (Desktop) -->
         <div class="col-md-4 d-none d-md-block">
             <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-custom-primary text-white">
                     <h5 class="card-title mb-0">Add New Facility</h5>
                 </div>
                 <div class="card-body">
@@ -125,7 +125,7 @@
                                         <small class="text-muted">{{ facility.user.username }}</small>
                                     </div>
                                     {% if facility.price %}
-                                    <span class="badge bg-info rounded-pill">${{ facility.price }}</span>
+                                    <span class="badge bg-custom-primary rounded-pill">${{ facility.price }}</span>
                                     {% else %}
                                     <span class="badge bg-light text-dark border">Free</span>
                                     {% endif %}
@@ -151,7 +151,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">{{ selected_facility.name }}</h5>
                         {% if selected_facility.price %}
-                        <span class="badge bg-info">${{ selected_facility.price }}</span>
+                        <span class="badge bg-custom-primary">${{ selected_facility.price }}</span>
                         {% else %}
                         <span class="badge bg-light text-dark border">Free</span>
                         {% endif %}

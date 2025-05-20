@@ -187,16 +187,18 @@ def room_data_api(request, room_id):
         
         # Get all service requests for this room
         service_requests = RoomServiceRequest.objects.filter(
-            room=room
+            room=room, room_settled=False
         ).select_related('service_type').order_by('-created_at')
         
         # Get all food orders for this room
         orders = Order.objects.filter(
-            room=room
+            room=room, room_settled=False
         ).prefetch_related('orderitem_set__menu_item').order_by('-created_at')
         
         # Calculate service requests total
         services_total = Decimal('0.00')
+        food_total = Decimal('0.00')
+        
         for service in service_requests:
             if service.service_type.price:
                 if isinstance(service.service_type.price, float):
@@ -270,6 +272,41 @@ def room_data_api(request, room_id):
         return JsonResponse({'error': 'Room not found'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
 
+@login_required
+def update_room_settled(request, room_id):
+    if request.method == 'POST':
+        room = get_object_or_404(Room, id=room_id)
+
+        # Get all service requests for this room
+        service_requests = RoomServiceRequest.objects.filter(
+            room=room, room_settled=False
+        ).select_related('service_type').order_by('-created_at')
+        
+        # Get all food orders for this room
+        orders = Order.objects.filter(
+            room=room, room_settled=False
+        ).prefetch_related('orderitem_set__menu_item').order_by('-created_at')
+
+        # Update each service request individually
+        for service_request in service_requests:
+            service_request.room_settled = True
+            service_request.save()
+
+        # Update each order individually
+        for order in orders:
+            order.room_settled = True
+            order.save()
+        
+        # For AJAX requests
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success'})
+        
+        # For regular form submissions, redirect back to a page
+        return redirect('room_detail', room_id=room_id)
+    
+    # If not a POST request, redirect to room detail
+    return redirect('room_detail', room_id=room_id)
 
 
