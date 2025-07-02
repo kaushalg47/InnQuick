@@ -238,6 +238,36 @@
       gap: 10px;
     }
     
+    /* Section divider for unavailable categories */
+    .unavailable-section-divider {
+      max-width: 800px;
+      margin: 40px auto 30px auto;
+      padding: 0 15px;
+      position: relative;
+    }
+    
+    .unavailable-section-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      right: 15px;
+      height: 1px;
+      background-color: #ddd;
+    }
+    
+    .unavailable-section-title {
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      padding: 8px 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    
     .cart-popup {
       position: fixed;
       bottom: 0;
@@ -503,7 +533,7 @@
   </button>
 
   <script>
-    // Data structure for categories and menu items
+    // Data structure for categories and menu items from Django template
     const categories = [
       {% for category in categories %}
         {
@@ -553,7 +583,7 @@
       return `Available: ${category.startTime} - ${category.endTime}`;
     }
     
-    // Render the menu organized by categories
+    // Render the menu organized by categories with available ones first
     function renderMenu() {
       const menuContainer = document.getElementById('menu-categories');
       menuContainer.innerHTML = '';
@@ -568,154 +598,124 @@
         itemsByCategory[categoryId].push(item);
       });
       
-      // Render each category with its items
+      // Separate available and unavailable categories
+      const availableCategories = [];
+      const unavailableCategories = [];
+      
       categories.forEach(category => {
         const categoryItems = itemsByCategory[category.id] || [];
         if (categoryItems.length === 0) return; // Skip empty categories
         
         const isCategoryAvailableNow = isCategoryAvailable(category);
         
-        const categorySection = document.createElement('div');
-        categorySection.className = 'category-section';
-        
-        const categoryHeader = document.createElement('div');
-        categoryHeader.className = `category-header ${isCategoryAvailableNow ? '' : 'category-unavailable'}`;
-        categoryHeader.innerHTML = `
-          <div>
-            <h2>${category.name}</h2>
-            <span class="availability">${getCategoryAvailabilityText(category)}</span>
-          </div>
-          <span class="category-toggle"><i class="fas fa-chevron-down"></i></span>
-        `;
-        categorySection.appendChild(categoryHeader);
-        
-        if (!isCategoryAvailableNow) {
-          const unavailableMsg = document.createElement('div');
-          unavailableMsg.className = 'category-unavailable-msg';
-          unavailableMsg.innerHTML = `
-            <i class="fas fa-clock"></i> 
-            <span>This category is currently unavailable. Please check back during operating hours.</span>
-          `;
-          categorySection.appendChild(unavailableMsg);
+        if (isCategoryAvailableNow) {
+          availableCategories.push({ category, items: categoryItems });
+        } else {
+          unavailableCategories.push({ category, items: categoryItems });
         }
-        
-        const menuItemsContainer = document.createElement('div');
-        menuItemsContainer.className = `menu-items ${!isCategoryAvailableNow ? 'collapsed' : ''}`;
-        menuItemsContainer.id = `category-items-${category.id}`;
-        
-        categoryItems.forEach(item => {
-          const menuItem = document.createElement('div');
-          menuItem.className = `menu-item ${!isCategoryAvailableNow ? 'disabled-item' : ''}`;
-          
-          const isInCart = cart.find(i => i.id === item.id);
-          const hasDiscount = item.discount > 0 && item.discountedPrice !== null;
-          
-          menuItem.innerHTML = `
-            <div class="menu-info">
-              <h3>${item.name}</h3>
-              <p>${item.description || "No description available"}</p>
-            </div>
-            <div class="menu-actions">
-              <div class="price-container">
-                ${hasDiscount ? 
-                  `<span class="original-price">₹${item.price.toFixed(2)}</span>
-                   <span class="discounted-price">₹${item.discountedPrice.toFixed(2)}</span>` : 
-                  `<span class="price">₹${item.price.toFixed(2)}</span>`
-                }
-              </div>
-              <div class="quantity-adjust" id="quantity-adjust-${item.id}">
-                ${isInCart ? `
-                  <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
-                  <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-                  <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
-                ` : `
-                  <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
-                  <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
-                `}
-              </div>
-            </div>
-          `;
-          menuItemsContainer.appendChild(menuItem);
-        });
-        
-        categorySection.appendChild(menuItemsContainer);
-        menuContainer.appendChild(categorySection);
-        
-        // Add toggle functionality for category
-        categoryHeader.addEventListener('click', function() {
-          menuItemsContainer.classList.toggle('collapsed');
-          categoryHeader.classList.toggle('collapsed');
-          const toggle = categoryHeader.querySelector('.category-toggle i');
-          toggle.classList.toggle('fa-chevron-down');
-          toggle.classList.toggle('fa-chevron-right');
-        });
+      });
+      
+      // Render available categories first
+      availableCategories.forEach(({ category, items }) => {
+        renderCategorySection(category, items, true, menuContainer);
+      });
+      
+      // Add divider if there are both available and unavailable categories
+      if (availableCategories.length > 0 && unavailableCategories.length > 0) {
+        const divider = document.createElement('div');
+        divider.className = 'unavailable-section-divider';
+        divider.innerHTML = '<div class="unavailable-section-title">Currently Unavailable</div>';
+        menuContainer.appendChild(divider);
+      }
+      
+      // Render unavailable categories
+      unavailableCategories.forEach(({ category, items }) => {
+        renderCategorySection(category, items, false, menuContainer);
       });
       
       // Render uncategorized items if any
       const uncategorizedItems = itemsByCategory['uncategorized'] || [];
       if (uncategorizedItems.length > 0) {
-        const uncategorizedSection = document.createElement('div');
-        uncategorizedSection.className = 'category-section';
-        
-        const uncategorizedHeader = document.createElement('div');
-        uncategorizedHeader.className = 'category-header';
-        uncategorizedHeader.innerHTML = `
-          <h2>Other Items</h2>
-          <span class="category-toggle"><i class="fas fa-chevron-down"></i></span>
-        `;
-        uncategorizedSection.appendChild(uncategorizedHeader);
-        
-        const menuItemsContainer = document.createElement('div');
-        menuItemsContainer.className = 'menu-items';
-        menuItemsContainer.id = 'category-items-uncategorized';
-        
-        uncategorizedItems.forEach(item => {
-          const menuItem = document.createElement('div');
-          menuItem.className = 'menu-item';
-          
-          const isInCart = cart.find(i => i.id === item.id);
-          const hasDiscount = item.discount > 0 && item.discountedPrice !== null;
-          
-          menuItem.innerHTML = `
-            <div class="menu-info">
-              <h3>${item.name}</h3>
-              <p>${item.description || "No description available"}</p>
-            </div>
-            <div class="menu-actions">
-              <div class="price-container">
-                ${hasDiscount ? 
-                  `<span class="original-price">₹${item.price.toFixed(2)}</span>
-                   <span class="discounted-price">₹${item.discountedPrice.toFixed(2)}</span>` : 
-                  `<span class="price">₹${item.price.toFixed(2)}</span>`
-                }
-              </div>
-              <div class="quantity-adjust" id="quantity-adjust-${item.id}">
-                ${isInCart ? `
-                  <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
-                  <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-                  <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
-                ` : `
-                  <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
-                  <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
-                `}
-              </div>
-            </div>
-          `;
-          menuItemsContainer.appendChild(menuItem);
-        });
-        
-        uncategorizedSection.appendChild(menuItemsContainer);
-        menuContainer.appendChild(uncategorizedSection);
-        
-        // Add toggle functionality for uncategorized
-        uncategorizedHeader.addEventListener('click', function() {
-          menuItemsContainer.classList.toggle('collapsed');
-          uncategorizedHeader.classList.toggle('collapsed');
-          const toggle = uncategorizedHeader.querySelector('.category-toggle i');
-          toggle.classList.toggle('fa-chevron-down');
-          toggle.classList.toggle('fa-chevron-right');
-        });
+        const uncategorizedCategory = { id: 'uncategorized', name: 'Other Items', startTime: null, endTime: null };
+        renderCategorySection(uncategorizedCategory, uncategorizedItems, true, menuContainer);
       }
+    }
+    
+    function renderCategorySection(category, categoryItems, isAvailable, container) {
+      const categorySection = document.createElement('div');
+      categorySection.className = 'category-section';
+      
+      const categoryHeader = document.createElement('div');
+      categoryHeader.className = `category-header ${isAvailable ? '' : 'category-unavailable'}`;
+      categoryHeader.innerHTML = `
+        <div>
+          <h2>${category.name}</h2>
+          <span class="availability">${getCategoryAvailabilityText(category)}</span>
+        </div>
+        <span class="category-toggle"><i class="fas fa-chevron-down"></i></span>
+      `;
+      categorySection.appendChild(categoryHeader);
+      
+      if (!isAvailable) {
+        const unavailableMsg = document.createElement('div');
+        unavailableMsg.className = 'category-unavailable-msg';
+        unavailableMsg.innerHTML = `
+          <i class="fas fa-clock"></i> 
+          <span>This category is currently unavailable. Please check back during operating hours.</span>
+        `;
+        categorySection.appendChild(unavailableMsg);
+      }
+      
+      const menuItemsContainer = document.createElement('div');
+      menuItemsContainer.className = `menu-items ${!isAvailable ? 'collapsed' : ''}`;
+      menuItemsContainer.id = `category-items-${category.id}`;
+      
+      categoryItems.forEach(item => {
+        const menuItem = document.createElement('div');
+        menuItem.className = `menu-item ${!isAvailable ? 'disabled-item' : ''}`;
+        
+        const isInCart = cart.find(i => i.id === item.id);
+        const hasDiscount = item.discount > 0 && item.discountedPrice !== null;
+        
+        menuItem.innerHTML = `
+          <div class="menu-info">
+            <h3>${item.name}</h3>
+            <p>${item.description || "No description available"}</p>
+          </div>
+          <div class="menu-actions">
+            <div class="price-container">
+              ${hasDiscount ? 
+                `<span class="original-price">₹${item.price.toFixed(2)}</span>
+                 <span class="discounted-price">₹${item.discountedPrice.toFixed(2)}</span>` : 
+                `<span class="price">₹${item.price.toFixed(2)}</span>`
+              }
+            </div>
+            <div class="quantity-adjust" id="quantity-adjust-${item.id}">
+              ${isInCart ? `
+                <button onclick="decreaseQuantity(${item.id})"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-${item.id}" value="${isInCart.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                <button onclick="increaseQuantity(${item.id})"><i class="fas fa-plus"></i></button>
+              ` : `
+                <input type="number" id="quantity-${item.id}" value="1" min="1" class="hidden">
+                <button class="add-btn" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
+              `}
+            </div>
+          </div>
+        `;
+        menuItemsContainer.appendChild(menuItem);
+      });
+      
+      categorySection.appendChild(menuItemsContainer);
+      container.appendChild(categorySection);
+      
+      // Add toggle functionality for category
+      categoryHeader.addEventListener('click', function() {
+        menuItemsContainer.classList.toggle('collapsed');
+        categoryHeader.classList.toggle('collapsed');
+        const toggle = categoryHeader.querySelector('.category-toggle i');
+        toggle.classList.toggle('fa-chevron-down');
+        toggle.classList.toggle('fa-chevron-right');
+      });
     }
 
     function addToCart(itemId) {
@@ -943,6 +943,7 @@
       const orderItems = window._pendingOrder;
       if (!orderItems || orderItems.length === 0) return;
     
+      // Simulate order placement with Django backend
       fetch('/menu/place-order/', {
         method: 'POST',
         headers: {
@@ -958,7 +959,7 @@
       .then(response => response.json())
       .then(data => {
         if (data.message) {
-          // Success notification instead of alert
+          // Success notification
           const notification = document.createElement('div');
           notification.style.position = 'fixed';
           notification.style.top = '20px';
